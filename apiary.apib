@@ -2,24 +2,25 @@ FORMAT: 1A
 HOST: http://sandbox.api.colisweb.com
 
 # Colisweb API
-L'API **Colisweb** permet d'effectuer une demande de livraison en moins de 2 heures ou sur rendez-vous.
 
-Une clé API, obtenue auprès de Colisweb, est nécéssaire.
-Pou en obtenir une, effectuez une demande par mail à support@colisweb.com  
+Ce document décrit les endpoints de l'API que fournit **Colisweb** ainsi que les workflows d'utilisation de cette API afin d'effectuer certains actions complexes.
+
+Une clé API, obtenue auprès de Colisweb, est nécéssaire pour l'utilisation de cette API.
+Pou en obtenir une, effectuez une demande par mail à support@colisweb.com.
 
 Deux environnements sont disponibles :  
 
-**sandbox** : Environnement "bac à sable" pour vos tests avant mise en production.   
+**sandbox** : Environnement "bac à sable" pour vos tests avant mise en production.
 http://sandbox.api.colisweb.com
 
-**production** : Après validation des tests en sandbox.    
+**production** : Après validation des tests en sandbox.
 http://api.colisweb.com
 
 ## URL d'appels
-L'url d'appel à l'api est:
+L'url d'appel à l'API est:
 http://<strong>environnement</strong>/<strong>version</strong>/<strong>end_point</strong>
 
-**environnement** = environnement sandbox ou production   
+**environnement** = environnement sandbox ou production
 **version** = **4**  
 **end_point** = Méthodes décrites dans ce document.
 
@@ -54,17 +55,20 @@ http://<strong>environnement</strong>/<strong>version</strong>/<strong>end_point
   </tr>
 </table>
 
-# Group Livraisons
+# Group Workflows
 
+# Group Descriptions des endpoints API  
 
-## deliveries/options
+## Group Deliveries
 
-***Exemple d'utilisation*** :     
+### deliveries/options
 
-Appeler cette méthode dans le tunnel de commande, avant affichage des méthodes de livraison afin de proposer les options du service de livraison colisweb.   
+***Exemple d'utilisation*** :
+
+Appeler cette méthode dans le tunnel de commande, avant affichage des méthodes de livraison afin de proposer les options du service de livraison colisweb.
 Selon la réponse de l'API, vous pourrez ainsi gérer l'affichage du service "Livraison instantanée" et sur "Sur rendez vous" :  
-+ Afficher les deux modes de livraison   
-+ Afficher uniquement le mode sur Rendez-vous (si la requête est effectuée en dehors des horaires d'ouverture magasin)   
++ Afficher les deux modes de livraison
++ Afficher uniquement le mode sur Rendez-vous (si la requête est effectuée en dehors des horaires d'ouverture magasin)
 + Aucun des deux modes (point de livraison hors périmêtre par exemple)
 
 **Une delivery-option renvoie les attributs suivants** :
@@ -80,11 +84,11 @@ Selon la réponse de l'API, vous pourrez ainsi gérer l'affichage du service "Li
 
 **Les paramètres de requête sont les suivants** :
 + **api_key** (required, string) ... Clé api client colisweb
-+ **slot_size** (optional, number) ... Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h   
++ **slot_size** (optional, number) ... Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h
 Ce paramètre permet d'écraser la valeur configurée par défaut dans notre système.
 + **pickup_point** (required, hash) ... Informations du point de retrait
-    + **store_code** (required, string) ... Code magasin de retrait   
-Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés. 
+    + **store_code** (required, string) ... Code magasin de retrait
+Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.
 + **shipping_point** (required, hash ) ... Informations du point de livraison
     + **zip_code** (required, string) ... Code postal.
 + **packaging** (required, hash) ... informations sur le packaging
@@ -174,12 +178,12 @@ Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de r
 
 ## Book-delivery [/3/book_delivery]
 
-Permet d'effectuer une pré-demande de livraison.   
+Permet d'effectuer une pré-demande de livraison.
 Cette demande sera ensuite à confirmer dans la méthode "confirm-delivery"
 
-**Exemple d'utilisation :**     
+**Exemple d'utilisation :**
 
-Après que l'internaute a fait son choix de livraison et de plage horaire.   
+Après que l'internaute a fait son choix de livraison et de plage horaire.
 
 **Un book-delivery renvoie les attributs suivants** :
 
@@ -189,13 +193,13 @@ Après que l'internaute a fait son choix de livraison et de plage horaire.
 
 **Les paramètres de requête sont les suivants** :
 + **api_key** (required, string) ... Clé api client colisweb
-+ **starts_at** (required, datetime) ... Date et heure de début de la plage de livraison.   
++ **starts_at** (required, datetime) ... Date et heure de début de la plage de livraison.
     + Pour passer une demande en mode "Instantané", passez la date / heure actuelle.
 Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies par les delivery-options garantissent une réponse positive de l'API
-+ **slot_size** (required, number) ... Taille de la plage de livraison demandée en minutes.   
++ **slot_size** (required, number) ... Taille de la plage de livraison demandée en minutes.
 Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies par les delivery-options garantissent une réponse positive de l'API
 + **pickup_point** (required, hash) ... Informations du point de retrait.
-    + **stores_codes** (required, array of strings) ... Liste des codes magasins de retrait.   
+    + **stores_codes** (required, array of strings) ... Liste des codes magasins de retrait.
         + Si plusieurs codes magasins sont passés Colisweb prend le premier de la liste comme point de retrait prioritaire.  
         + Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés
 + **shipping_point** (required, hash ) ... Informations du point de livraison
@@ -211,9 +215,9 @@ Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies 
     + **zip_code** (required, string) ... Code postal.
     + **city** (required, string) ... Ville.
     + **country** (required, string) ... Pays.
-    + **send_delivery_statuses** (optional, Boolean) ... Envoyer les statuts de livraison par sms/email au consommateur 
+    + **send_delivery_statuses** (optional, Boolean) ... Envoyer les statuts de livraison par sms/email au consommateur
         + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-    + **send_survey** (optional, Boolean) ... Envoyer  l'enquête de satisfaction au consommateur 
+    + **send_survey** (optional, Boolean) ... Envoyer  l'enquête de satisfaction au consommateur
         + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 + **packaging** (required, hash) ... Informations sur le packaging
     + **products_description** (optional, string) ... Typologie / dénomination des produits. Exemple : micro-onde.
@@ -282,12 +286,12 @@ Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies 
 
 ## confirm-delivery [/3/confirm_delivery]
 
-Confirme la commande créée via la methode "book-delivery".   
+Confirme la commande créée via la methode "book-delivery".
 
-***Attention*** : Un maximum de 15 minutes est autorisé entre l'appel au book-delivery et cet appel.   
+***Attention*** : Un maximum de 15 minutes est autorisé entre l'appel au book-delivery et cet appel.
 Au delà une erreur "delivery_has_expired" est renvoyée.
 
-**Exemple d'utilisation :**     
+**Exemple d'utilisation :**
 
 Aprés la validation du paiement.
 
@@ -322,5 +326,5 @@ Aprés la validation du paiement.
                         "confirmed": true
                     }
                 }
-                
+
 # Deliveries API Root [/deliveries]
