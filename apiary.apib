@@ -82,14 +82,14 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
 **La réponse contiendra les inforamtions suivantes** :
 
 + **now** *(hash)* : Disponibilité de l'offre "instantanée
-    + **available** *(boolean)* : Livraison "instantanée" disponible ou non
-    + **slot_size** *(integer)* : Taille du créneau horaire en minutes de la livraison "instantanée"
-    + **price** *(integer)* : Coût HT de la livraison en centimes
+  + **available** *(boolean)* : Livraison "instantanée" disponible ou non
+  + **slot_size** *(integer)* : Taille du créneau horaire en minutes de la livraison "instantanée"
+  + **price** *(integer)* : Coût HT de la livraison en centimes
 + **planned** *(array of hashes)* : Plages horaire de livraison sur rendez-vous
-    + **starts_at** *(datetime UTC)* : Début d'un créneau horaire
-    + **ends_at** *(datetime UTC)* : Fin d'un créneau horaire
-    + **slot_size** *(integer)* : Taille du créneau horaire en minutes
-    + **price** *(float)* : Coût HT de la livraison en euro
+  + **starts_at** *(datetime UTC)* : Début d'un créneau horaire
+  + **ends_at** *(datetime UTC)* : Fin d'un créneau horaire
+  + **slot_size** *(integer)* : Taille du créneau horaire en minutes
+  + **price** *(float)* : Coût HT de la livraison en euro
 
 
 ### POST
@@ -174,18 +174,8 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
 
 ## Commander une livraison [/deliveries/book]
 
-Permet d'effectuer une pré-demande de livraison.
+Permet d'effectuer une pré-demande de livraison.   
 Cette demande sera ensuite à confirmer dans la méthode "Confirmer une livraison"
-
-**Exemple d'utilisation :**
-
-Après que l'internaute a fait son choix de livraison et de plage horaire.
-
-**Un book-delivery renvoie les attributs suivants** :
-
-+ ***delivery_id*** (integer) - Identifiant de commande qui sera utilisé pour effectuer la confirmation.
-+ **price** (integer) : Coût HT de la livraison en centimes
-
 
 **Les paramètres de requête sont les suivants** :
 + **api_key** (required, string) : Clé api client colisweb
@@ -223,6 +213,10 @@ Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies 
         + **height** (required, integer) : Hauteur du colis (en cm)
         + **weight** (required, integer) : Poids du colis (en grammes)
 
+**Un book-delivery renvoie les attributs suivants** :
+
++ **delivery_id** *(integer)* - Identifiant de commande qui sera utilisé pour effectuer la confirmation.
++ **price** *(integer)* : Coût HT de la livraison en centimes
 
 ### Voir les détails d'un book-delivery [POST]
 
