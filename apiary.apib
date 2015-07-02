@@ -1,13 +1,14 @@
 FORMAT: 1A
 HOST: http://sandbox.api.colisweb.com
 
-# Colisweb API
+# Colisweb API v4
 
-Ce document décrit les endpoints de l'API que fournit **Colisweb** ainsi que les workflows d'utilisation de cette API afin d'effectuer certains actions complexes.
+Ce document décrit les endpoints de l'API que fournit **Colisweb** ainsi que les workflows d'utilisations de cette API qui permettent d'effectuer certaines actions complexes.
 
 Une clé API, obtenue auprès de Colisweb, est nécéssaire pour l'utilisation de cette API.
 Pou en obtenir une, effectuez une demande par mail à support@colisweb.com.
 
+## Environnements
 Deux environnements sont disponibles :  
 
 **sandbox** : Environnement "bac à sable" pour vos tests avant mise en production.
@@ -18,7 +19,7 @@ http://api.colisweb.com
 
 ## URL d'appels
 L'url d'appel à l'API est:
-http://<strong>environnement</strong>/<strong>version</strong>/<strong>end_point</strong>
+https://<strong>environnement</strong>/<strong>version</strong>/<strong>end_point</strong>
 
 **environnement** = environnement sandbox ou production
 **version** = **4**  
@@ -61,42 +62,36 @@ http://<strong>environnement</strong>/<strong>version</strong>/<strong>end_point
 
 ## Group Deliveries
 
-### deliveries/options
+### /deliveries/options
 
-***Exemple d'utilisation*** :
+Permet de récupérer les options de livraisons disponibles par rapport à différents paramètres.
 
-Appeler cette méthode dans le tunnel de commande, avant affichage des méthodes de livraison afin de proposer les options du service de livraison colisweb.
-Selon la réponse de l'API, vous pourrez ainsi gérer l'affichage du service "Livraison instantanée" et sur "Sur rendez vous" :  
-+ Afficher les deux modes de livraison
-+ Afficher uniquement le mode sur Rendez-vous (si la requête est effectuée en dehors des horaires d'ouverture magasin)
-+ Aucun des deux modes (point de livraison hors périmêtre par exemple)
+**Les paramètres de requête sont les suivants** :
++ **api_key** *(required, string)* : Clé API Colisweb
++ **slot_size** *(optional, number)* : Taille de la plage de livraison demandée en minutes.
+Exemple : 120 pour une livraison en 2h.
+Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
++ **pickup_point** *(required, hash)* : Informations du point de retrait
+  + **zip_code** *(required, string)* : Code postal
++ **shipping_point** *(required, hash)* : Informations du point de livraison
+  + **zip_code** *(required, string)* : Code postal
++ **packets** *(required, array of hashes)* : Informations sur les colis
+  + **length** *(required, integer)* : Longueur du colis (en cm)
+  + **width** *(required, integer)* : largeur du colis (en cm)
+  + **height** *(required, integer)* : hauteur du colis (en cm)
+  + **weight** *(required, integer)* : poids du colis (en grammes)
+
 
 **Une delivery-option renvoie les attributs suivants** :
 
-+ **now** (hash) ... Disponibilité de l'offre "instantanée".
-    + **available** (boolean) ... livraison maintenant dans les x minutes disponible ou non.
-    + **slot_size** (integer) ... Taille du créneau horaire en minutes.
-+ **planned** (array of hashes) ... Plages horaire de livraison sur rendez-vous
-    + **starts_at** (datetime) ... Début d'un créneau horaire.
-    + **ends_at** (datetime) ... Fin d'un créneau horaire.
-    + **slot_size** (integer) ... Taille du créneau horaire en minutes.
-+ **price** (integer) ... Coût HT de la livraison en centimes
-
-**Les paramètres de requête sont les suivants** :
-+ **api_key** (required, string) ... Clé api client colisweb
-+ **slot_size** (optional, number) ... Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h
-Ce paramètre permet d'écraser la valeur configurée par défaut dans notre système.
-+ **pickup_point** (required, hash) ... Informations du point de retrait
-    + **store_code** (required, string) ... Code magasin de retrait
-Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.
-+ **shipping_point** (required, hash ) ... Informations du point de livraison
-    + **zip_code** (required, string) ... Code postal.
-+ **packaging** (required, hash) ... informations sur le packaging
-    + **packets** (required, array of hashes) ... informations sur les colis
-        + **length** (required, integer) ... Longueur du colis (en cm)
-        + **width** (required, integer) ... largeur du colis (en cm)
-        + **height** (required, integer) ... hauteur du colis (en cm)
-        + **weight** (required, integer) ... poids du colis (en grammes)
++ **now** *(hash)* : Disponibilité de l'offre "instantanée".
+    + **available** *(boolean)* : livraison maintenant dans les x minutes disponible ou non.
+    + **slot_size** *(integer)* : Taille du créneau horaire en minutes.
++ **planned** *(array of hashes)* : Plages horaire de livraison sur rendez-vous
+    + **starts_at** *(datetime)* : Début d'un créneau horaire.
+    + **ends_at** *(datetime)* : Fin d'un créneau horaire.
+    + **slot_size** *(integer)* : Taille du créneau horaire en minutes.
++ **price** *(integer)* : Coût HT de la livraison en centimes
 
 
 ### Voir les détails d'une Delivery-Options [POST]
@@ -112,22 +107,20 @@ Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de r
                 "shipping_point": {
                     "zip_code": 75001
                 },
-                "packaging": {
-                    "packets": [
-                        {
-                            "weight": 1,
-                            "height": 14,
-                            "length": 15,
-                            "width": 16
-                        },
-                        {
-                            "weight": 2,
-                            "height": 24,
-                            "length": 25,
-                            "width": 26
-                        }
-                    ]
-                }
+                "packets": [
+                    {
+                        "weight": 1,
+                        "height": 14,
+                        "length": 15,
+                        "width": 16
+                    },
+                    {
+                        "weight": 2,
+                        "height": 24,
+                        "length": 25,
+                        "width": 26
+                    }
+                ]
             }
 
 
@@ -188,44 +181,44 @@ Après que l'internaute a fait son choix de livraison et de plage horaire.
 **Un book-delivery renvoie les attributs suivants** :
 
 + ***delivery_id*** (integer) - Identifiant de commande qui sera utilisé pour effectuer la confirmation.
-+ **price** (integer) ... Coût HT de la livraison en centimes
++ **price** (integer) : Coût HT de la livraison en centimes
 
 
 **Les paramètres de requête sont les suivants** :
-+ **api_key** (required, string) ... Clé api client colisweb
-+ **starts_at** (required, datetime) ... Date et heure de début de la plage de livraison.
++ **api_key** (required, string) : Clé api client colisweb
++ **starts_at** (required, datetime) : Date et heure de début de la plage de livraison.
     + Pour passer une demande en mode "Instantané", passez la date / heure actuelle.
 Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies par les delivery-options garantissent une réponse positive de l'API
-+ **slot_size** (required, number) ... Taille de la plage de livraison demandée en minutes.
++ **slot_size** (required, number) : Taille de la plage de livraison demandée en minutes.
 Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies par les delivery-options garantissent une réponse positive de l'API
-+ **pickup_point** (required, hash) ... Informations du point de retrait.
-    + **stores_codes** (required, array of strings) ... Liste des codes magasins de retrait.
++ **pickup_point** (required, hash) : Informations du point de retrait.
+    + **stores_codes** (required, array of strings) : Liste des codes magasins de retrait.
         + Si plusieurs codes magasins sont passés Colisweb prend le premier de la liste comme point de retrait prioritaire.  
         + Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés
-+ **shipping_point** (required, hash ) ... Informations du point de livraison
-    + **society** (optional, string) ... Société.
-    + **first_name** (optional, string) ... Prénom.
-    + **last_name** (required, string) ... Nom.
-    + **email** (required, string) ... Email.
-    + **primary_phone** (required, string) ... Numéro de téléphone primaire.
-    + **secondary_phone** (optional, string) ... Numéro de téléphone secondaire.
-    + **line1** (required, string) ... Adresse de livraison.
-    + **line2** (optional, string) ... Complément d'adresse.
-    + **additional_informations** (optional, string) ... Informations supplémentaire (digicode, etc.)
-    + **zip_code** (required, string) ... Code postal.
-    + **city** (required, string) ... Ville.
-    + **country** (required, string) ... Pays.
-    + **send_delivery_statuses** (optional, Boolean) ... Envoyer les statuts de livraison par sms/email au consommateur
++ **shipping_point** (required, hash ) : Informations du point de livraison
+    + **society** (optional, string) : Société.
+    + **first_name** (optional, string) : Prénom.
+    + **last_name** (required, string) : Nom.
+    + **email** (required, string) : Email.
+    + **primary_phone** (required, string) : Numéro de téléphone primaire.
+    + **secondary_phone** (optional, string) : Numéro de téléphone secondaire.
+    + **line1** (required, string) : Adresse de livraison.
+    + **line2** (optional, string) : Complément d'adresse.
+    + **additional_informations** (optional, string) : Informations supplémentaire (digicode, etc.)
+    + **zip_code** (required, string) : Code postal.
+    + **city** (required, string) : Ville.
+    + **country** (required, string) : Pays.
+    + **send_delivery_statuses** (optional, Boolean) : Envoyer les statuts de livraison par sms/email au consommateur
         + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-    + **send_survey** (optional, Boolean) ... Envoyer  l'enquête de satisfaction au consommateur
+    + **send_survey** (optional, Boolean) : Envoyer  l'enquête de satisfaction au consommateur
         + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-+ **packaging** (required, hash) ... Informations sur le packaging
-    + **products_description** (optional, string) ... Typologie / dénomination des produits. Exemple : micro-onde.
-    + **packets** (required, array of hashes) ... Informations sur les colis
-        + **length** (required, integer) ... Longueur du colis (en cm)
-        + **width** (required, integer) ... Largeur du colis (en cm)
-        + **height** (required, integer) ... Hauteur du colis (en cm)
-        + **weight** (required, integer) ... Poids du colis (en grammes)
++ **packaging** (required, hash) : Informations sur le packaging
+    + **products_description** (optional, string) : Typologie / dénomination des produits. Exemple : micro-onde.
+    + **packets** (required, array of hashes) : Informations sur les colis
+        + **length** (required, integer) : Longueur du colis (en cm)
+        + **width** (required, integer) : Largeur du colis (en cm)
+        + **height** (required, integer) : Hauteur du colis (en cm)
+        + **weight** (required, integer) : Poids du colis (en grammes)
 
 
 ### Voir les détails d'un book-delivery [POST]
@@ -297,15 +290,15 @@ Aprés la validation du paiement.
 
 **Un confirm-delivery renvoie les attributs suivants** :
 
-+ ***confirmed*** (boolean) ... la valeur "True" indique que la livraison a bien été prise en compte.
++ ***confirmed*** (boolean) : la valeur "True" indique que la livraison a bien été prise en compte.
 
 **Les paramètres de requête sont les suivants** :
 
-+ **api_key** (required, string) ... Clé api client colisweb
-+ **delivery_id** (required, integer) ... ID commande colisweb récupérée lors de l'appel à la méthode book-delivery
-+ **order_ref** (required, string) ... Référence commande de votre plateforme  
++ **api_key** (required, string) : Clé api client colisweb
++ **delivery_id** (required, integer) : ID commande colisweb récupérée lors de l'appel à la méthode book-delivery
++ **order_ref** (required, string) : Référence commande de votre plateforme  
 (permet au transporteur d'identifier le colis à retirer en boutique)
-+ **order_id** (optional, string) ... ID commande interne à votre plateforme
++ **order_id** (optional, string) : ID commande interne à votre plateforme
 
 ### Voir les détails d'un book-delivery [PUT]
 
