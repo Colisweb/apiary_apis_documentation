@@ -1,32 +1,27 @@
 FORMAT: 1A
 HOST: http://sandbox.api.colisweb.com
 
-# colisweb
-L'API Colisweb permet d'effectuer une demande de livraison en moins de 2 heures ou sur rendez-vous.  
-Une clé api, obtenue auprès de Colisweb est nécéssaire : faire une demande par email à support@colisweb.com  
-Le format de données est de type JSON.
+# Colisweb API
+L'API **Colisweb** permet d'effectuer une demande de livraison en moins de 2 heures ou sur rendez-vous.
 
-## Environnements
+Une clé API, obtenue auprès de Colisweb, est nécéssaire.
+Pou en obtenir une, effectuez une demande par mail à support@colisweb.com  
 
-Deux environnements sont disponibles :
+Deux environnements sont disponibles :  
 
-<strong>sandbox</strong> : Environnement "bac à sable", nécéssaire avant mise en production    
+**sandbox** : Environnement "bac à sable" pour vos tests avant mise en production.   
 http://sandbox.api.colisweb.com
 
-<strong>production</strong> : Après validation des tests en sandbox    
+**production** : Après validation des tests en sandbox.    
 http://api.colisweb.com
 
 ## URL d'appels
 L'url d'appel à l'api est:
 http://<strong>environnement</strong>/<strong>version</strong>/<strong>end_point</strong>
 
-<strong>environnement</strong> = environnement sandbox ou production   
-<strong>version</strong> = La version de l'API a appeler : 2  
-<strong>end_point</strong> = Méthodes décrites dans ce document.
-
-Par exemple,  
-pour appeler la méthode <strong>delivery-options</strong> en production, l'url d'appel sera la suivante :   
-http://api.colisweb.com/2/delivery-options
+**environnement** = environnement sandbox ou production   
+**version** = **4**  
+**end_point** = Méthodes décrites dans ce document.
 
 ## Codes d'erreurs
 
@@ -45,12 +40,7 @@ http://api.colisweb.com/2/delivery-options
   <tr>
      <td>fail_to_confirm_delivery</td>
      <td>400 Bad Request</td>
-     <td>Les paramètres minimum requis ont-ils tous bien été envoyés ?</td>
-  </tr>
-  <tr>
-     <td>delivery_out_of_range</td>
-     <td>404 not found</td>
-     <td>Livraison hors zone</td>
+     <td>Le commande de livraison a échoué</td>
   </tr>
   <tr>
      <td>no_delivery_options</td>
@@ -58,1382 +48,279 @@ http://api.colisweb.com/2/delivery-options
      <td>Aucune disponibilité de livraison</td>
   </tr>
   <tr>
-     <td>malformed_client</td>
-     <td>503 Unavailable</td>
-     <td>Aucun magasin ou aucune zone de magasin trouvé pour le client demandé</td>
-  </tr>
-  <tr>
-     <td>missing_zip_code</td>
-     <td>400 Bad Request</td>
-     <td>Le code postal manque dans les paramètres de requête</td>
-  </tr>
-  <tr>
-     <td>wrong_zip_code</td>
-     <td>400 Bad Request</td>
-     <td>Aucun code postal équivalent trouvé</td>
-  </tr>
-  <tr>
-     <td>wrong_store</td>
-     <td>404 Not found</td>
-     <td>Le magasin n'a pas été retrouvé avec ce delivery_id</td>
-  </tr>
-  <tr>
      <td>missing_delivery</td>
-     <td>400 Bad Request</td>
-     <td>La commande n'a pas été retrouvée avec ce delivery_id</td>
-  </tr>
-  <tr>
-     <td>incomplete_package_data</td>
-     <td>400 Bad Request</td>
-     <td>Il manque des paramètres de packaging : height, width, length, weight</td>
-  </tr>
-  <tr>
-     <td>delivery_already_confirmed</td>
-     <td>400 Bad Request</td>
-     <td>La commande identifiée par le delivery_id a déjà été confirmée </td>
-  </tr>
-  <tr>
-     <td>delivery_has_expired</td>
-     <td>404 Not found</td>
-     <td>La confirmation de commande survient après le timeout (15 minutes), impossible de confirmer la commande</td>
+     <td>404 not found</td>
+     <td>Numéro de commande inconnue</td>
   </tr>
 </table>
 
-# Group E-commerce checkout flow
-Méthodes permettant l'intégration du service de livraison colisweb dans un tunnel d'achat E-commerce classique.   
+# Group Livraisons
 
-Le déroulement standard est :    
-1 - Appel à "delivery-options" afin d'afficher ou non les options de livraisons colisweb dans le checkout.   
-2 - Appel à "book-delivery" afin d'effectuer une pré-demande de livraison avec les options choisies précédement.    
-3 - Appel à "confirm-delivery" suite à la validation de paiement, pour donner le top départ.
 
-# POST /2/availability
-Renvoie la disponibilité du service colisweb par rapport à un code postal.
+## deliveries/options
 
-Exemple d'utilisation :  
-Afficher le logo colisweb dans la fiche produit, ou dans l'index des produits, en grâce à la géolocalisation (ou les informations de compte) de l'internaute.
-## Requête 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-              <strong>Paramètres requis</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                api_key
-            </td>
-            <td>
-                Clé api client colisweb
-            </td>
-        </tr>
-        <tr>
-            <td>
-                zip_code
-            </td>
-            <td>
-                Code postal
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <strong>Paramètres optionnels</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                customer_id
-            </td>
-            <td>
-                Identifiant de session e-commerce internaute
-            </td>
-        </tr>
-    </tbody>
-</table>
+***Exemple d'utilisation*** :     
 
-## Réponse
+Appeler cette méthode dans le tunnel de commande, avant affichage des méthodes de livraison afin de proposer les options du service de livraison colisweb.   
+Selon la réponse de l'API, vous pourrez ainsi gérer l'affichage du service "Livraison instantanée" et sur "Sur rendez vous" :  
++ Afficher les deux modes de livraison   
++ Afficher uniquement le mode sur Rendez-vous (si la requête est effectuée en dehors des horaires d'ouverture magasin)   
++ Aucun des deux modes (point de livraison hors périmêtre par exemple)
 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-                available
-            </td>
-            <td>
-                true / false (boolean)
-            </td>
-        </tr>
-    </tbody>
-</table>
+**Une delivery-option renvoie les attributs suivants** :
 
++ **now** (hash) ... Disponibilité de l'offre "instantanée".
+    + **available** (boolean) ... livraison maintenant dans les x minutes disponible ou non.
+    + **slot_size** (integer) ... Taille du créneau horaire en minutes.
++ **planned** (array of hashes) ... Plages horaire de livraison sur rendez-vous
+    + **starts_at** (datetime) ... Début d'un créneau horaire.
+    + **ends_at** (datetime) ... Fin d'un créneau horaire.
+    + **slot_size** (integer) ... Taille du créneau horaire en minutes.
++ **price** (integer) ... Coût HT de la livraison en centimes
+
+**Les paramètres de requête sont les suivants** :
++ **api_key** (required, string) ... Clé api client colisweb
++ **slot_size** (optional, number) ... Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h   
+Ce paramètre permet d'écraser la valeur configurée par défaut dans notre système.
++ **pickup_point** (required, hash) ... Informations du point de retrait
+    + **store_code** (required, string) ... Code magasin de retrait   
+Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés. 
++ **shipping_point** (required, hash ) ... Informations du point de livraison
+    + **zip_code** (required, string) ... Code postal.
++ **packaging** (required, hash) ... informations sur le packaging
+    + **packets** (required, array of hashes) ... informations sur les colis
+        + **length** (required, integer) ... Longueur du colis (en cm)
+        + **width** (required, integer) ... largeur du colis (en cm)
+        + **height** (required, integer) ... hauteur du colis (en cm)
+        + **weight** (required, integer) ... poids du colis (en grammes)
+
+
+### Voir les détails d'une Delivery-Options [POST]
 
 + Request (application/json)
 
-        { 
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "zip_code": 59000
-        }
+            {
+                "api_key": "3025688655a161aeb167b7b33f03c013",
+                "slot_size": 120,
+                "pickup_point": {
+                    "store_code": "1024864"
+                },
+                "shipping_point": {
+                    "zip_code": 75001
+                },
+                "packaging": {
+                    "packets": [
+                        {
+                            "weight": 1,
+                            "height": 14,
+                            "length": 15,
+                            "width": 16
+                        },
+                        {
+                            "weight": 2,
+                            "height": 24,
+                            "length": 25,
+                            "width": 26
+                        }
+                    ]
+                }
+            }
 
-+ Response 200 (application/json)
-    
-        { "response":
-            {"available": true}
-        }
 
-# POST /2/delivery-options
-Renvoie les options de livraison disponibles au moment de la requête :   
-=> Livraison instantanée en 2h,  
-=> Les plages horaires du service sur "rendez-vous"   
-=> Coût de la livraison
++ Response 201 (application/json)
 
-Exemple d'utilisation :     
+                {
+                    "response" : {
+                        "now" : {
+                            "available": true,
+                            "slot_size": 120
+                        },
+                        "planned" : [
+                            {
+                                "starts_at": "2015-04-22T10:00:00+00:00",
+                                "ends_at": "2015-04-22T12:00:00+00:00",
+                                "slot_size": 120
+                            },
+                            {
+                                "starts_at": "2015-04-22T12:00:00+00:00",
+                                "ends_at": "2015-04-22T14:00:00+00:00",
+                                "slot_size": 120
+                            },
+                            {
+                                "starts_at": "2015-04-22T14:00:00+00:00",
+                                "ends_at": "2015-04-22T15:00:00+00:00",
+                                "slot_size": 60
+                            },
+                            {
+                                "starts_at": "2015-04-23T10:00:00+00:00",
+                                "ends_at": "2015-04-23T12:00:00+00:00",
+                                "slot_size": 120
+                            },
+                            {
+                                "starts_at": "2015-04-23T12:00:00+00:00",
+                                "ends_at": "2015-04-23T14:00:00+00:00",
+                                "slot_size": 120
+                            },
+                            {
+                                "starts_at": "2015-04-23T14:00:00+00:00",
+                                "ends_at": "2015-04-23T15:00:00+00:00",
+                                "slot_size": 60
+                            }
+                        ],
+                        "price" : "1200"
+                    }
+                }
 
-Appeler cette méthode dans le tunnel de commande, avant affichage des méthodes de livraison afin d'afficher ou non les options de livraison colisweb.   
-Selon la réponse de l'API, l'option "Livraison instantanée" et l'option "Sur rendez vous" pourront ainsi être affichés :  
-=> Tous les deux   
-=> Un seul des deux (généralement sur rendez-vous si la requête est effectuée en dehors des horaires d'ouverture magasin)   
-=> Aucun (point de livraison hors périmêtre par exemple)
 
-Pour l'option rendez-vous, un calendrier peut ainsi être généré grâce aux créneaux retournés par l'API 
+## Book-delivery [/3/book_delivery]
 
-## Requête 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-              <strong>Paramètres requis</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                api_key
-            </td>
-            <td>
-                Clé api client colisweb
-            </td>
-        </tr>
-        <tr>
-            <td>
-                zip_code
-            </td>
-            <td>
-                Code postal de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                length
-            </td>
-            <td>
-                Dimension du plus grand coté du colis (cm)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                width
-            </td>
-            <td>
-                Largeur du colis (cm)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                height
-            </td>
-            <td>
-                Hauteur du colis (cm)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                weight
-            </td>
-            <td>
-                Poids du colis (Kg)
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <strong>Paramètres optionnels</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                customer_id
-            </td>
-            <td>
-                Identifiant de session e-commerce internaute
-            </td>
-        </tr>
-        <tr>
-            <td>
-                basket_content
-            </td>
-            <td>
-                Contenu du panier (voir le format ci-dessous) <br />
-                totalPriceTTC : prix total du panier <br />
-                basketLineNumber : nombre d'articles au panier <br />
-                items : tableau de détail des articles <br />
-                name : nom de l'article <br />
-                sku: code article <br />
-                price: prix de l'article <br />
-                qty: quantité au panier <br />
-                cw_item_active : article actif <br />
-                stock: quantité en stock
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-Exemple de format du paramètre basket_content <strong>(Toutes les clés et valeurs doivent être entre double quotes)</strong>
-
-```
-"basket_content" : {
-    "totalPriceTTC" : "89.99", 
-    "basketLineNumber" : "1", 
-    "items" : [
-        {   
-            "name"  : "Casque micro Sure",
-            "sku"   : "CK6001R" ,
-            "price" : "41.99" ,
-            "qty" : "1" ,
-            "cw_item_active" : "1" ,
-            "stock" : "0"
-        }
-    ] 
-}
-```
-
-## Réponse
-
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-                now
-            </td>
-            <td>
-                Disponibilité de l'offre instantanée : true / false
-            </td>
-        </tr>
-        <tr>
-            <td>
-                planned
-            </td>
-            <td>
-                Tableau des créneaux de disponibilité sur rendez-vous
-            </td>
-        </tr>
-        <tr>
-            <td>
-                price
-            </td>
-            <td>
-                Coût de la livraison HT
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-Exemple de réponse :
-
-```
-{
-    "response" : {
-        "planned" : {
-            "2013-12-26" : [
-                ["16:00","18:00"],
-                ["17:00","19:00"]
-            ],
-            "2013-12-27" : [
-                ["10:00","12:00"],
-                ["11:00","13:00"],
-                ["12:00","14:00"],
-                ["13:00","15:00"],
-                ["14:00","16:00"]
-            ],
-            "2013-12-28" : [
-                ["10:00","12:00"],
-                ["11:00","13:00"],
-                ["12:00","14:00"],
-                ["13:00","15:00"]
-            ]
-        },
-        "now" : true,
-        "price" : "12.0"
-    }
-}
-```
-
-+ Request (application/json)
-
-        { 
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "zip_code": 59000,
-            "length": 20,
-            "width": 10,
-            "height": 5,
-            "weight": 1
-        }
-        
-+ Response 200 (application/json)
-    
-        {"response":{"planned":{"2013-12-26":[["16:00","18:00"],["17:00","19:00"]],"2013-12-27":[["10:00","12:00"],["11:00","13:00"],["12:00","14:00"],["13:00","15:00"],["14:00","16:00"],["15:00","17:00"],["16:00","18:00"],["17:00","19:00"]],"2013-12-28":[["10:00","12:00"],["11:00","13:00"],["12:00","14:00"],["13:00","15:00"],["14:00","16:00"],["15:00","17:00"],["16:00","18:00"],["17:00","19:00"]]},"now":true,"price":"12.0"}}
-
-# POST /2/book-delivery
-Permet d'effectuer une pré-demande de livraison.
+Permet d'effectuer une pré-demande de livraison.   
 Cette demande sera ensuite à confirmer dans la méthode "confirm-delivery"
 
-Exemple d'utilisation :     
+**Exemple d'utilisation :**     
 
-Après que l'internaute a fait son choix sur la méthode (instantané / sur rendez-vous en sélectionnant un créneau).   
+Après que l'internaute a fait son choix de livraison et de plage horaire.   
 
-## Requête 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-              <strong>Paramètres requis</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                api_key
-            </td>
-            <td>
-                Clé api client colisweb
-            </td>
-        </tr>
-        <tr>
-            <td>
-                length
-            </td>
-            <td>
-                Dimension du plus grand coté du colis (cm)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                width
-            </td>
-            <td>
-                Largeur du colis (cm)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                height
-            </td>
-            <td>
-                Hauteur du colis (cm)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                weight
-            </td>
-            <td>
-                Poids du colis (Kg)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                name
-            </td>
-            <td>
-                Nom et prénom de la personne à livrer
-            </td>
-        </tr>
-        <tr>
-            <td>
-                email
-            </td>
-            <td>
-                email de la personne à livrer
-            </td>
-        </tr>
-        <tr>
-            <td>
-                primary_phone
-            </td>
-            <td>
-                téléphone de la persoone à livrer
-            </td>
-        </tr>
-        <tr>
-            <td>
-                line1
-            </td>
-            <td>
-                addresse de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                city
-            </td>
-            <td>
-                Ville de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                zip_code
-            </td>
-            <td>
-                Code postal de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                country
-            </td>
-            <td>
-                Pays de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                now
-            </td>
-            <td>
-                <strong>Si ce paramètre est passé la livraison sera interprétée comme type "instantanée", quelque soit le contenu de sa valeur. <br />
-                Ce paramètre prend la priorité même si les paramètre de type rendez-vous sont également passés.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                year
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : année (eg: 2013)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                month
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : mois (eg: 02)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                day
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : jour (eg: 12)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                hours
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : heure de <strong>début</strong> du créneau horaire (eg: 13)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                minutes
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : minutes de <strong>début</strong> du créneau horaire (eg: 00)
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <strong>Paramètres optionnels</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                customer_id
-            </td>
-            <td>
-                Identifiant de session e-commerce internaute
-            </td>
-        </tr>
-        <tr>
-            <td>
-                line2
-            </td>
-            <td>
-                Complément d'adresse
-            </td>
-        </tr>
-        <tr>
-            <td>
-                secondary_phone
-            </td>
-            <td>
-                Télephone secondaire de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                additional_informations
-            </td>
-            <td>
-                Informations complémentaires
-            </td>
-        </tr>
-        <tr>
-            <td>
-                state_or_province
-            </td>
-            <td>
-                Région de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                basket_content
-            </td>
-            <td>
-                Contenu du panier (voir le format ci-dessous) <br />
-                totalPriceTTC : prix total du panier <br />
-                basketLineNumber : nombre d'articles au panier <br />
-                items : tableau de détail des articles <br />
-                name : nom de l'article <br />
-                sku: code article <br />
-                price: prix de l'article <br />
-                qty: quantité au panier <br />
-                cw_item_active : article actif <br />
-                stock: quantité en stock
-            </td>
-        </tr>
-    </tbody>
-</table>
+**Un book-delivery renvoie les attributs suivants** :
 
-Exemple de format du paramètre basket_content <strong>(Toutes les clés et valeurs doivent être entre double quotes)</strong>
++ ***delivery_id*** (integer) - Identifiant de commande qui sera utilisé pour effectuer la confirmation.
++ **price** (integer) ... Coût HT de la livraison en centimes
 
-```
-"basket_content" : {
-    "totalPriceTTC" : "89.99", 
-    "basketLineNumber" : "1", 
-    "items" : [
-        {   
-            "name"  : "Casque micro Sure",
-            "sku"   : "CK6001R" ,
-            "price" : "41.99" ,
-            "qty" : "1" ,
-            "cw_item_active" : "1" ,
-            "stock" : "10"
-        }
-    ] 
-}
-```
 
-## Réponse
+**Les paramètres de requête sont les suivants** :
++ **api_key** (required, string) ... Clé api client colisweb
++ **starts_at** (required, datetime) ... Date et heure de début de la plage de livraison.   
+    + Pour passer une demande en mode "Instantané", passez la date / heure actuelle.
+Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies par les delivery-options garantissent une réponse positive de l'API
++ **slot_size** (required, number) ... Taille de la plage de livraison demandée en minutes.   
+Vous pouvez passer la valeur que vous souhaitez, cependant les valeurs fournies par les delivery-options garantissent une réponse positive de l'API
++ **pickup_point** (required, hash) ... Informations du point de retrait.
+    + **stores_codes** (required, array of strings) ... Liste des codes magasins de retrait.   
+        + Si plusieurs codes magasins sont passés Colisweb prend le premier de la liste comme point de retrait prioritaire.  
+        + Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés
++ **shipping_point** (required, hash ) ... Informations du point de livraison
+    + **society** (optional, string) ... Société.
+    + **first_name** (optional, string) ... Prénom.
+    + **last_name** (required, string) ... Nom.
+    + **email** (required, string) ... Email.
+    + **primary_phone** (required, string) ... Numéro de téléphone primaire.
+    + **secondary_phone** (optional, string) ... Numéro de téléphone secondaire.
+    + **line1** (required, string) ... Adresse de livraison.
+    + **line2** (optional, string) ... Complément d'adresse.
+    + **additional_informations** (optional, string) ... Informations supplémentaire (digicode, etc.)
+    + **zip_code** (required, string) ... Code postal.
+    + **city** (required, string) ... Ville.
+    + **country** (required, string) ... Pays.
+    + **send_delivery_statuses** (optional, Boolean) ... Envoyer les statuts de livraison par sms/email au consommateur 
+        + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+    + **send_survey** (optional, Boolean) ... Envoyer  l'enquête de satisfaction au consommateur 
+        + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
++ **packaging** (required, hash) ... Informations sur le packaging
+    + **products_description** (optional, string) ... Typologie / dénomination des produits. Exemple : micro-onde.
+    + **packets** (required, array of hashes) ... Informations sur les colis
+        + **length** (required, integer) ... Longueur du colis (en cm)
+        + **width** (required, integer) ... Largeur du colis (en cm)
+        + **height** (required, integer) ... Hauteur du colis (en cm)
+        + **weight** (required, integer) ... Poids du colis (en grammes)
 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-                delivery_id
-            </td>
-            <td>
-                Identifiant de commande qui sera à utiliser pour effectuer la confirmation finale (integer)
-            </td>
-        </tr>
-    </tbody>
-</table>
 
+### Voir les détails d'un book-delivery [POST]
 
 + Request (application/json)
 
-        { 
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "customer_id": "515845454"
-            "zip_code": 59000,
-            "length": 20,
-            "width": 10,
-            "height": 5,
-            "weight": 1,
-            "name": "Sergent pepper",
-            "line1": "165, avenue de bretagne",
-            "email": "foo@bar.com",
-            "primary_phone" : "+3306060606",
-            "city": "lille",
-            "postal_code": 59000,
-            "country": "france",
-            "now": "whatever you want",
-            "basket_content" : {
-                "totalPriceTTC" : "89.99", 
-                "basketLineNumber" : "1", 
-                "items" : [{   
-                    "name"  : "Casque micro Sure",
-                    "sku"   : "CK6001R" ,
-                    "price" : "41.99" ,
-                    "qty" : "1" ,
-                    "cw_item_active" : "1" ,
-                    "stock" : "10"
-                }] 
-            }
-        }
-        
-+ Response 200 (application/json)
-    
-        {
-            "response":{
-                "delivery_id": 1234
-            }
-        }
-
-# POST /2/confirm-delivery
-Confirme la commande créée via la methode "book-delivery" et référencée par son ID.   
-
-<strong>Attention : Un maximum de 15 minutes est autorisé entre l'appel au book-delivery et cet appel.   
-Au delà une erreur "delivery_has_expired" est renvoyée.</strong>
-
-Exemple d'utilisation :  
-Aprés la validation de paiement de l'internaute.
-
-## Requête 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-              <strong>Paramètres requis</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                api_key
-            </td>
-            <td>
-                Clé api client colisweb
-            </td>
-        </tr>
-        <tr>
-            <td>
-                delivery_id
-            </td>
-            <td>
-                 ID commande interne colisweb récupérée lors de l'appel à la méthode book-delivery
-            </td>
-        </tr>
-        <tr>
-            <td>
-                order_ref
-            </td>
-            <td>
-                Référence commande de votre plateforme (permet au transporteur d'identifier le colis à retirer en boutique)
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <strong>Paramètres optionnels</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                customer_id
-            </td>
-            <td>
-                Identifiant de session e-commerce internaute
-            </td>
-        </tr>
-        <tr>
-            <td>
-                order_id
-            </td>
-            <td>
-                ID commande interne à votre plateforme
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-## Réponse
-
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-                status
-            </td>
-            <td>
-                "200 OK"
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-
-+ Request (application/json)
-
-        { 
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "zip_code": 59000,
-            "delivery_id": 1234,
-            "order_ref": "XFV154CZ"
-        }
-
-+ Response 200 (application/json)
-    
-        { "response":
-            {"status": "200 OK"}
-        }
-
-# Group A to B Fast flow 
-
-Ces méthodes permettent de créer une demande de livraison rapide d'un point A à un point B.    
-Notre système recherche et sélectionne le transporteur le plus adapté.   
-
-### Déroulement :    
-1 - Vous effectuez une demande de livraison d'un point A à B.   
-2 - Cette demande vous renvoie la disponibilité du service en livraison instantanée ainsi que les plages de rendez-vous disponibles.   
-3 - Vous confirmez l'horaire et le statut de la demande, et nous nous occupons de la livraison!   
-
-
-**N.B : La disponibilité du point de retrait et de livraison au moment choisi est à discrétion du demandeur.**
-<br />
-<br />
-
-
-
-
-# POST /2/a2b/deliveries
-
-Créer une demande de livraison d'un point A à B, et récupérer les créneaux de livraison disponibles.
-
-## Requête 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-              <strong>Paramètres requis</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                api_key
-            </td>
-            <td>
-                Clé api client colisweb
-            </td>
-        </tr>
-        <tr>
-            <td>
-                withdrawal_point
-            </td>
-            <td>
-                Informations du point de retrait (hash)
-                <br />
-                <br />
-                zip_code : Code postal
-            </td>
-        </tr>
-        <tr>
-            <td>
-                shipping_point
-            </td>
-            <td>
-                Informations du point de livraison (hash)
-                <br />
-                <br />
-                zip_code : Code postal <br />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                package
-            </td>
-            <td>
-                Dimensions et poids du colis (hash)
-                <br />
-                <br />
-                length : Dimension du plus grand coté du colis (cm) <br />
-                width : Largeur du colis (cm) <br />
-                height : Hauteur du colis (cm) <br />
-                weight : Poids du colis (Kg)
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <strong>Paramètres optionnels</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                reference
-            </td>
-            <td>
-                Référence commande (permet au transporteur d'identifier le colis à retirer en boutique)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                withdrawal_point
-            </td>
-            <td>
-                Informations du point de retrait (hash)
-                <br />
-                <br />
-                name : nom (personne physique / magasin) <br />
-                society : société <br />
-                email : Email de contact <br />
-                primary_phone : Télephone de contact <br /> 
-                secondary_phone : Télephone de contact <br /> 
-                line1 : Addresse <br />
-                line2 : complément d'addresse <br />
-                additional_informations: informations supplémentaires <br />
-                state_or_province: région <br />
-                city : Ville <br />
-                country: Pays <br />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                shipping_point
-            </td>
-            <td>
-                Informations du point de livraison (hash)
-                <br />
-                <br />
-                name : nom (personne physique / magasin) <br />
-                society : société <br />
-                email : Email de contact <br />
-                primary_phone : Télephone de contact <br /> 
-                secondary_phone : Télephone de contact <br /> 
-                line1 : Addresse <br />
-                line2 : complément d'addresse <br />
-                additional_informations: informations supplémentaires <br />
-                state_or_province: région <br />
-                city : Ville <br />
-                country: Pays <br />
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-
-Exemple 
-
-```
-{
-    "api_key": "1g2n3a4y56s78i9o0", 
-    "withdrawal_point": {
-        "zip_code": "75010"
-    },
-    "shipping_point": {
-        "zip_code": "75016"
-    }, 
-    "package": {
-        "length": 50,
-        "width": 45,
-        "height": 30,
-        "weight": 3
-    } 
-}
-```
-
-## Réponse
-
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-                id
-            </td>
-            <td>
-                 Id de la demande
-            </td>
-        </tr>
-        <tr>
-            <td>
-                now
-            </td>
-            <td>
-                Disponibilité de l'offre instantanée : <br />
-                0 => pas de disponibilité <br />
-                > 0 => créneau en minutes 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                planned
-            </td>
-            <td>
-                Tableau des créneaux de disponibilité sur rendez-vous
-            </td>
-        </tr>
-        <tr>
-            <td>
-                price
-            </td>
-            <td>
-                Coût de la livraison en Euro (HT)
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-
-+ Request (application/json)
-
-        {
-            "api_key": "4b9817071e76f958e6d79f5696e7b6d9",
-            "withdrawal_point": {
-                "zip_code" : 59000,
-                "name": "yann marzack",
-                "society": "colisweb",
-                "email": "yy@gmail.com",
-                "primary_phone": "06",
-                "secondary_phone": "07",
-                "line1": "165 avenue",
-                "line2": "de bretagne",
-                "additional_informations": "3eme etage",
-                "state_or_province": "nord",
-                "city": "lille",
-                "country": "france"
-            },
-            "shipping_point": {
-                "zip_code" : 59000,
-                "name": "tom",
-                "society": "tymate",
-                "email": "tom@gmail.com",
-                "primary_phone": "16",
-                "secondary_phone": "17",
-                "line1": "rue de lambersart",
-                "line2": "4eme",
-                "additional_informations": "rdc",
-                "state_or_province": "nord",
-                "city": "lille",
-                "country": "france"
-            },
-            "package": {
-                "length": 10,
-                "width": 10,
-                "height": 10,
-                "weight": 1
-            }
-        }
-
-+ Response 200 (application/json)
-    
-        {
-            "response": {
-            "id": 186,
-            "planned": {
-                "2014-01-28": [
-                    [
-                        "10:00",
-                        "12:00"
-                    ],
-                    [
-                        "11:00",
-                        "13:00"
-                    ],
-                    [
-                        "12:00",
-                        "14:00"
-                    ],
-                    [
-                        "13:00",
-                        "15:00"
-                    ],
-                    [
-                        "14:00",
-                        "16:00"
-                    ],
-                    [
-                        "15:00",
-                        "17:00"
-                    ],
-                    [
-                        "16:00",
-                        "18:00"
-                    ],
-                    [
-                        "17:00",
-                        "19:00"
+            {
+                "api_key": "3025688655a161aeb167b7b33f03c013",
+                "starts_at": "2015-04-22T16:00:00+00:00",
+                "slot_size": "120",
+                "pickup_point": {
+                    "stores_codes": ["100001", "100002"]
+                },
+                "shipping_point": {
+                    "society": "Twelve factors & C",
+                    "first_name": "Helmout",
+                    "last_name": "Ardelpik",
+                    "email": "helmoutardelpik@gmail.com",
+                    "primary_phone": "0694385693",
+                    "secondary_phone": "0354678942",
+                    "line1": "165, Av des champs Elysées",
+                    "line2": "Batiment Leblanc",
+                    "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                    "zip_code": 75001,
+                    "city": "Paris",
+                    "country": "FR",
+                    "send_delivery_statuses": true,
+                    "send_survey": true
+                },
+                "packaging": {
+                    "products_description": "Ipad mini",
+                    "packets": [
+                        {
+                            "weight": 1,
+                            "height": 14,
+                            "length": 15,
+                            "width": 16
+                        },
+                        {
+                            "weight": 2,
+                            "height": 24,
+                            "length": 25,
+                            "width": 26
+                        }
                     ]
-                ],
-                "2014-01-29": [
-                    [
-                        "10:00",
-                        "12:00"
-                    ],
-                    [
-                        "11:00",
-                        "13:00"
-                    ],
-                    [
-                        "12:00",
-                        "14:00"
-                    ],
-                    [
-                        "13:00",
-                        "15:00"
-                    ],
-                    [
-                        "14:00",
-                        "16:00"
-                    ],
-                    [
-                        "15:00",
-                        "17:00"
-                    ],
-                    [
-                        "16:00",
-                        "18:00"
-                    ],
-                    [
-                        "17:00",
-                        "19:00"
-                    ]
-                ],
-                "2014-01-30": [
-                    [
-                        "10:00",
-                        "12:00"
-                    ],
-                    [
-                        "11:00",
-                        "13:00"
-                    ],
-                    [
-                        "12:00",
-                        "14:00"
-                    ],
-                    [
-                        "13:00",
-                        "15:00"
-                    ],
-                    [
-                        "14:00",
-                        "16:00"
-                    ],
-                    [
-                        "15:00",
-                        "17:00"
-                    ],
-                    [
-                        "16:00",
-                        "18:00"
-                    ],
-                    [
-                        "17:00",
-                        "19:00"
-                    ]
-                ]
-            },
-            "now": 120,
-            "price": "12.0"
-        }
+                }
+            }
 
-# PUT /2/a2b/deliveries/:id
 
-Cette méthode vous permet de mettre à jour la demande comme :   
++ Response 201 (application/json)
 
-- Les informations complémentaires de point de retrait et livraison.   
-- Le créneau horaire de livraison   
-- Confirmer la demande de livraison.
+                {
+                    "response":{
+                        "delivery_id": 1234,
+                        "price": 1600
+                    }
+                }
 
-<strong>Important :</strong>
+## confirm-delivery [/3/confirm_delivery]
 
-- **Un maximum de 15 minutes** est autorisé entre la création d'une demande et sa confirmation.   
+Confirme la commande créée via la methode "book-delivery".   
+
+***Attention*** : Un maximum de 15 minutes est autorisé entre l'appel au book-delivery et cet appel.   
 Au delà une erreur "delivery_has_expired" est renvoyée.
 
-- **Les codes postaux et les dimensions/poids du colis ne peuvent pas être modifiés.**   
-En cas de changement, il faut refaire une nouvelle demande de création.
+**Exemple d'utilisation :**     
 
-- Aucune information ne peux plus être modifié une fois que le statut de la commande est confirmée.  
+Aprés la validation du paiement.
 
-**Informations requises pour pouvoir confirmer la livraison :**  
+**Un confirm-delivery renvoie les attributs suivants** :
 
-- Les informations minimales de retrait et livraison soient renseignés pour pouvoir confirmer la demande :   
-    
-    - line1
-    
-    - city
-    
-    - primary_phone
++ ***confirmed*** (boolean) ... la valeur "True" indique que la livraison a bien été prise en compte.
 
-- Le créneau horaire
-    - soit "now" pour une livraison instantanée
-    - soit "year"/"month"/"day"/"hours"/"minutes" pour une livraison sur rdv
-    
-- La référence commande permettant au transporteur d'identifier le colis à retirer
+**Les paramètres de requête sont les suivants** :
 
-## Requête 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-              <strong>Paramètres</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                api_key
-            </td>
-            <td>
-                Clé api client colisweb
-            </td>
-        </tr>
-        <tr>
-            <td>
-                confirm
-            </td>
-            <td>
-                1 = confirmer la demande de livraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                reference
-            </td>
-            <td>
-                Référence commande (permet au transporteur d'identifier le colis à retirer en boutique)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                now
-            </td>
-            <td>
-                <strong>Si ce paramètre est passé la livraison sera interprétée comme type "instantanée", quelque soit le contenu de sa valeur. <br />
-                Ce paramètre prend la priorité même si les paramètre de type rendez-vous sont également passés.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                year
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : année (eg: 2013)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                month
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : mois (eg: 02)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                day
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : jour (eg: 12)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                hours
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : heure de <strong>début</strong> du créneau horaire (eg: 13)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                minutes
-            </td>
-            <td>
-                <strong>Livraison sur rendez-vous</strong> : minutes de <strong>début</strong> du créneau horaire (eg: 00)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                withdrawal_point
-            </td>
-            <td>
-                Informations du point de retrait (hash)
-                <br />
-                <br />
-                name : nom (personne physique / magasin) <br />
-                society : société <br />
-                email : Email de contact <br />
-                primary_phone : Télephone de contact <br /> 
-                secondary_phone : Télephone de contact <br /> 
-                line1 : Addresse <br />
-                line2 : complément d'addresse <br />
-                additional_informations: informations supplémentaires <br />
-                state_or_province: région <br />
-                city : Ville <br />
-                country: Pays <br />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                shipping_point
-            </td>
-            <td>
-                Informations du point de livraison (hash)
-                <br />
-                <br />
-                name : nom (personne physique / magasin) <br />
-                society : société <br />
-                email : Email de contact <br />
-                primary_phone : Télephone de contact <br /> 
-                secondary_phone : Télephone de contact <br /> 
-                line1 : Addresse <br />
-                line2 : complément d'addresse <br />
-                additional_informations: informations supplémentaires <br />
-                state_or_province: région <br />
-                city : Ville <br />
-                country: Pays <br />
-            </td>
-        </tr>
-    </tbody>
-</table>
++ **api_key** (required, string) ... Clé api client colisweb
++ **delivery_id** (required, integer) ... ID commande colisweb récupérée lors de l'appel à la méthode book-delivery
++ **order_ref** (required, string) ... Référence commande de votre plateforme  
+(permet au transporteur d'identifier le colis à retirer en boutique)
++ **order_id** (optional, string) ... ID commande interne à votre plateforme
 
-## Réponse
-
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-                delivery
-            </td>
-            <td>
-                récapitulatif de la demande
-            </td>
-        </tr>
-    </tbody>
-</table>
-
+### Voir les détails d'un book-delivery [PUT]
 
 + Request (application/json)
 
-        { 
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "zip_code": 59000
-        }
-
-+ Response 200 (application/json)
-    
-        { "response":
-            {"available": true}
-        }
-
-# GET /2/a2b/zip_codes
-
-Cette méthode permet de récupérer la liste des codes postaux desservis par le système.
-
-## Requête 
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-              <strong>Paramètres requis</strong>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                api_key
-            </td>
-            <td>
-                Clé api client colisweb
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-## Réponse
-
-<table style="width: 100%; margin: 12px 0 0 0;">
-    <tbody>
-        <tr>
-            <td>
-                zip_codes
-            </td>
-            <td>
-                (Array of values) liste des codes postaux desservis
-            </td>
-        </tr>
-    </tbody>
-</table>
+            {
+                "api_key": "3025688655a161aeb167b7b33f03c013",
+                "delivery_id": 1234,
+                "order_ref": "R10390",
+                "order_id": "987663"
+            }
 
 
-+ Request (application/json)
++ Response 201 (application/json)
 
-        { 
-            "api_key": "3025688655a161aeb167b7b33f03c013"
-        }
-
-+ Response 200 (application/json)
-    
-        { "response":
-            {"zip_codes": [59000, 59800, 75001, 75002]}
-        }
-
-
-# Group Récupération des statuts des commandes
-
-La récupération des statuts des commandes se fait via un Webhook.   
-Le Webhook vous permet d'être informé en temps réél de chaque changement des statuts d'une commande.   
-
-## Webhooks
-1 - Vous nous fournissez une URL (contacter directement Colisweb).    
-2 - A chaque changement de statut d'une commande, notre système envoie une requête `HTTP POST` sur votre URL.   
-
-<strong>Note</strong> : En cas d'échec de la connexion, le système effectue jusque 3 tentatives supplémentaires à 30 secondes d'intervalle.
-
-## Format de donné envoyé
-```
-{   
-    "delivery": {
-        reference: "reference de la commande"
-    },
-    delivery_statuses: {
-        global: "statut global de la commande",
-        retailer: "statut magasin de la commande", 
-        carrier: "statut transporteur de la commande"
-        
-    }
-}
-```
-## Détail des statuts
-Les différents statuts susceptibles de vous être renvoyés sont :
-
-### global (statut global automatique)
-- `pre_order` = pré-commande
-- `confirmed` = commande confirmée
-- `canceled`  = commande annulée
-
-### retailer (statut géré par le magasin)
-- `preparing` = colis à préparer / en préparation
-- `ready_to_pick_up`= colis prêt à être retiré
-- `picked_up`= colis retiré
-- `package_returned`= colis retourné en magasin
-
-### carrier (statut géré par le transporteur chargé de la livraison)
-- `package_withdrawn` = colis retiré
-- `package_returned`= colis retourné
-- `delivered` = colis livré
-
-
-
+                {
+                    "response":{
+                        "confirmed": true
+                    }
+                }
+                
+# Deliveries API Root [/deliveries]
