@@ -173,29 +173,68 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
 Permet d'effectuer une pré-commande de livraison.   
 Cette pré-commande sera ensuite à confirmer dans la méthode "Confirmer une livraison".
 
+### Types de livraisons disponibles
+
+Via ce endpoint vous êtes en mesure de pré-commander **quatres types de livraisons** :
+
++ **B2B** (réapprovisionnement, etc.)
++ **B2C** (livraison d'un client final,  etc.)
++ **C2B** (retour magasin, etc.)
++ **C2C** (livraison entres deux adresses quelconque, etc.)
+
+Nous identifions le type de livraison que vous commandez suivant les informations sur les adresses que vous nous envoyez.
+
+Dans la description des paramètres de requête de ce endpoint, les adresses sont à passer dans les paramètres **pickup_point** *(point de retrait)* et **shipping_point** *(point de livraison)*, qui sont de type **Address**.   
+
+Une **Address** peut être de deux types : 
+ + **ConsummerAddress** : Une adresse quelconque.   
+ Par exemple, l'adresse d'un de vos client final que vous souhaitez livrer.
+ + **StoreAddress** : Une adresse d'un de vos magasins.
+
+#### StoreAddress
+
+Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat donc vous n'avez pas besoin de nous envoyer l'adresse du magasin.   
+Seul le code de ce magasin est nécessaire pour ne puissions l'identifier.
+
+Cependant, plusieurs cas de figure sont possibles :
++ Vous gérer déjà en interne vos magasins avec des codes et nous travaillons avec vous avec ces mêmes code car vous nous les avez transmis. 
+Dans ce cas de figure, vous n'aurez qu'a nous poussez le code du magasin qui intervient dans la livraison.
++ Vous n'avez pas ce type d'identiant de magasin ou nous n'y avons pas accès. Ici encore, il y  a plusieurs cas de figure possibles :
+  + Dans notre système, un magasin est toujours identifié par un code unique, que vous nous fournissez ou que nous générons. Si vous n'en avez pas dans votre système, vous pouvez utiliser les notres. Ces identiants sont récupérables via le endpoint [```/stores/{id}```](#reference/stores/details-dun-magasin)
+
+un **StoreAddress** ne contiendra que les informations suivantes :
+
++ **store_code** *(required, array of strings)* : Codes magasins.   
+  + **Si rempli**, alors le point retrait sera considéré comme un magasin. Tous les autres paramètres seront donc inutiles et seront ignorés car nous possédons toutes les informations nécessaires sur les magasins.
+  + **Si vide**, alors le point de retrait sera considéré comme une adresse quelconque. (L'adresse du client que vous voulez livrer par exemple).
+
+#### ConsummerAddress
+
+Voici la description de ce qu'est une **Address** :
+
 + **stores_code** *(optional, string)* : Code magasin.   
-Si rempli, alors le point retrait sera considéré comme un magasin.   
-Si vide, alors le point de retrait sera considéré comme une adresse quelconque. (L'adresse du client que vous voulez livrer par exemple).
-Attention: Pour que cette 
-+ **society** (optional, string) : Société.
-+ **first_name** (optional, string) : Prénom.
-+ **last_name** (required, string) : Nom.
-+ **email** (required, string) : Email.
-+ **primary_phone** (required, string) : Numéro de téléphone primaire.
-+ **secondary_phone** (optional, string) : Numéro de téléphone secondaire.
-+ **line1** (required, string) : Adresse de livraison.
-+ **line2** (optional, string) : Complément d'adresse.
-+ **additional_informations** (optional, string) : Informations supplémentaire (digicode, etc.)
-+ **zip_code** (required, string) : Code postal.
-+ **city** (required, string) : Ville.
-+ **country** (required, string) : Pays.
-+ **send_delivery_statuses** (optional, Boolean) : Envoyer les statuts de livraison par sms/email au consommateur
-    + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-+ **send_survey** (optional, Boolean) : Envoyer  l'enquête de satisfaction au consommateur
-    + True par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+  + **Si rempli**, alors le point retrait sera considéré comme un magasin. Tous les autres paramètres seront donc inutiles et seront ignorés car nous possédons toutes les informations nécessaires sur les magasins.
+  + **Si vide**, alors le point de retrait sera considéré comme une adresse quelconque. (L'adresse du client que vous voulez livrer par exemple).
++ **society** *(optional, string)* : Société.
++ **first_name** *(required, string)* : Prénom.
++ **last_name** *(required, string)* : Nom.
++ **email** *(required, string)* : Email.
++ **primary_phone** *(required, string)* : Numéro de téléphone primaire.
++ **secondary_phone** *(optional, string)* : Numéro de téléphone secondaire.
++ **line1** *(required, string)* : Adresse de livraison.
++ **line2** *(optional, string)* : Complément d'adresse.
++ **additional_informations** *(optional, string)* : Informations supplémentaire (digicode, etc.)
++ **zip_code** *(required, string)* : Code postal.
++ **city** *(required, string)* : Ville.
++ **country** *(required, string)* : Pays.
++ **send_delivery_statuses** *(optional, boolean)* : Envoyer les statuts de livraison par sms/email au consommateur.
+    + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
++ **send_survey** *(optional, boolean)* : Envoyer  l'enquête de satisfaction au consommateur.
+    + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 
 
-**Les paramètres de requête sont les suivants** :
+### Paramètres de requête
+
 + **api_key** *(required, string)* : Clé API Colisweb
 + **starts_at** *(required, datetime UTC)* : Date et heure de début de la plage de livraison.   
 Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
@@ -213,7 +252,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
     + **height** *(required, float)* : Hauteur du colis (en cm).
     + **weight** *(required, float)* : Poids du colis (en grammes).
 
-**La réponse contiendra les informations suivantes** :
+### Contenu de la réponse
 
 + **delivery_id** *(string)* - Identifiant de la commande créée.   
 **Cet identifiant vous sera nécessaire pour effectuer la confirmation de la commande.**
@@ -327,3 +366,14 @@ Aprés la validation du paiement.
                 }
 
 # Deliveries API Root [/deliveries]
+
+
+# Group Stores 
+
+## Informations détaillées d'un magasin  [/stores/{id}]
+
+TODO !
+
+### GET
+
+TODO !
