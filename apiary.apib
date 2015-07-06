@@ -20,11 +20,19 @@ http://api.colisweb.com
 
 ## URL d'appels
 L'url d'appel à l'API est:   
-**https://[sandbox.]api.colisweb/4/end_point**
+https://[sandbox.]api.colisweb/4/**end_point**
 
 **end_point** = Méthodes décrites dans ce document
 
 ## Codes d'erreurs
+
+| Error name               | HTTP Status      | Description                       |
+| ------------------------ | ---------------- | --------------------------------- |
+| wrong_api_key            | 401 Unauthorized | Clé API manquante / inconnue      |
+| missing_parameters       | 400 Bad Request  | Il manque des paramètres          |
+| fail_to_confirm_delivery | 400 Bad Request  | Le commande de livraison a échoué |
+| no_delivery_options      | 404 not found    | Aucune disponibilité de livraison |
+| missing_delivery         | 404 not found    | Numéro de commande inconnue       |
 
 <table>
   <tr><th>Error name</th><th>HTTP Status</th><th>Description</th></tr>
@@ -191,16 +199,26 @@ Une **Address** peut être de deux types :
  Par exemple, l'adresse d'un de vos client final que vous souhaitez livrer.
  + **StoreAddress** : Une adresse d'un de vos magasins.
 
-#### StoreAddress
+#### Description d'une **StoreAddress**
 
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat donc vous n'avez pas besoin de nous envoyer l'adresse du magasin.   
-Seul le code de ce magasin est nécessaire pour ne puissions l'identifier.
+Seul l'identifiant unique de ce magasin est nécessaire pour ne puissions l'identifier.
 
 Cependant, plusieurs cas de figure sont possibles :
-+ Vous gérer déjà en interne vos magasins avec des codes et nous travaillons avec vous avec ces mêmes code car vous nous les avez transmis. 
-Dans ce cas de figure, vous n'aurez qu'a nous poussez le code du magasin qui intervient dans la livraison.
-+ Vous n'avez pas ce type d'identiant de magasin ou nous n'y avons pas accès. Ici encore, il y  a plusieurs cas de figure possibles :
-  + Dans notre système, un magasin est toujours identifié par un code unique, que vous nous fournissez ou que nous générons. Si vous n'en avez pas dans votre système, vous pouvez utiliser les notres. Ces identiants sont récupérables via le endpoint [```/stores/{id}```](#reference/stores/informations-detaillees-dun-magasin)
+1. **Vous gérer déjà en interne vos magasins avec des identifiants uniques et nous travaillons avec vous avec ces mêmes identifiants uniques car vous nous les avez transmis.**   
+
+Dans ce cas de figure, vous n'aurez qu'à nous poussez l'identifiant unique du magasin qui intervient dans la livraison.
+
+2. **Vous n'avez pas ce type d'identiants pour vos magasins ou nous n'y avons pas accés** et vous voulez nous laisser choisir le magasin le plus approprié.    
+(Uniquement possible si le magasin dont nous parlons est le point de retrait. Il nous est impossible de deviner quel magasin vous voulez livrer dans le cas d'un **C2B** par exemple.)
+
+3. **Vous n'avez pas ce type d'identiants pour vos magasins ou nous n'y avons pas accés** mais vous souhaitez nous indiquez de quel magasin la livraison doit partir ou arriver.
+  + Dans notre système, un magasin est toujours identifié par un identifiant unique, que vous nous fournissez ou que nous générons.   
+  Si vous n'en avez pas dans votre système, vous pouvez utiliser les notres.    
+  Ces identiants sont récupérables via le endpoint [```/stores/{id}```](#reference/stores/informations-detaillees-dun-magasin).
+  Une fois récupéré, vous n'avez plus qu'à utiliser ces identifiants.
+  + Vous ne souhaitez 
+  
 
 un **StoreAddress** ne contiendra que les informations suivantes :
 
