@@ -205,9 +205,9 @@ Une **ConsummerAddress** est une adresse classique. Elle devra contenir les info
 + **api_key** *(required, string)* : Clé API Colisweb
 + **starts_at** *(required, datetime UTC)* : Date et heure de début de la plage de livraison.   
 Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
-Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```][deliveries/options] garantissent une réponse positive de l'API.   
+Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.   
 + **slot_size** *(required, integer)* : Taille de la plage de livraison demandée (en minutes).   
-Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```][deliveries/options] garantissent une réponse positive de l'API.
+Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.
 + **pickup_point** *(required, **Address**)* : Informations sur le point de retrait.
 + **shipping_point** *(required, **Address**)* : Informations sur le point de livraison.
 + **package** *(required, hash)* : Informations sur le colis.
@@ -333,5 +333,3 @@ Aprés la validation du paiement.
                 }
 
 # Deliveries API Root [/deliveries]
-
-[deliveries/options]: #reference/deliveries/obtenir-les-options-de-livraison-disponbiles
