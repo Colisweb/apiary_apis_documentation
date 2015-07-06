@@ -170,6 +170,8 @@ Une **Address** peut être de deux types :
  Par exemple, l'adresse d'un de vos client final que vous souhaitez livrer.
  + **StoreAddress** : Une adresse d'un de vos magasins
 
+Un exemple de chaque type de livraison est donnée à la fin de la description de ce endpoint.
+
 #### Description d'une **StoreAddress**
 
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat donc vous n'avez pas besoin de nous envoyer l'adresse du magasin.   
@@ -210,14 +212,13 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
 Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.
 + **pickup_point** *(required, **Address**)* : Informations sur le point de retrait.
 + **shipping_point** *(required, **Address**)* : Informations sur le point de livraison.
-+ **package** *(required, hash)* : Informations sur le colis.
-  + **products_description** *(optional, string)* : Typologie / dénomination des produits.   
++ **packets** *(required, array of hashes)* : Informations sur les colis
+  + **product_description** *(optional, string)* : Typologie/dénomination du/des produits contenue dans ce "packet".   
   Exemple : "micro-onde".
-  + **packets** *(required, array of hashes)* : Informations sur les colis
-    + **length** *(required, float)* : Longueur du colis (en cm).
-    + **width** *(required, float)* : Largeur du colis (en cm).
-    + **height** *(required, float)* : Hauteur du colis (en cm).
-    + **weight** *(required, float)* : Poids du colis (en grammes).
+  + **length** *(required, float)* : Longueur du colis (en cm).
+  + **width** *(required, float)* : Largeur du colis (en cm).
+  + **height** *(required, float)* : Hauteur du colis (en cm).
+  + **weight** *(required, float)* : Poids du colis (en grammes).
 
 ### Contenu de la réponse
 
@@ -229,7 +230,53 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   + **slot_size** *(integer)* : Taille du créneau horaire (en minutes).
   + **price** *(float)* : Coût HT de la livraison (en euro).
   
-### POST
+### Exemple de commande de livraison B2B [POST]
+
++ Request (application/json)
+
+{
+  "api_key": "3025688655a161aeb167b7b33f03c013",
+  "starts_at": "2015-04-22T16:00:00+00:00",
+  "slot_size": 120,
+  "pickup_point": {
+    "store_code": "100001",
+  },
+  "shipping_point": {
+    "store_code": "100002",
+  },
+  "packets": [
+    {
+      "product_description": "Ipad mini",
+      "weight": 1.55,
+      "height": 14.55,
+      "length": 15.55,
+      "width": 16.55
+    },
+    {
+      "product_description": "Iphone",
+      "weight": 2.55,
+      "height": 24.55,
+      "length": 25.55,
+      "width": 26.55
+    }
+  ]
+}
+
++ Response 201 (application/json)
+
+{
+  "response":{
+    "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+    "slot" : {
+      "starts_at": "2015-04-22T16:00:00+00:00",
+      "ends_at": "2015-04-22T18:00:00+00:00",
+      "slot_size": 120,
+      "price": 5.55
+    }
+  }
+}
+
+### Exemple de commande de livraison B2C [POST]
 
 + Request (application/json)
 
@@ -256,23 +303,153 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
     "send_delivery_statuses": true,
     "send_survey": true
   },
-  "packaging": {
-    "products_description": "Ipad mini",
-    "packets": [
-      {
-        "weight": 1.55,
-        "height": 14.55,
-        "length": 15.55,
-        "width": 16.55
-      },
-      {
-        "weight": 2.55,
-        "height": 24.55,
-        "length": 25.55,
-        "width": 26.55
-      }
-    ]
+  "packets": [
+    {
+      "product_description": "Ipad mini",
+      "weight": 1.55,
+      "height": 14.55,
+      "length": 15.55,
+      "width": 16.55
+    },
+    {
+      "product_description": "Iphone",
+      "weight": 2.55,
+      "height": 24.55,
+      "length": 25.55,
+      "width": 26.55
+    }
+  ]
+}
+
++ Response 201 (application/json)
+
+{
+  "response":{
+    "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+    "slot" : {
+      "starts_at": "2015-04-22T16:00:00+00:00",
+      "ends_at": "2015-04-22T18:00:00+00:00",
+      "slot_size": 120,
+      "price": 5.55
+    }
   }
+}
+
+### Exemple de commande de livraison C2B [POST]
+
++ Request (application/json)
+
+{
+  "api_key": "3025688655a161aeb167b7b33f03c013",
+  "starts_at": "2015-04-22T16:00:00+00:00",
+  "slot_size": 120,
+  "pickup_point": {
+    "society": "Twelve factors & C",
+    "first_name": "Helmout",
+    "last_name": "Ardelpik",
+    "email": "helmoutardelpik@gmail.com",
+    "primary_phone": "0694385693",
+    "secondary_phone": "0354678942",
+    "line1": "165, avenue des champs Elysées",
+    "line2": "Batiment Leblanc",
+    "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+    "zip_code": "75001",
+    "city": "Paris",
+    "country": "France",
+    "send_delivery_statuses": true,
+    "send_survey": true
+  },
+  "shipping_point": {
+    "store_code": "100001",
+  },
+  "packets": [
+    {
+      "product_description": "Ipad mini",
+      "weight": 1.55,
+      "height": 14.55,
+      "length": 15.55,
+      "width": 16.55
+    },
+    {
+      "product_description": "Iphone",
+      "weight": 2.55,
+      "height": 24.55,
+      "length": 25.55,
+      "width": 26.55
+    }
+  ]
+}
+
++ Response 201 (application/json)
+
+{
+  "response":{
+    "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+    "slot" : {
+      "starts_at": "2015-04-22T16:00:00+00:00",
+      "ends_at": "2015-04-22T18:00:00+00:00",
+      "slot_size": 120,
+      "price": 5.55
+    }
+  }
+}
+
+### Exemple de commande de livraison C2C [POST]
+
++ Request (application/json)
+
+{
+  "api_key": "3025688655a161aeb167b7b33f03c013",
+  "starts_at": "2015-04-22T16:00:00+00:00",
+  "slot_size": 120,
+  "pickup_point": {
+    "society": "",
+    "first_name": "Alan",
+    "last_name": "Turing",
+    "email": "alan.turing@gmail.com",
+    "primary_phone": "0624243624",
+    "secondary_phone": "",
+    "line1": "125 rue de Vaugirard",
+    "line2": "",
+    "additional_informations": "",
+    "zip_code": "75015",
+    "city": "Paris",
+    "country": "France",
+    "send_delivery_statuses": true,
+    "send_survey": true
+  },
+  "shipping_point": {
+    "society": "Twelve factors & C",
+    "first_name": "Helmout",
+    "last_name": "Ardelpik",
+    "email": "helmoutardelpik@gmail.com",
+    "primary_phone": "0694385693",
+    "secondary_phone": "0354678942",
+    "line1": "165, avenue des champs Elysées",
+    "line2": "Batiment Leblanc",
+    "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+    "zip_code": "75001",
+    "city": "Paris",
+    "country": "France",
+    "send_delivery_statuses": true,
+    "send_survey": true
+  },
+  "packets": [
+    {
+      "product_description": "Ipad mini",
+      "weight": 1.55,
+      "height": 14.55,
+      "length": 15.55,
+      "width": 16.55
+    },
+    {
+      "product_description": "Iphone",
+      "weight": 2.55,
+      "height": 24.55,
+      "length": 25.55,
+      "width": 26.55
+    }
+  ]
 }
 
 + Response 201 (application/json)
