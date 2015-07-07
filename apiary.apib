@@ -26,13 +26,13 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 ## Codes d'erreurs
 
-| Error name           | HTTP Status    | Description                 |
-| ------------------------ | ---------------- | --------------------------------- |
-| wrong_api_key        | 401 Unauthorized | Clé API manquante / inconnue    |
-| missing_parameters     | 400 Bad Request  | Il manque des paramètres        |
-| fail_to_confirm_delivery | 400 Bad Request  | Le commande de livraison a échoué |
-| no_delivery_options    | 404 not found    | Aucune disponibilité de livraison |
-| missing_delivery       | 404 not found    | Numéro de commande inconnue     |
+| Error name                | HTTP Status       | Description                       |
+| ------------------------  | ----------------  | --------------------------------- |
+| wrong_api_key             | 401 Unauthorized  | Clé API manquante / inconnue      |
+| missing_parameters        | 400 Bad Request   | Il manque des paramètres          |
+| fail_to_confirm_delivery  | 400 Bad Request   | Le commande de livraison a échoué |
+| no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
+| missing_delivery          | 404 not found     | Numéro de commande inconnue       |
 
 # Group Gestion et commande de livraisons
 
@@ -100,51 +100,49 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
 + Response 200 (application/json)
 
         {
-            "response" : {
-                "now" : {
-                    "available": true,
+            "now" : {
+                "available": true,
+                "slot_size": 120,
+                "price" : 5.55
+            },
+            "planned" : [
+                {
+                    "starts_at": "2015-04-22T10:00:00+00:00",
+                    "ends_at": "2015-04-22T12:00:00+00:00",
                     "slot_size": 120,
                     "price" : 5.55
                 },
-                "planned" : [
-                    {
-                        "starts_at": "2015-04-22T10:00:00+00:00",
-                        "ends_at": "2015-04-22T12:00:00+00:00",
-                        "slot_size": 120,
-                        "price" : 5.55
-                    },
-                    {
-                        "starts_at": "2015-04-22T12:00:00+00:00",
-                        "ends_at": "2015-04-22T14:00:00+00:00",
-                        "slot_size": 120,
-                        "price" : 5.55
-                    },
-                    {
-                        "starts_at": "2015-04-22T14:00:00+00:00",
-                        "ends_at": "2015-04-22T15:00:00+00:00",
-                        "slot_size": 60,
-                        "price" : 5.55
-                    },
-                    {
-                        "starts_at": "2015-04-23T10:00:00+00:00",
-                        "ends_at": "2015-04-23T12:00:00+00:00",
-                        "slot_size": 120,
-                        "price" : 5.55
-                    },
-                    {
-                        "starts_at": "2015-04-23T12:00:00+00:00",
-                        "ends_at": "2015-04-23T14:00:00+00:00",
-                        "slot_size": 120,
-                        "price" : 5.55
-                    },
-                    {
-                        "starts_at": "2015-04-23T14:00:00+00:00",
-                        "ends_at": "2015-04-23T15:00:00+00:00",
-                        "slot_size": 60,
-                        "price" : 5.55
-                    }
-                ]
-            }
+                {
+                    "starts_at": "2015-04-22T12:00:00+00:00",
+                    "ends_at": "2015-04-22T14:00:00+00:00",
+                    "slot_size": 120,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-22T14:00:00+00:00",
+                    "ends_at": "2015-04-22T15:00:00+00:00",
+                    "slot_size": 60,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-23T10:00:00+00:00",
+                    "ends_at": "2015-04-23T12:00:00+00:00",
+                    "slot_size": 120,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-23T12:00:00+00:00",
+                    "ends_at": "2015-04-23T14:00:00+00:00",
+                    "slot_size": 120,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-23T14:00:00+00:00",
+                    "ends_at": "2015-04-23T15:00:00+00:00",
+                    "slot_size": 60,
+                    "price" : 5.55
+                }
+            ]
         }
 
 ## Pré-commander une livraison [/deliveries/book]
@@ -234,237 +232,229 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
 
 + Request (application/json)
 
-{
-  "api_key": "3025688655a161aeb167b7b33f03c013",
-  "starts_at": "2015-04-22T16:00:00+00:00",
-  "slot_size": 120,
-  "pickup_point": {
-    "store_code": "100001"
-  },
-  "shipping_point": {
-    "store_code": "100002"
-  },
-  "packets": [
-    {
-    "product_description": "Ipad mini",
-    "weight": 1.55,
-    "height": 14.55,
-    "length": 15.55,
-    "width": 16.55
-    },
-    {
-    "product_description": "Iphone",
-    "weight": 2.55,
-    "height": 24.55,
-    "length": 25.55,
-    "width": 26.55
-    }
-  ]
-}
+        {
+            "api_key": "3025688655a161aeb167b7b33f03c013",
+            "starts_at": "2015-04-22T16:00:00+00:00",
+            "slot_size": 120,
+            "pickup_point": {
+                "store_code": "100001"
+            },
+            "shipping_point": {
+                "store_code": "100002"
+            },
+            "packets": [
+                    {
+                        "product_description": "Ipad mini",
+                        "weight": 1.55,
+                        "height": 14.55,
+                        "length": 15.55,
+                        "width": 16.55
+                    },
+                    {
+                        "product_description": "Iphone",
+                        "weight": 2.55,
+                        "height": 24.55,
+                        "length": 25.55,
+                        "width": 26.55
+                    }
+            ]
+        }
 
 + Response 201 (application/json)
 
-{
-  "response":{
-    "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-    "slot" : {
-    "starts_at": "2015-04-22T16:00:00+00:00",
-    "ends_at": "2015-04-22T18:00:00+00:00",
-    "slot_size": 120,
-    "price": 5.55
-    }
-  }
-}
+        {
+            "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+            "slot" : {
+                "starts_at": "2015-04-22T16:00:00+00:00",
+                "ends_at": "2015-04-22T18:00:00+00:00",
+                "slot_size": 120,
+                "price": 5.55
+            }
+        }
 
 ### Exemple de pré-commande de livraison B2C [POST]
 
 + Request (application/json)
 
-{
-  "api_key": "3025688655a161aeb167b7b33f03c013",
-  "starts_at": "2015-04-22T16:00:00+00:00",
-  "slot_size": 120,
-  "pickup_point": {
-    "store_code": "100001"
-  },
-  "shipping_point": {
-    "society": "Twelve factors & C",
-    "first_name": "Helmout",
-    "last_name": "Ardelpik",
-    "email": "helmoutardelpik@gmail.com",
-    "primary_phone": "0694385693",
-    "secondary_phone": "0354678942",
-    "line1": "165, avenue des champs Elysées",
-    "line2": "Batiment Leblanc",
-    "additional_informations": "Digicode B345, 3 éme etage, accès parking",
-    "zip_code": "75001",
-    "city": "Paris",
-    "country": "France",
-    "send_delivery_statuses": true,
-    "send_survey": true
-  },
-  "packets": [
-    {
-    "product_description": "Ipad mini",
-    "weight": 1.55,
-    "height": 14.55,
-    "length": 15.55,
-    "width": 16.55
-    },
-    {
-    "product_description": "Iphone",
-    "weight": 2.55,
-    "height": 24.55,
-    "length": 25.55,
-    "width": 26.55
-    }
-  ]
-}
+        {
+            "api_key": "3025688655a161aeb167b7b33f03c013",
+            "starts_at": "2015-04-22T16:00:00+00:00",
+            "slot_size": 120,
+            "pickup_point": {
+                "store_code": "100001"
+            },
+            "shipping_point": {
+                "society": "Twelve factors & C",
+                "first_name": "Helmout",
+                "last_name": "Ardelpik",
+                "email": "helmoutardelpik@gmail.com",
+                "primary_phone": "0694385693",
+                "secondary_phone": "0354678942",
+                "line1": "165, avenue des champs Elysées",
+                "line2": "Batiment Leblanc",
+                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                "zip_code": "75001",
+                "city": "Paris",
+                "country": "France",
+                "send_delivery_statuses": true,
+                "send_survey": true
+            },
+            "packets": [
+                {
+                    "product_description": "Ipad mini",
+                    "weight": 1.55,
+                    "height": 14.55,
+                    "length": 15.55,
+                    "width": 16.55
+                },
+                {
+                    "product_description": "Iphone",
+                    "weight": 2.55,
+                    "height": 24.55,
+                    "length": 25.55,
+                    "width": 26.55
+                }
+            ]
+        }
 
 + Response 201 (application/json)
 
-{
-  "response":{
-    "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-    "slot" : {
-    "starts_at": "2015-04-22T16:00:00+00:00",
-    "ends_at": "2015-04-22T18:00:00+00:00",
-    "slot_size": 120,
-    "price": 5.55
-    }
-  }
-}
+        {
+            "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+            "slot" : {
+                "starts_at": "2015-04-22T16:00:00+00:00",
+                "ends_at": "2015-04-22T18:00:00+00:00",
+                "slot_size": 120,
+                "price": 5.55
+            }
+        }
 
 ### Exemple de pré-commande de livraison C2B [POST]
 
 + Request (application/json)
 
-{
-  "api_key": "3025688655a161aeb167b7b33f03c013",
-  "starts_at": "2015-04-22T16:00:00+00:00",
-  "slot_size": 120,
-  "pickup_point": {
-    "society": "Twelve factors & C",
-    "first_name": "Helmout",
-    "last_name": "Ardelpik",
-    "email": "helmoutardelpik@gmail.com",
-    "primary_phone": "0694385693",
-    "secondary_phone": "0354678942",
-    "line1": "165, avenue des champs Elysées",
-    "line2": "Batiment Leblanc",
-    "additional_informations": "Digicode B345, 3 éme etage, accès parking",
-    "zip_code": "75001",
-    "city": "Paris",
-    "country": "France",
-    "send_delivery_statuses": true,
-    "send_survey": true
-  },
-  "shipping_point": {
-    "store_code": "100001"
-  },
-  "packets": [
-    {
-    "product_description": "Ipad mini",
-    "weight": 1.55,
-    "height": 14.55,
-    "length": 15.55,
-    "width": 16.55
-    },
-    {
-    "product_description": "Iphone",
-    "weight": 2.55,
-    "height": 24.55,
-    "length": 25.55,
-    "width": 26.55
-    }
-  ]
-}
+        {
+            "api_key": "3025688655a161aeb167b7b33f03c013",
+            "starts_at": "2015-04-22T16:00:00+00:00",
+            "slot_size": 120,
+            "pickup_point": {
+                "society": "Twelve factors & C",
+                "first_name": "Helmout",
+                "last_name": "Ardelpik",
+                "email": "helmoutardelpik@gmail.com",
+                "primary_phone": "0694385693",
+                "secondary_phone": "0354678942",
+                "line1": "165, avenue des champs Elysées",
+                "line2": "Batiment Leblanc",
+                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                "zip_code": "75001",
+                "city": "Paris",
+                "country": "France",
+                "send_delivery_statuses": true,
+                "send_survey": true
+            },
+            "shipping_point": {
+                "store_code": "100001"
+            },
+            "packets": [
+                {
+                    "product_description": "Ipad mini",
+                    "weight": 1.55,
+                    "height": 14.55,
+                    "length": 15.55,
+                    "width": 16.55
+                },
+                {
+                    "product_description": "Iphone",
+                    "weight": 2.55,
+                    "height": 24.55,
+                    "length": 25.55,
+                    "width": 26.55
+                }
+            ]
+        }
 
 + Response 201 (application/json)
 
-{
-  "response":{
-    "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-    "slot" : {
-    "starts_at": "2015-04-22T16:00:00+00:00",
-    "ends_at": "2015-04-22T18:00:00+00:00",
-    "slot_size": 120,
-    "price": 5.55
-    }
-  }
-}
+        {
+            "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+            "slot" : {
+                "starts_at": "2015-04-22T16:00:00+00:00",
+                "ends_at": "2015-04-22T18:00:00+00:00",
+                "slot_size": 120,
+                "price": 5.55
+            }
+        }
 
 ### Exemple de pré-commande de livraison C2C [POST]
 
 + Request (application/json)
 
-{
-  "api_key": "3025688655a161aeb167b7b33f03c013",
-  "starts_at": "2015-04-22T16:00:00+00:00",
-  "slot_size": 120,
-  "pickup_point": {
-    "society": "",
-    "first_name": "Alan",
-    "last_name": "Turing",
-    "email": "alan.turing@gmail.com",
-    "primary_phone": "0624243624",
-    "secondary_phone": "",
-    "line1": "125 rue de Vaugirard",
-    "line2": "",
-    "additional_informations": "",
-    "zip_code": "75015",
-    "city": "Paris",
-    "country": "France",
-    "send_delivery_statuses": true,
-    "send_survey": true
-  },
-  "shipping_point": {
-    "society": "Twelve factors & C",
-    "first_name": "Helmout",
-    "last_name": "Ardelpik",
-    "email": "helmoutardelpik@gmail.com",
-    "primary_phone": "0694385693",
-    "secondary_phone": "0354678942",
-    "line1": "165, avenue des champs Elysées",
-    "line2": "Batiment Leblanc",
-    "additional_informations": "Digicode B345, 3 éme etage, accès parking",
-    "zip_code": "75001",
-    "city": "Paris",
-    "country": "France",
-    "send_delivery_statuses": true,
-    "send_survey": true
-  },
-  "packets": [
-    {
-    "product_description": "Ipad mini",
-    "weight": 1.55,
-    "height": 14.55,
-    "length": 15.55,
-    "width": 16.55
-    },
-    {
-    "product_description": "Iphone",
-    "weight": 2.55,
-    "height": 24.55,
-    "length": 25.55,
-    "width": 26.55
-    }
-  ]
-}
+        {
+            "api_key": "3025688655a161aeb167b7b33f03c013",
+            "starts_at": "2015-04-22T16:00:00+00:00",
+            "slot_size": 120,
+            "pickup_point": {
+                "society": "",
+                "first_name": "Alan",
+                "last_name": "Turing",
+                "email": "alan.turing@gmail.com",
+                "primary_phone": "0624243624",
+                "secondary_phone": "",
+                "line1": "125 rue de Vaugirard",
+                "line2": "",
+                "additional_informations": "",
+                "zip_code": "75015",
+                "city": "Paris",
+                "country": "France",
+                "send_delivery_statuses": true,
+                "send_survey": true
+            },
+            "shipping_point": {
+                "society": "Twelve factors & C",
+                "first_name": "Helmout",
+                "last_name": "Ardelpik",
+                "email": "helmoutardelpik@gmail.com",
+                "primary_phone": "0694385693",
+                "secondary_phone": "0354678942",
+                "line1": "165, avenue des champs Elysées",
+                "line2": "Batiment Leblanc",
+                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                "zip_code": "75001",
+                "city": "Paris",
+                "country": "France",
+                "send_delivery_statuses": true,
+                "send_survey": true
+            },
+            "packets": [
+                {
+                    "product_description": "Ipad mini",
+                    "weight": 1.55,
+                    "height": 14.55,
+                    "length": 15.55,
+                    "width": 16.55
+                },
+                {
+                    "product_description": "Iphone",
+                    "weight": 2.55,
+                    "height": 24.55,
+                    "length": 25.55,
+                    "width": 26.55
+                }
+            ]
+        }
 
 + Response 201 (application/json)
 
-{
-  "response":{
-    "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-    "slot" : {
-    "starts_at": "2015-04-22T16:00:00+00:00",
-    "ends_at": "2015-04-22T18:00:00+00:00",
-    "slot_size": 120,
-    "price": 5.55
+    {
+        "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+        "slot" : {
+            "starts_at": "2015-04-22T16:00:00+00:00",
+            "ends_at": "2015-04-22T18:00:00+00:00",
+            "slot_size": 120,
+            "price": 5.55
+        }
     }
-  }
-}
 
 ## Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
 
@@ -490,11 +480,11 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
 
 + Request (application/json)
 
-{
-  "api_key": "3025688655a161aeb167b7b33f03c013",
-  "order_ref": "R10390",
-  "order_id": "987663"
-}
+        {
+            "api_key": "3025688655a161aeb167b7b33f03c013",
+            "order_ref": "R10390",
+            "order_id": "987663"
+        }
 
 + Response 200 (application/json)
 
@@ -516,9 +506,9 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 
 + Request (application/json)
 
-{
-  "api_key": "3025688655a161aeb167b7b33f03c013"
-}
+        {
+            "api_key": "3025688655a161aeb167b7b33f03c013"
+        }
 
 + Response 200 si OK
 
