@@ -75,12 +75,16 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
         {
             "api_key": "3025688655a161aeb167b7b33f03c013",
             "slot_size": 120,
-            "pickup_point": {
-                "zip_code": "75012"
-            },
-            "shipping_point": {
-                "zip_code": "75001"
-            },
+            "points": [
+                {
+                   "point_type": "PICKUP",
+                   "zip_code": "75012"
+                },
+                {
+                    "point_type": "SHIPPING",
+                    "zip_code": "75001"
+                }
+            ]
             "packets": [
                 {
                     "weight": 1.55,
@@ -236,39 +240,45 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             "api_key": "3025688655a161aeb167b7b33f03c013",
             "starts_at": "2015-04-22T16:00:00+00:00",
             "slot_size": 120,
-            "pickup_point": {
-                "store_code": "100001"
-            },
-            "shipping_point": {
-                "store_code": "100002"
-            },
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "store_code": "100001"
+                },
+                {
+                    "point_type": "SHIPPING",
+                    "store_code": "100002"
+                }
+            ],
             "packets": [
-                    {
-                        "product_description": "Ipad mini",
-                        "weight": 1.55,
-                        "height": 14.55,
-                        "length": 15.55,
-                        "width": 16.55
-                    },
-                    {
-                        "product_description": "Iphone",
-                        "weight": 2.55,
-                        "height": 24.55,
-                        "length": 25.55,
-                        "width": 26.55
-                    }
+                {
+                    "product_description": "Ipad mini",
+                    "weight": 1.55,
+                    "height": 14.55,
+                    "length": 15.55,
+                    "width": 16.55
+                },
+                {
+                    "product_description": "Iphone",
+                    "weight": 2.55,
+                    "height": 24.55,
+                    "length": 25.55,
+                    "width": 26.55
+                }
             ]
         }
 
 + Response 201 (application/json)
 
         {
-            "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-            "slot" : {
-                "starts_at": "2015-04-22T16:00:00+00:00",
-                "ends_at": "2015-04-22T18:00:00+00:00",
-                "slot_size": 120,
-                "price": 5.55
+            "delivery": {
+                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "slot": {
+                    "starts_at": "2015-04-22T16:00:00+00:00",
+                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 5.55
+                }
             }
         }
 
@@ -280,25 +290,31 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             "api_key": "3025688655a161aeb167b7b33f03c013",
             "starts_at": "2015-04-22T16:00:00+00:00",
             "slot_size": 120,
-            "pickup_point": {
-                "store_code": "100001"
-            },
-            "shipping_point": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
-                "zip_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            },
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "store_code": "100001"
+                },
+                {
+                    "point_type": "SHIPPING",
+                    "address": {
+                        "society": "Twelve factors & C",
+                        "first_name": "Helmout",
+                        "last_name": "Ardelpik",
+                        "email": "helmoutardelpik@gmail.com",
+                        "primary_phone": "0694385693",
+                        "secondary_phone": "0354678942",
+                        "line1": "165, avenue des champs Elysées",
+                        "line2": "Batiment Leblanc",
+                        "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                        "zip_code": "75001",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                }
+            ],
             "packets": [
                 {
                     "product_description": "Ipad mini",
@@ -320,12 +336,14 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
 + Response 201 (application/json)
 
         {
-            "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-            "slot" : {
-                "starts_at": "2015-04-22T16:00:00+00:00",
-                "ends_at": "2015-04-22T18:00:00+00:00",
-                "slot_size": 120,
-                "price": 5.55
+            "delivery": {
+                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "slot": {
+                    "starts_at": "2015-04-22T16:00:00+00:00",
+                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 5.55
+                }
             }
         }
 
@@ -337,25 +355,31 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             "api_key": "3025688655a161aeb167b7b33f03c013",
             "starts_at": "2015-04-22T16:00:00+00:00",
             "slot_size": 120,
-            "pickup_point": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
-                "zip_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            },
-            "shipping_point": {
-                "store_code": "100001"
-            },
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "address": {
+                        "society": "Twelve factors & C",
+                        "first_name": "Helmout",
+                        "last_name": "Ardelpik",
+                        "email": "helmoutardelpik@gmail.com",
+                        "primary_phone": "0694385693",
+                        "secondary_phone": "0354678942",
+                        "line1": "165, avenue des champs Elysées",
+                        "line2": "Batiment Leblanc",
+                        "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                        "zip_code": "75001",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                },
+                {
+                    "point_type": "SHIPPING",
+                    "store_code": "100001"
+                }
+            ],
             "packets": [
                 {
                     "product_description": "Ipad mini",
@@ -377,12 +401,14 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
 + Response 201 (application/json)
 
         {
-            "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-            "slot" : {
-                "starts_at": "2015-04-22T16:00:00+00:00",
-                "ends_at": "2015-04-22T18:00:00+00:00",
-                "slot_size": 120,
-                "price": 5.55
+            "delivery": {
+                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "slot": {
+                    "starts_at": "2015-04-22T16:00:00+00:00",
+                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 5.55
+                }
             }
         }
 
@@ -394,38 +420,46 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             "api_key": "3025688655a161aeb167b7b33f03c013",
             "starts_at": "2015-04-22T16:00:00+00:00",
             "slot_size": 120,
-            "pickup_point": {
-                "society": "",
-                "first_name": "Alan",
-                "last_name": "Turing",
-                "email": "alan.turing@gmail.com",
-                "primary_phone": "0624243624",
-                "secondary_phone": "",
-                "line1": "125 rue de Vaugirard",
-                "line2": "",
-                "additional_informations": "",
-                "zip_code": "75015",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            },
-            "shipping_point": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
-                "zip_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            },
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "address": {
+                        "society": "",
+                        "first_name": "Alan",
+                        "last_name": "Turing",
+                        "email": "alan.turing@gmail.com",
+                        "primary_phone": "0624243624",
+                        "secondary_phone": "",
+                        "line1": "125 rue de Vaugirard",
+                        "line2": "",
+                        "additional_informations": "",
+                        "zip_code": "75015",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                },
+                {
+                    "point_type": "SHIPPING",
+                    "address": {
+                        "society": "Twelve factors & C",
+                        "first_name": "Helmout",
+                        "last_name": "Ardelpik",
+                        "email": "helmoutardelpik@gmail.com",
+                        "primary_phone": "0694385693",
+                        "secondary_phone": "0354678942",
+                        "line1": "165, avenue des champs Elysées",
+                        "line2": "Batiment Leblanc",
+                        "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                        "zip_code": "75001",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                }
+            ],
             "packets": [
                 {
                     "product_description": "Ipad mini",
@@ -447,12 +481,14 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
 + Response 201 (application/json)
 
         {
-            "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-            "slot" : {
-                "starts_at": "2015-04-22T16:00:00+00:00",
-                "ends_at": "2015-04-22T18:00:00+00:00",
-                "slot_size": 120,
-                "price": 5.55
+            "delivery": {
+                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "slot": {
+                    "starts_at": "2015-04-22T16:00:00+00:00",
+                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 5.55
+                }
             }
         }
 
