@@ -26,13 +26,13 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 ## Codes d'erreurs
 
-| Error name               | HTTP Status      | Description                       |
+| Error name           | HTTP Status    | Description                 |
 | ------------------------ | ---------------- | --------------------------------- |
-| wrong_api_key            | 401 Unauthorized | Clé API manquante / inconnue      |
-| missing_parameters       | 400 Bad Request  | Il manque des paramètres          |
+| wrong_api_key        | 401 Unauthorized | Clé API manquante / inconnue    |
+| missing_parameters     | 400 Bad Request  | Il manque des paramètres        |
 | fail_to_confirm_delivery | 400 Bad Request  | Le commande de livraison a échoué |
-| no_delivery_options      | 404 not found    | Aucune disponibilité de livraison |
-| missing_delivery         | 404 not found    | Numéro de commande inconnue       |
+| no_delivery_options    | 404 not found    | Aucune disponibilité de livraison |
+| missing_delivery       | 404 not found    | Numéro de commande inconnue     |
 
 # Group Gestion et commande de livraisons
 
@@ -72,80 +72,80 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
 
 + Request (application/json)
 
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "slot_size": 120,
-            "pickup_point": {
-                "zip_code": "75012"
+    {
+        "api_key": "3025688655a161aeb167b7b33f03c013",
+        "slot_size": 120,
+        "pickup_point": {
+            "zip_code": "75012"
+        },
+        "shipping_point": {
+            "zip_code": "75001"
+        },
+        "packets": [
+            {
+                "weight": 1.55,
+                "height": 14.55,
+                "length": 15.55,
+                "width": 16.55
             },
-            "shipping_point": {
-                "zip_code": "75001"
-            },
-            "packets": [
-                {
-                    "weight": 1.55,
-                    "height": 14.55,
-                    "length": 15.55,
-                    "width": 16.55
-                },
-                {
-                    "weight": 2.55,
-                    "height": 24.55,
-                    "length": 25.55,
-                    "width": 26.55
-                }
-            ]
-        }
+            {
+                "weight": 2.55,
+                "height": 24.55,
+                "length": 25.55,
+                "width": 26.55
+            }
+        ]
+    }
 
 + Response 200 (application/json)
 
-      {
+    {
         "response" : {
-          "now" : {
-            "available": true,
-            "slot_size": 120,
-            "price" : 5.55
-          },
-          "planned" : [
-            {
-              "starts_at": "2015-04-22T10:00:00+00:00",
-              "ends_at": "2015-04-22T12:00:00+00:00",
-              "slot_size": 120,
-              "price" : 5.55
+            "now" : {
+                "available": true,
+                "slot_size": 120,
+                "price" : 5.55
             },
-            {
-              "starts_at": "2015-04-22T12:00:00+00:00",
-              "ends_at": "2015-04-22T14:00:00+00:00",
-              "slot_size": 120,
-              "price" : 5.55
-            },
-            {
-              "starts_at": "2015-04-22T14:00:00+00:00",
-              "ends_at": "2015-04-22T15:00:00+00:00",
-              "slot_size": 60,
-              "price" : 5.55
-            },
-            {
-              "starts_at": "2015-04-23T10:00:00+00:00",
-              "ends_at": "2015-04-23T12:00:00+00:00",
-              "slot_size": 120,
-              "price" : 5.55
-            },
-            {
-              "starts_at": "2015-04-23T12:00:00+00:00",
-              "ends_at": "2015-04-23T14:00:00+00:00",
-              "slot_size": 120,
-              "price" : 5.55
-            },
-            {
-              "starts_at": "2015-04-23T14:00:00+00:00",
-              "ends_at": "2015-04-23T15:00:00+00:00",
-              "slot_size": 60,
-              "price" : 5.55
-            }
-          ]
+            "planned" : [
+                {
+                    "starts_at": "2015-04-22T10:00:00+00:00",
+                    "ends_at": "2015-04-22T12:00:00+00:00",
+                    "slot_size": 120,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-22T12:00:00+00:00",
+                    "ends_at": "2015-04-22T14:00:00+00:00",
+                    "slot_size": 120,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-22T14:00:00+00:00",
+                    "ends_at": "2015-04-22T15:00:00+00:00",
+                    "slot_size": 60,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-23T10:00:00+00:00",
+                    "ends_at": "2015-04-23T12:00:00+00:00",
+                    "slot_size": 120,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-23T12:00:00+00:00",
+                    "ends_at": "2015-04-23T14:00:00+00:00",
+                    "slot_size": 120,
+                    "price" : 5.55
+                },
+                {
+                    "starts_at": "2015-04-23T14:00:00+00:00",
+                    "ends_at": "2015-04-23T15:00:00+00:00",
+                    "slot_size": 60,
+                    "price" : 5.55
+                }
+            ]
         }
-      }
+    }
 
 ## Pré-commander une livraison [/deliveries/book]
 
@@ -246,18 +246,18 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   },
   "packets": [
     {
-      "product_description": "Ipad mini",
-      "weight": 1.55,
-      "height": 14.55,
-      "length": 15.55,
-      "width": 16.55
+    "product_description": "Ipad mini",
+    "weight": 1.55,
+    "height": 14.55,
+    "length": 15.55,
+    "width": 16.55
     },
     {
-      "product_description": "Iphone",
-      "weight": 2.55,
-      "height": 24.55,
-      "length": 25.55,
-      "width": 26.55
+    "product_description": "Iphone",
+    "weight": 2.55,
+    "height": 24.55,
+    "length": 25.55,
+    "width": 26.55
     }
   ]
 }
@@ -268,10 +268,10 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   "response":{
     "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
     "slot" : {
-      "starts_at": "2015-04-22T16:00:00+00:00",
-      "ends_at": "2015-04-22T18:00:00+00:00",
-      "slot_size": 120,
-      "price": 5.55
+    "starts_at": "2015-04-22T16:00:00+00:00",
+    "ends_at": "2015-04-22T18:00:00+00:00",
+    "slot_size": 120,
+    "price": 5.55
     }
   }
 }
@@ -305,18 +305,18 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   },
   "packets": [
     {
-      "product_description": "Ipad mini",
-      "weight": 1.55,
-      "height": 14.55,
-      "length": 15.55,
-      "width": 16.55
+    "product_description": "Ipad mini",
+    "weight": 1.55,
+    "height": 14.55,
+    "length": 15.55,
+    "width": 16.55
     },
     {
-      "product_description": "Iphone",
-      "weight": 2.55,
-      "height": 24.55,
-      "length": 25.55,
-      "width": 26.55
+    "product_description": "Iphone",
+    "weight": 2.55,
+    "height": 24.55,
+    "length": 25.55,
+    "width": 26.55
     }
   ]
 }
@@ -327,10 +327,10 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   "response":{
     "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
     "slot" : {
-      "starts_at": "2015-04-22T16:00:00+00:00",
-      "ends_at": "2015-04-22T18:00:00+00:00",
-      "slot_size": 120,
-      "price": 5.55
+    "starts_at": "2015-04-22T16:00:00+00:00",
+    "ends_at": "2015-04-22T18:00:00+00:00",
+    "slot_size": 120,
+    "price": 5.55
     }
   }
 }
@@ -364,18 +364,18 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   },
   "packets": [
     {
-      "product_description": "Ipad mini",
-      "weight": 1.55,
-      "height": 14.55,
-      "length": 15.55,
-      "width": 16.55
+    "product_description": "Ipad mini",
+    "weight": 1.55,
+    "height": 14.55,
+    "length": 15.55,
+    "width": 16.55
     },
     {
-      "product_description": "Iphone",
-      "weight": 2.55,
-      "height": 24.55,
-      "length": 25.55,
-      "width": 26.55
+    "product_description": "Iphone",
+    "weight": 2.55,
+    "height": 24.55,
+    "length": 25.55,
+    "width": 26.55
     }
   ]
 }
@@ -386,10 +386,10 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   "response":{
     "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
     "slot" : {
-      "starts_at": "2015-04-22T16:00:00+00:00",
-      "ends_at": "2015-04-22T18:00:00+00:00",
-      "slot_size": 120,
-      "price": 5.55
+    "starts_at": "2015-04-22T16:00:00+00:00",
+    "ends_at": "2015-04-22T18:00:00+00:00",
+    "slot_size": 120,
+    "price": 5.55
     }
   }
 }
@@ -436,18 +436,18 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   },
   "packets": [
     {
-      "product_description": "Ipad mini",
-      "weight": 1.55,
-      "height": 14.55,
-      "length": 15.55,
-      "width": 16.55
+    "product_description": "Ipad mini",
+    "weight": 1.55,
+    "height": 14.55,
+    "length": 15.55,
+    "width": 16.55
     },
     {
-      "product_description": "Iphone",
-      "weight": 2.55,
-      "height": 24.55,
-      "length": 25.55,
-      "width": 26.55
+    "product_description": "Iphone",
+    "weight": 2.55,
+    "height": 24.55,
+    "length": 25.55,
+    "width": 26.55
     }
   ]
 }
@@ -458,10 +458,10 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   "response":{
     "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
     "slot" : {
-      "starts_at": "2015-04-22T16:00:00+00:00",
-      "ends_at": "2015-04-22T18:00:00+00:00",
-      "slot_size": 120,
-      "price": 5.55
+    "starts_at": "2015-04-22T16:00:00+00:00",
+    "ends_at": "2015-04-22T18:00:00+00:00",
+    "slot_size": 120,
+    "price": 5.55
     }
   }
 }
