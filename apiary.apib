@@ -147,7 +147,7 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
   }
 }
 
-## Commander une livraison [/deliveries/book]
+## Pré-commander une livraison [/deliveries/book]
 
 Permet d'effectuer une pré-commande de livraison.   
 Cette pré-commande sera ensuite à confirmer dans la méthode "Confirmer une livraison".
@@ -197,9 +197,9 @@ Une **ConsummerAddress** est une adresse classique. Elle devra contenir les info
 + **city** *(required, string)* : Ville.
 + **country** *(required, string)* : Pays.
 + **send_delivery_statuses** *(optional, boolean)* : Envoyer les statuts de livraison par sms/email au consommateur.
-    + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 + **send_survey** *(optional, boolean)* : Envoyer  l'enquête de satisfaction au consommateur.
-    + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 
 
 ### Paramètres de requête
@@ -230,7 +230,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   + **slot_size** *(integer)* : Taille du créneau horaire (en minutes).
   + **price** *(float)* : Coût HT de la livraison (en euro).
   
-### Exemple de commande de livraison B2B [POST]
+### Exemple de pré-commande de livraison B2B [POST]
 
 + Request (application/json)
 
@@ -276,7 +276,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   }
 }
 
-### Exemple de commande de livraison B2C [POST]
+### Exemple de pré-commande de livraison B2C [POST]
 
 + Request (application/json)
 
@@ -335,7 +335,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   }
 }
 
-### Exemple de commande de livraison C2B [POST]
+### Exemple de pré-commande de livraison C2B [POST]
 
 + Request (application/json)
 
@@ -394,7 +394,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   }
 }
 
-### Exemple de commande de livraison C2C [POST]
+### Exemple de pré-commande de livraison C2C [POST]
 
 + Request (application/json)
 
@@ -466,30 +466,26 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   }
 }
 
-## confirm-delivery [/3/confirm_delivery]
+## Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
 
-Confirme la commande créée via la methode "book-delivery".
+Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné un
+**delivery_id**, vous devez la confirmer pour finaliser votre commande.
 
-***Attention*** : Un maximum de 15 minutes est autorisé entre l'appel au book-delivery et cet appel.
-Au delà une erreur "delivery_has_expired" est renvoyée.
+***Attention*** : Un maximum de **15 minutes** est autorisé entre la pré-commande et la confirmation de la commande.   
+Au delà, une erreur **delivery_has_expired** est renvoyée.
 
-**Exemple d'utilisation :**
+### Paramètres de requête
 
-Aprés la validation du paiement.
++ **api_key** *(required, string)* : Clé API Colisweb
++ **order_ref** *(required if not C2C, string)* : Référence commande de votre plateforme   
+(permet au transporteur d'identifier le colis en boutique)
++ **order_id** *(optional, string)* : identifiant commande interne à votre plateforme
 
-**Un confirm-delivery renvoie les attributs suivants** :
+### Contenu de la réponse
 
-+ ***confirmed*** (boolean) : la valeur "True" indique que la livraison a bien été prise en compte.
++ **confirmed** *(boolean)* : la valeur ```true``` indique que la livraison a bien été prise en compte.
 
-**Les paramètres de requête sont les suivants** :
-
-+ **api_key** (required, string) : Clé api client colisweb
-+ **delivery_id** (required, integer) : ID commande colisweb récupérée lors de l'appel à la méthode book-delivery
-+ **order_ref** (required, string) : Référence commande de votre plateforme  
-(permet au transporteur d'identifier le colis à retirer en boutique)
-+ **order_id** (optional, string) : ID commande interne à votre plateforme
-
-### Voir les détails d'un book-delivery [PUT]
+### PUT
 
 + Request (application/json)
 
