@@ -53,16 +53,49 @@ Un schéma vallant mille mots, voici un schéma UML des entités décrites ci-de
 
 ### Location 
 
-Une **Location** est un type abstrait qui possède trois spécialisation concréte:   
+Une **Location** est un type abstrait qui possède trois spécialisations concrétes:   
 + Une **Address** : Adresse quelconque (celle d'un client que vous souhaitez livrer, par exemple).   
 + Un **GpsPoint** : Un point GPS.   
 + Un **Store** : Un de vos magasins.
 
 ### Address 
 
+Une **Address** est composée des attributs suivants : 
+
++ **society** *(optional, string)* : Société.
++ **first_name** *(optional, string)* : Prénom.
++ **last_name** *(required, string)* : Nom.
++ **email** *(required, string)* : Email.
++ **primary_phone** *(required, string)* : Numéro de téléphone primaire.
++ **secondary_phone** *(optional, string)* : Numéro de téléphone secondaire.
++ **line1** *(required, string)* : Adresse de livraison.
++ **line2** *(optional, string)* : Complément d'adresse.
++ **additional_informations** *(optional, string)* : Informations supplémentaire (digicode, etc.)
++ **zip_code** *(required, string)* : Code postal.
++ **city** *(required, string)* : Ville.
++ **country** *(required, string)* : Pays.
++ **send_delivery_statuses** *(optional, boolean)* : Envoyer les statuts de livraison par sms/email au consommateur.
+    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
++ **send_survey** *(optional, boolean)* : Envoyer  l'enquête de satisfaction au consommateur.
+    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+
 ### GpsPoint 
 
+Un **GpsPoint** est composé des attributs suivants : 
+
++ **latitude** *(required, float)* : Latitude.
++ **longitude** *(optional, float)* : Longitude.
+
 ### Store 
+
+Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Vous n'avez donc pas besoin de nous envoyer l'adresse du magasin.   
+Seul l'identifiant unique de ce magasin est nécessaire pour que nous puissions l'identifier.   
+
+
+Un **Store** est composé de l'attribut suivant : 
+
++ **store_code** *(required, string)* : Code magasin.   
+
 
 # Group Gestion et commande de livraisons
 
@@ -206,32 +239,12 @@ Un exemple de chaque type de livraison est donnée à la fin de la description d
 
 #### Description d'une **StoreAddress**
 
-Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat donc vous n'avez pas besoin de nous envoyer l'adresse du magasin.   
-Seul l'identifiant unique de ce magasin est nécessaire pour que nous puissions l'identifier.   
-Une **StoreAddress** ne devra donc contenir que l'information suivante :
-
-+ **store_code** *(required, string)* : Code magasin.   
 
 #### Description d'une **ConsummerAddress**
 
 Une **ConsummerAddress** est une adresse classique. Elle devra contenir les informations suivantes : 
 
-+ **** *(optional, string)* : Société.
-+ **first_name** *(optional, string)* : Prénom.
-+ **last_name** *(required, string)* : Nom.
-+ **email** *(required, string)* : Email.
-+ **primary_phone** *(required, string)* : Numéro de téléphone primaire.
-+ **secondary_phone** *(optional, string)* : Numéro de téléphone secondaire.
-+ **line1** *(required, string)* : Adresse de livraison.
-+ **line2** *(optional, string)* : Complément d'adresse.
-+ **additional_informations** *(optional, string)* : Informations supplémentaire (digicode, etc.)
-+ **zip_code** *(required, string)* : Code postal.
-+ **city** *(required, string)* : Ville.
-+ **country** *(required, string)* : Pays.
-+ **send_delivery_statuses** *(optional, boolean)* : Envoyer les statuts de livraison par sms/email au consommateur.
-    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-+ **send_survey** *(optional, boolean)* : Envoyer  l'enquête de satisfaction au consommateur.
-    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+
 
 
 ### Paramètres de requête
