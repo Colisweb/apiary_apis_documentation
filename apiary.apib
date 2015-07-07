@@ -489,18 +489,17 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
 
 + Request (application/json)
 
-            {
-                "api_key": "3025688655a161aeb167b7b33f03c013",
-                "delivery_id": 1234,
-                "order_ref": "R10390",
-                "order_id": "987663"
-            }
+{
+  "api_key": "3025688655a161aeb167b7b33f03c013",
+  "order_ref": "R10390",
+  "order_id": "987663"
+}
 
 
 + Response 201 (application/json)
 
-                {
-                    "response":{
-                        "confirmed": true
-                    }
-                }
+{
+  "response":{
+    "confirmed": true
+  }
+}
