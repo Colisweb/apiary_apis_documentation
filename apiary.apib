@@ -34,6 +34,33 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 | no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
 | missing_delivery          | 404 not found     | Numéro de commande inconnue       |
 
+## Entitées
+
+Nous gérons des livraisons partant d'un point A (point de retrait) et arrivant à un point B (point de livraison).   
+Nous avons formalisé cette notion de "points" dans des types de données spécifiques dont voici les description.
+
+### Le **Point**
+
+1. Un **Point** posséde un attribut **point_type**.   
+Un **point_type** peut prendre les valeurs suivantes : 
+    + ```PICKUP``` : Signifie que le **Point** sera un point de retrait.
+    + ```SHIPPING``` : Signifie que le **Point** sera un point de livraison.
+
+2. Un **Point** est composé d'une **Location**.   
+
+### La **Location** 
+
+Une **Location** est un type abstrait qui possède trois spécialisation concréte:   
++ Une **Address** : Adresse quelconque (celle d'un client que vous souhaitez livrer, par exemple).   
++ Un **GpsPoint** : Un point GPS.   
++ Un **Store** : Un de vos magasins.
+
+### L'**Address** 
+
+### Le **GpsPoint** 
+
+### Le **Store** 
+
 # Group Gestion et commande de livraisons
 
 ## Obtenir les options de livraison disponibles [/deliveries/options]
@@ -176,6 +203,8 @@ Un exemple de chaque type de livraison est donnée à la fin de la description d
 
 #### Description d'une **StoreAddress**
 
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat donc vous n'avez pas besoin de nous envoyer l'adresse du magasin.   
 Seul l'identifiant unique de ce magasin est nécessaire pour que nous puissions l'identifier.   
 Une **StoreAddress** ne devra donc contenir que l'information suivante :
@@ -186,7 +215,7 @@ Une **StoreAddress** ne devra donc contenir que l'information suivante :
 
 Une **ConsummerAddress** est une adresse classique. Elle devra contenir les informations suivantes : 
 
-+ **society** *(optional, string)* : Société.
++ **** *(optional, string)* : Société.
 + **first_name** *(optional, string)* : Prénom.
 + **last_name** *(required, string)* : Nom.
 + **email** *(required, string)* : Email.
