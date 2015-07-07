@@ -6,16 +6,16 @@ HOST: http://sandbox.api.colisweb.com
 Ce document décrit les points d'entrée, appelés **endpoints** dans la suite de ce document, de l'API que fournit **Colisweb** ainsi que les workflows d'utilisations de cette API qui permettent d'effectuer certaines actions complexes.
 
 ## Autorisations d'accès
-Une clé API est nécéssaire pour l'utilisation de cette API.
+Une clé API est nécéssaire pour l'utilisation de cette API.   
 Afin d'obtenir une clé, vous devez effectuer une demande par mail à support@colisweb.com.
 
 ## Environnements
 Deux environnements sont disponibles :  
 
-**sandbox** : Environnement "bac à sable" pour vos tests avant mise en production.
+**sandbox** : Environnement "bac à sable" pour vos tests avant mise en production.   
 https://sandbox.api.colisweb.com
 
-**production** : Après validation des tests en sandbox.
+**production** : Après validation des tests en sandbox.   
 https://api.colisweb.com
 
 ## URL d'appels
@@ -185,7 +185,7 @@ Une **StoreAddress** ne devra donc contenir que l'information suivante :
 Une **ConsummerAddress** est une adresse classique. Elle devra contenir les informations suivantes : 
 
 + **society** *(optional, string)* : Société.
-+ **first_name** *(required, string)* : Prénom.
++ **first_name** *(optional, string)* : Prénom.
 + **last_name** *(required, string)* : Nom.
 + **email** *(required, string)* : Email.
 + **primary_phone** *(required, string)* : Numéro de téléphone primaire.
@@ -497,11 +497,6 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
 
 + Response 200 (application/json)
 
-{
-  "response":{
-    "confirmed": true
-  }
-}
 
 ## Annuler une livraison [/deliveries/{delivery_id}/cancel]
 
@@ -514,7 +509,7 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 
 ### Contenu de la réponse
 
-+ **canceled** *(boolean)* : ```true``` si l'annulation est effective. ```false``` si l'annulation a été refusé.
+
 
 ### PUT
 
@@ -524,10 +519,6 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
   "api_key": "3025688655a161aeb167b7b33f03c013"
 }
 
-+ Response 200 (application/json)
++ Response 200 si OK
 
-{
-  "response":{
-    "canceled": true
-  }
-}
++ Response 200
