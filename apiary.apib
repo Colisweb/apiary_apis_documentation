@@ -495,11 +495,39 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
   "order_id": "987663"
 }
 
-
 + Response 200 (application/json)
 
 {
   "response":{
     "confirmed": true
+  }
+}
+
+## Annuler une livraison [/deliveries/{delivery_id}/cancel]
+
+Vous pouvez annuler une livraison jusqu'à un certain stade d'avancement de celle-ci.   
+Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable.
+
+### Paramètres de requête
+
++ **api_key** *(required, string)* : Clé API Colisweb
+
+### Contenu de la réponse
+
++ **canceled** *(boolean)* : ```true``` si l'annulation est effective. ```false``` si l'annulation a été refusé.
+
+### PUT
+
++ Request (application/json)
+
+{
+  "api_key": "3025688655a161aeb167b7b33f03c013"
+}
+
++ Response 200 (application/json)
+
+{
+  "response":{
+    "canceled": true
   }
 }
