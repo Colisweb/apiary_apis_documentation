@@ -255,7 +255,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
 
 Permet de récupérer les options de livraisons disponibles.
 
-### Paramètres de requête
+## Paramètres de requête
 
 + **api_key** *(required, string)* : Clé API Colisweb.
 + **slot_size** *(optional, integer)* : Taille de la plage de livraison demandée (en minutes).   
@@ -269,7 +269,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
   + **height** *(required, float)* : hauteur du colis (en cm).
   + **weight** *(required, float)* : poids du colis (en grammes).
 
-### Contenu de la réponse
+## Contenu de la réponse
 
 + **now** *(hash)* : Disponibilité de l'offre "instantanée.
   + **available** *(boolean)* : Livraison "instantanée" disponible ou non.
@@ -281,7 +281,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
   + **slot_size** *(integer)* : Taille du créneau horaire (en minutes).
   + **price** *(float)* : Coût HT de la livraison dans ce créneau (en euro).
 
-### POST
+## POST
 
 + Request (application/json)
 
@@ -362,12 +362,12 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ]
         }
 
-## Pré-commander une livraison [/deliveries/book]
+# Pré-commander une livraison [/deliveries/book]
 
 Permet d'effectuer une pré-commande de livraison.   
 Cette pré-commande sera ensuite à confirmer dans la méthode "Confirmer une livraison".
 
-### Paramètres de requête
+## Paramètres de requête
 
 + **api_key** *(required, string)* : Clé API Colisweb
 + **starts_at** *(required, datetime UTC)* : Date et heure de début de la plage de livraison.   
@@ -388,7 +388,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
 ### Contenu de la réponse
 
 + **delivery_id** *(string)* - Identifiant de la commande créée.   
-**Cet identifiant vous sera nécessaire pour effectuer la confirmation de la commande.**
+**Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
 + **slot** *(hash)* : Informations de la plage horaire commandée.
   + **starts_at** *(datetime UTC)* : Début d'un créneau horaire.
   + **ends_at** *(datetime UTC)* : Fin d'un créneau horaire.
