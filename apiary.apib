@@ -103,7 +103,7 @@ Via notre API, vous êtes en mesure de commander **quatres types de livraisons**
 + **C2B** (exemple : retour magasin)
 + **C2C** (exemple : livraison entres deux adresses quelconques)
 
-Nous identifions le type de livraison que vous commandez en regardant quel type de **Location** vous nous envoyez dans vos paramètres de requêtes.
+Nous identifions le type de livraison que vous commandez en regardant quels types d'entités **Location** vous nous envoyez dans vos paramètres de requêtes.
 
 ## Exemple de paramètre de requête pour du B2B
 
@@ -385,7 +385,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   + **height** *(required, float)* : Hauteur du colis (en cm).
   + **weight** *(required, float)* : Poids du colis (en grammes).
 
-### Contenu de la réponse
+## Contenu de la réponse
 
 + **delivery_id** *(string)* - Identifiant de la commande créée.   
 **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
@@ -395,7 +395,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
   + **slot_size** *(integer)* : Taille du créneau horaire (en minutes).
   + **price** *(float)* : Coût HT de la livraison (en euro).
   
-### Exemple de pré-commande de livraison B2B [POST]
+## Exemple de pré-commande de livraison B2B [POST]
 
 + Request (application/json)
 
@@ -449,7 +449,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             }
         }
 
-### Exemple de pré-commande de livraison B2C [POST]
+## Exemple de pré-commande de livraison B2C [POST]
 
 + Request (application/json)
 
@@ -516,7 +516,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             }
         }
 
-### Exemple de pré-commande de livraison C2B [POST]
+## Exemple de pré-commande de livraison C2B [POST]
 
 + Request (application/json)
 
@@ -583,7 +583,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             }
         }
 
-### Exemple de pré-commande de livraison C2C [POST]
+## Exemple de pré-commande de livraison C2C [POST]
 
 + Request (application/json)
 
@@ -663,7 +663,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
             }
         }
 
-## Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
+# Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
 
 Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné un
 **delivery_id**, vous devez la confirmer pour finaliser votre commande.
@@ -671,19 +671,19 @@ Une fois que vous avez pré-commandé une livraison et que l'API vous a retourn�
 ***Attention*** : Un maximum de **15 minutes** est autorisé entre la pré-commande et la confirmation de la commande.   
 Au delà, une erreur **delivery_has_expired** est renvoyée.
 
-### Paramètres de requête
+## Paramètres de requête
 
 + **api_key** *(required, string)* : Clé API Colisweb
 + **order_ref** *(required if not C2C, string)* : Référence commande de votre plateforme   
 (permet au transporteur d'identifier le colis en boutique)
 + **order_id** *(optional, string)* : identifiant commande interne à votre plateforme
 
-### Contenu de la réponse
+## Contenu de la réponse
 
 !!!! mettre les statuts mag/transporteur/global à la place
 + **confirmed** *(boolean)* : la valeur ```true``` indique que la livraison a bien été prise en compte.
 
-### PUT
+## PUT
 
 + Request (application/json)
 
@@ -696,20 +696,20 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
 + Response 200 (application/json)
 
 
-## Annuler une livraison [/deliveries/{delivery_id}/cancel]
+# Annuler une livraison [/deliveries/{delivery_id}/cancel]
 
 Vous pouvez annuler une livraison jusqu'à un certain stade d'avancement de celle-ci.   
 Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable.
 
-### Paramètres de requête
+## Paramètres de requête
 
 + **api_key** *(required, string)* : Clé API Colisweb
 
-### Contenu de la réponse
+## Contenu de la réponse
 
 
 
-### PUT
+## PUT
 
 + Parameters
     + delivery_id - Identifiant de la livraison donnée lors de la pré-commande.
