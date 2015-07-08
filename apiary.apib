@@ -55,9 +55,8 @@ Un schéma vallant mille mots, voici un schéma UML des entités décrites ci-de
 
 ### L'entité "Location"
 
-Une **Location** est un type abstrait qui possède trois spécialisations concrétes:
+Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
 + Une **Address** : Adresse quelconque (celle d'un client que vous souhaitez livrer, par exemple).   
-+ Un **GpsPoint** : Un point GPS.   
 + Un **Store** : Un de vos magasins.
 
 ### L'entité "Address"
@@ -81,12 +80,6 @@ Une **Address** est composée des attributs suivants :
 + **send_survey** *(optional, boolean)* : Envoyer  l'enquête de satisfaction au consommateur.
     + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 
-### L'entité "GpsPoint"
-
-Un **GpsPoint** est composé des attributs suivants : 
-
-+ **latitude** *(required, float)* : Latitude.
-+ **longitude** *(optional, float)* : Longitude.
 
 ### L'entité "Store"
 
