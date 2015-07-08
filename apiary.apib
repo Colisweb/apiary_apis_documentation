@@ -6,10 +6,12 @@ HOST: http://sandbox.api.colisweb.com
 Ce document décrit les points d'entrée, appelés **endpoints** dans la suite de ce document, de l'API que fournit **Colisweb** ainsi que les workflows d'utilisations de cette API qui permettent d'effectuer certaines actions complexes.
 
 ## Autorisations d'accès
+
 Une clé API est nécéssaire pour l'utilisation de cette API.   
 Afin d'obtenir une clé, vous devez effectuer une demande par mail à support@colisweb.com.
 
 ## Environnements
+
 Deux environnements sont disponibles :  
 
 **sandbox** : Environnement "bac à sable" pour vos tests avant mise en production.   
@@ -19,7 +21,8 @@ https://sandbox.api.colisweb.com
 https://api.colisweb.com
 
 ## URL d'appels
-L'url d'appel à l'API est:   
+
+L'URL d'appel à l'API est:   
 https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 **end_point** = Méthodes décrites dans ce document
@@ -89,11 +92,40 @@ Un **Store** est composé de l'attribut suivant :
 
 + **store_code** *(required, string)* : Code magasin.   
 
+## Types de livraison disponibles
+
+Grâce à notre API, vous êtes en mesure de commander **quatres types de livraisons** :
+
++ **B2B** (exemple : réapprovisionnement entre magasins)
++ **B2C** (exemple : livraison d'un client final)
++ **C2B** (exemple : retour magasin)
++ **C2C** (exemple : livraison entres deux adresses quelconques)
+
+Nous identifions le type de livraison que vous commandez en regardant quel type de **Location** vous nous envoyez.
+
+Exemple de B2B :
+
+        "points": [
+            {
+                "point_type": "PICKUP",
+                "store" {
+                    "store_code": "100001"
+                }
+            },
+            {
+                "point_type": "SHIPPING"
+                "store" {
+                    "store_code": "100002"
+                }
+            }
+        ]
+
 # Group Gestion et commande de livraisons
 
 ## Obtenir les options de livraison disponibles [/deliveries/options]
 
 Permet de récupérer les options de livraisons disponibles.
+
 
 ### Paramètres de requête
 
@@ -101,10 +133,8 @@ Permet de récupérer les options de livraisons disponibles.
 + **slot_size** *(optional, integer)* : Taille de la plage de livraison demandée (en minutes).   
 Exemple : 120 pour une livraison en 2h.   
 Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
-+ **pickup_point** *(required, hash)* : Informations du point de retrait.
-  + **zip_code** *(required, string)* : Code postal du point de retrait.
-+ **shipping_point** *(required, hash)* : Informations du point de livraison.
-  + **zip_code** *(required, string)* : Code postal du point de livraison.
++ **points** *(required, array of hashes)* : Informations sur les points de retrait et de livraison.    
+Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux **Points**, l'un ayant son **point_type** à ```"PICKUP"``` et l'autre à ```"SHIPPING"```
 + **packets** *(required, array of hashes)* : Informations sur les colis.
   + **length** *(required, float)* : Longueur du colis (en cm).
   + **width** *(required, float)* : largeur du colis (en cm).
@@ -208,36 +238,6 @@ Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
 
 Permet d'effectuer une pré-commande de livraison.   
 Cette pré-commande sera ensuite à confirmer dans la méthode "Confirmer une livraison".
-
-### Types de livraisons disponibles
-
-Via ce endpoint vous êtes en mesure de pré-commander **quatres types de livraisons** :
-
-+ **B2B** (exemple : réapprovisionnement entre magasins)
-+ **B2C** (exemple : livraison d'un client final)
-+ **C2B** (exemple : retour magasin)
-+ **C2C** (exemple : livraison entres deux adresses quelconques)
-
-Nous identifions le type de livraison que vous commandez en regardant les informations sur les adresses que vous nous envoyez.
-
-Dans la description des paramètres de requête de ce endpoint, les adresses sont à passer dans les paramètres **pickup_point** *(point de retrait)* et **shipping_point** *(point de livraison)*, qui sont de type **Address**.   
-
-Une **Address** peut être de deux types : 
- + **ConsummerAddress** : Une adresse quelconque.   
- Par exemple, l'adresse d'un de vos client final que vous souhaitez livrer.
- + **StoreAddress** : Une adresse d'un de vos magasins
-
-Un exemple de chaque type de livraison est donnée à la fin de la description de ce endpoint.
-
-#### Description d'une **StoreAddress**
-
-
-#### Description d'une **ConsummerAddress**
-
-Une **ConsummerAddress** est une adresse classique. Elle devra contenir les informations suivantes : 
-
-
-
 
 ### Paramètres de requête
 
