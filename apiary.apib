@@ -107,26 +107,25 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
 
 ### Exemple de paramètre de requête pour du B2B :
 
-```[json]
+```json
+{
+    ...
+    "points": [
         {
-            ...
-            "points": [
-                {
-                    "point_type": "PICKUP",
-                    "store" {
-                        "store_code": "100001"
-                    }
-                },
-                {
-                    "point_type": "SHIPPING"
-                    "store" {
-                        "store_code": "100002"
-                    }
-                }
-            ]
-            ...
+            "point_type": "PICKUP",
+            "store" {
+                "store_code": "100001"
+            }
+        },
+        {
+            "point_type": "SHIPPING"
+            "store" {
+                "store_code": "100002"
+            }
         }
-
+    ]
+    ...
+}
 ```
 
 ### Exemple de paramètre de requête pour du B2C :
@@ -152,7 +151,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
                 "secondary_phone": "0354678942",
                 "line1": "165, avenue des champs Elysées",
                 "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                "additional_informations": "Digicode B345, 3 éme etage",
                 "zip_code": "75001",
                 "city": "Paris",
                 "country": "France",
@@ -183,7 +182,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
                 "secondary_phone": "0354678942",
                 "line1": "165, avenue des champs Elysées",
                 "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                "additional_informations": "Digicode B345, 3 éme etage",
                 "zip_code": "75001",
                 "city": "Paris",
                 "country": "France",
@@ -239,7 +238,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
                 "secondary_phone": "0354678942",
                 "line1": "165, avenue des champs Elysées",
                 "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                "additional_informations": "Digicode B345, 3 éme etage",
                 "zip_code": "75001",
                 "city": "Paris",
                 "country": "France",
@@ -474,7 +473,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
                         "secondary_phone": "0354678942",
                         "line1": "165, avenue des champs Elysées",
                         "line2": "Batiment Leblanc",
-                        "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                        "additional_informations": "Digicode B345, 3 éme etage",
                         "zip_code": "75001",
                         "city": "Paris",
                         "country": "France",
@@ -535,7 +534,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
                         "secondary_phone": "0354678942",
                         "line1": "165, avenue des champs Elysées",
                         "line2": "Batiment Leblanc",
-                        "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                        "additional_informations": "Digicode B345, 3 éme etage",
                         "zip_code": "75001",
                         "city": "Paris",
                         "country": "France",
@@ -619,7 +618,7 @@ Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fou
                         "secondary_phone": "0354678942",
                         "line1": "165, avenue des champs Elysées",
                         "line2": "Batiment Leblanc",
-                        "additional_informations": "Digicode B345, 3 éme etage, accès parking",
+                        "additional_informations": "Digicode B345, 3 éme etage",
                         "zip_code": "75001",
                         "city": "Paris",
                         "country": "France",
