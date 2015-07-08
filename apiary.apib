@@ -249,6 +249,17 @@ Nous identifions le type de livraison que vous commandez en regardant quels type
 }
 ```
 
+# Fuseaux Horaires
+
+Toutes les dates de cette API sont en UTC, au format ISO 8601 avec indication de fuseau horaire.   
+Exemple : 
+```ruby
+2015-04-22T12:00:00+00:00
+```
+
+TODO Jules
+
+
 # Group Gestion et commande de livraisons
 
 # Obtenir les options de livraison disponibles [/deliveries/options]
@@ -261,8 +272,9 @@ Permet de récupérer les options de livraisons disponibles.
 + **slot_size** *(optional, integer)* : Taille de la plage de livraison demandée (en minutes).   
 Exemple : 120 pour une livraison en 2h.   
 Ce paramètre permet d'écraser la valeur par défaut de Colisweb.
-+ **points** *(required, array of hashes)* : Informations sur les points de retrait et de livraison.    
-Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités **Point**, l'un ayant son **point_type** à ```"PICKUP"``` et l'autre à ```"SHIPPING"```
++ **points** *(required, array of Points)* : Informations sur les points de retrait et de livraison.    
+Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités **Point**, l'une ayant comme valeur de **point_type** ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
+*Remarque* : **Pour ce endpoint uniquement**, dans le cas d'une **Address** le **zip_code** suffit.
 + **packets** *(required, array of hashes)* : Informations sur les colis.
   + **length** *(required, float)* : Longueur du colis (en cm).
   + **width** *(required, float)* : largeur du colis (en cm).
@@ -274,7 +286,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 + **now** *(hash)* : Disponibilité de l'offre "instantanée.
   + **available** *(boolean)* : Livraison "instantanée" disponible ou non.
   + **slot_size** *(integer)* : Taille du créneau horaire en minutes de la livraison "instantanée" (en minutes).
-  + **price** *(integer)* : Coût HT de la livraison "instantanée" (en euro).
+  + **price** *(float)* : Coût HT de la livraison "instantanée" (en euro).
 + **planned** *(array of hashes)* : Plages horaires de livraison sur rendez-vous.
   + **starts_at** *(datetime UTC)* : Début d'un créneau horaire.
   + **ends_at** *(datetime UTC)* : Fin d'un créneau horaire.
@@ -291,11 +303,15 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             "points": [
                 {
                    "point_type": "PICKUP",
-                   "zip_code": "75012"
+                   "address": {
+                       "zip_code": "75012"                       
+                   }
                 },
                 {
                     "point_type": "SHIPPING",
-                    "zip_code": "75001"
+                    "store": {
+                        "store_code": "100001"                        
+                    }
                 }
             ]
             "packets": [
