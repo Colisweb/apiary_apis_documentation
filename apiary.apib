@@ -94,7 +94,9 @@ Un **Store** est composé de l'attribut suivant :
 
 ## Types de livraison disponibles
 
-Grâce à notre API, vous êtes en mesure de commander **quatres types de livraisons** :
+### Introduction
+
+Via notre API, vous êtes en mesure de commander **quatres types de livraisons** :
 
 + **B2B** (exemple : réapprovisionnement entre magasins)
 + **B2C** (exemple : livraison d'un client final)
@@ -105,25 +107,25 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
 
 ### Exemple de paramètre de requête pour du B2B :
 
-```
-{
-    ...
-    "points": [
+```[json]
         {
-            "point_type": "PICKUP",
-            "store" {
-                "store_code": "100001"
-            }
-        },
-        {
-            "point_type": "SHIPPING"
-            "store" {
-                "store_code": "100002"
-            }
+            ...
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "store" {
+                        "store_code": "100001"
+                    }
+                },
+                {
+                    "point_type": "SHIPPING"
+                    "store" {
+                        "store_code": "100002"
+                    }
+                }
+            ]
+            ...
         }
-    ]
-    ...
-}
 
 ```
 
