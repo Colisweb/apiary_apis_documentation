@@ -108,6 +108,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
 ### Exemple de paramètre de requête pour du B2B :
 
         {
+            ...
             "points": [
                 {
                     "point_type": "PICKUP",
@@ -122,131 +123,126 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
                     }
                 }
             ]
+            ...
         }
 
 ### Exemple de paramètre de requête pour du B2C :
 
-```
-{
-    ...
-    "points": [
-        {
-            "point_type": "PICKUP",
-            "store" {
-                "store_code": "100001"
-            }
-        },
-        {
-            "point_type": "SHIPPING",
-            "address": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage",
-                "zip_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            }
-        }
-    ]
-    ...
-}
 
-```
+        {
+            ...
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "store" {
+                        "store_code": "100001"
+                    }
+                },
+                {
+                    "point_type": "SHIPPING",
+                    "address": {
+                        "society": "Twelve factors & C",
+                        "first_name": "Helmout",
+                        "last_name": "Ardelpik",
+                        "email": "helmoutardelpik@gmail.com",
+                        "primary_phone": "0694385693",
+                        "secondary_phone": "0354678942",
+                        "line1": "165, avenue des champs Elysées",
+                        "line2": "Batiment Leblanc",
+                        "additional_informations": "Digicode B345, 3 éme etage",
+                        "zip_code": "75001",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                }
+            ]
+            ...
+        }
+
 
 ### Exemple de paramètre de requête pour du C2B :
 
-```
-{
-    ...
-    "points": [
-        {
-            "point_type": "PICKUP",
-            "address": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage",
-                "zip_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            }
-        },
-        {
-            "point_type": "SHIPPING"
-            "store" {
-                "store_code": "100002"
-            }
-        }
-    ]
-    ...
-}
 
-```
+        {
+            ...
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "address": {
+                        "society": "Twelve factors & C",
+                        "first_name": "Helmout",
+                        "last_name": "Ardelpik",
+                        "email": "helmoutardelpik@gmail.com",
+                        "primary_phone": "0694385693",
+                        "secondary_phone": "0354678942",
+                        "line1": "165, avenue des champs Elysées",
+                        "line2": "Batiment Leblanc",
+                        "additional_informations": "Digicode B345, 3 éme etage",
+                        "zip_code": "75001",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                },
+                {
+                    "point_type": "SHIPPING"
+                    "store" {
+                        "store_code": "100002"
+                    }
+                }
+            ]
+            ...
+        }
 
 ### Exemple de paramètre de requête pour du C2C :
 
-```
-{
-    ...
-    "points": [
         {
-            "point_type": "PICKUP",
-            "address": {
-                "society": "",
-                "first_name": "Alan",
-                "last_name": "Turing",
-                "email": "alan.turing@gmail.com",
-                "primary_phone": "0624243624",
-                "secondary_phone": "",
-                "line1": "125 rue de Vaugirard",
-                "line2": "",
-                "additional_informations": "",
-                "zip_code": "75015",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            }
-        },
-        {
-            "point_type": "SHIPPING",
-            "address": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage",
-                "zip_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_delivery_statuses": true,
-                "send_survey": true
-            }
+            ...
+            "points": [
+                {
+                    "point_type": "PICKUP",
+                    "address": {
+                        "society": "",
+                        "first_name": "Alan",
+                        "last_name": "Turing",
+                        "email": "alan.turing@gmail.com",
+                        "primary_phone": "0624243624",
+                        "secondary_phone": "",
+                        "line1": "125 rue de Vaugirard",
+                        "line2": "",
+                        "additional_informations": "",
+                        "zip_code": "75015",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                },
+                {
+                    "point_type": "SHIPPING",
+                    "address": {
+                        "society": "Twelve factors & C",
+                        "first_name": "Helmout",
+                        "last_name": "Ardelpik",
+                        "email": "helmoutardelpik@gmail.com",
+                        "primary_phone": "0694385693",
+                        "secondary_phone": "0354678942",
+                        "line1": "165, avenue des champs Elysées",
+                        "line2": "Batiment Leblanc",
+                        "additional_informations": "Digicode B345, 3 éme etage",
+                        "zip_code": "75001",
+                        "city": "Paris",
+                        "country": "France",
+                        "send_delivery_statuses": true,
+                        "send_survey": true
+                    }
+                }
+            ]
+            ...
         }
-    ]
-    ...
-}
-
-```
 
 # Group Gestion et commande de livraisons
 
