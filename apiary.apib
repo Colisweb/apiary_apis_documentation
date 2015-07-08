@@ -403,13 +403,14 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
 ## Contenu de la réponse
 
-+ **delivery_id** *(string)* - Identifiant de la commande créée.   
-**Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
-+ **slot** *(hash)* : Informations de la plage horaire commandée.
-  + **starts_at** *(datetime UTC)* : Début d'un créneau horaire.
-  + **ends_at** *(datetime UTC)* : Fin d'un créneau horaire.
-  + **slot_size** *(integer)* : Taille du créneau horaire (en minutes).
-  + **price** *(float)* : Coût HT de la livraison (en euro).
++ **delivery** *(hash)* : Informations sur la commande créée
+    + **id** *(string)* - Identifiant de la commande créée.   
+    **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
+    + **slot** *(hash)* : Informations de la plage horaire commandée.
+      + **starts_at** *(datetime UTC)* : Début d'un créneau horaire.
+      + **ends_at** *(datetime UTC)* : Fin d'un créneau horaire.
+      + **slot_size** *(integer)* : Taille du créneau horaire (en minutes).
+      + **price** *(float)* : Coût HT de la livraison (en euro).
   
 ## Exemple de pré-commande de livraison B2B [POST]
 
