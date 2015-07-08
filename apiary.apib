@@ -41,12 +41,74 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 ## Introduction
 
-Nous gérons des livraisons partant d'un point A (point de retrait) et arrivant à un point B (point de livraison).   
-Nous avons formalisé cette notion de "points" dans des types de données spécifiques.
+Nous gérons des **livraisons** partant d'un **point A** (point de retrait) et arrivant à un **point B** (point de livraison).   
+Nous avons formalisé ces notions de "livraisons" de "points" dans des types de données spécifiques.
 
-Un schéma vallant mille mots, voici un schéma UML des entités décrites ci-dessous.   
+Voici un schéma UML des entités décrites ci-dessous.   
 
 ![alt text](https://photos-3.dropbox.com/t/2/AABb5vgJqqMVz0sT3K2hhzUFZzEvg6asyl4vr3q1ipFEUg/12/8290481/png/32x32/1/_/1/2/apiv4_entities.png/EJPblQYYh4krIAEgAigB/Ojc6sY27se8xUvqv9ta96UGmvPKniXaASdBfgddj5lo?size=1280x960&size_mode=2 "UML des entitées composant un Point")
+
+## L'entité "Delivery"
+
+{
+    "delivery": {
+        "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+        "order_ref": "R10390",
+        "order_id": "987663"
+        "command_status": "CANCELED",
+        "transporter_status": "CANCELED",
+        "sender_status": "CANCELED",
+        "slot": {
+            "starts_at": "2015-04-22T16:00:00+00:00",
+            "ends_at": "2015-04-22T18:00:00+00:00",
+            "slot_size": 120,
+            "price": 5.55
+        },
+        "points": [
+            {
+                "point_type": "PICKUP",
+                "address": {
+                    "society": "Twelve factors & C",
+                    "first_name": "Helmout",
+                    "last_name": "Ardelpik",
+                    "email": "helmoutardelpik@gmail.com",
+                    "primary_phone": "0694385693",
+                    "secondary_phone": "0354678942",
+                    "line1": "165, avenue des champs Elysées",
+                    "line2": "Batiment Leblanc",
+                    "additional_informations": "Digicode B345, 3 éme etage",
+                    "zip_code": "75001",
+                    "city": "Paris",
+                    "country": "France",
+                    "send_delivery_statuses": true,
+                    "send_survey": true
+                }
+            },
+            {
+                "point_type": "SHIPPING"
+                "store" {
+                    "store_code": "100002"
+                }
+            }
+        ],
+        "packets": [
+            {
+                "product_description": "Ipad mini",
+                "weight": 1.55,
+                "height": 14.55,
+                "length": 15.55,
+                "width": 16.55
+            },
+            {
+                "product_description": "Iphone",
+                "weight": 2.55,
+                "height": 24.55,
+                "length": 25.55,
+                "width": 26.55
+            }
+        ]
+    }
+}
 
 ## L'entité "Point"
 
@@ -404,8 +466,11 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 ## Contenu de la réponse
 
 + **delivery** *(hash)* : Informations sur la commande créée
-    + **id** *(string)* - Identifiant de la commande créée.   
+    + **command_id** *(string)* - Identifiant de la commande créée.   
     **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
+    + **command_status**: ```"PRE_ORDERED"```
+    + **transporter_status**: ```"IDLE"```
+    + **sender_status**: ```"IDLE"```
     + **slot** *(hash)* : Informations de la plage horaire commandée.
       + **starts_at** *(datetime UTC)* : Début d'un créneau horaire.
       + **ends_at** *(datetime UTC)* : Fin d'un créneau horaire.
@@ -456,7 +521,10 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
+                "transporter_status": "IDLE",
+                "sender_status": "IDLE",
                 "slot": {
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
@@ -523,7 +591,10 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
+                "transporter_status": "IDLE",
+                "sender_status": "IDLE",
                 "slot": {
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
@@ -590,7 +661,10 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
+                "transporter_status": "IDLE",
+                "sender_status": "IDLE",
                 "slot": {
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
@@ -670,7 +744,10 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
+                "transporter_status": "IDLE",
+                "sender_status": "IDLE",
                 "slot": {
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
@@ -682,8 +759,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
 # Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
 
-Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné un
-**delivery_id**, vous devez la confirmer pour finaliser votre commande.
+Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le **command_id** de votre commande, vous devez la confirmer pour finaliser votre commande.
 
 ***Attention*** : Un maximum de **15 minutes** est autorisé entre la pré-commande et la confirmation de la commande.   
 Au delà, une erreur **delivery_has_expired** est renvoyée.
@@ -692,15 +768,17 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
 
 + **api_key** *(required, string)* : Clé API Colisweb
 + **order_ref** *(required if not C2C, string)* : Référence commande de votre plateforme   
-(permet au transporteur d'identifier le colis en boutique)
-+ **order_id** *(optional, string)* : identifiant commande interne à votre plateforme
+(permet au transporteur d'identifier le colis en boutique).
++ **order_id** *(optional, string)* : identifiant commande interne à votre plateforme.
 
 ## Contenu de la réponse
 
-!!!! mettre les statuts mag/transporteur/global à la place
-+ **confirmed** *(boolean)* : la valeur ```true``` indique que la livraison a bien été prise en compte.
++ **delivery** *(<strong>Delivery</strong>)* : Informations sur la livraison commandé
 
 ## PUT
+
++ Parameters
+    + delivery_id - Identifiant de la livraison obtenue lors de la pré-commande
 
 + Request (application/json)
 
@@ -711,6 +789,24 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
         }
 
 + Response 200 (application/json)
+        
+        {
+            "delivery": {
+                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "CONFIRMED",
+                "transporter_status": "IDLE",
+                "sender_status": "PREPARING",
+                "slot": {
+                    "starts_at": "2015-04-22T16:00:00+00:00",
+                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 5.55
+                },
+                "order_ref": "R10390",
+                "order_id": "987663"
+            }
+        }
+        
 
 
 # Annuler une livraison [/deliveries/{delivery_id}/cancel]
@@ -724,6 +820,7 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 
 ## Contenu de la réponse
 
++ **delivery** *(<strong>Delivery</strong>)* : Informations sur la livraison commandé
 
 
 ## PUT
@@ -738,5 +835,22 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
         }
 
 + Response 200
+
+        {
+            "delivery": {
+                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "CANCELED",
+                "transporter_status": "CANCELED",
+                "sender_status": "CANCELED",
+                "slot": {
+                    "starts_at": "2015-04-22T16:00:00+00:00",
+                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 5.55
+                },
+                "order_ref": "R10390",
+                "order_id": "987663"
+            }
+        }
 
 + Response 400
