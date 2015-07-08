@@ -391,7 +391,7 @@ Pour passer une demande en mode "Instantané", passez la date / heure actuelle.
 Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.   
 + **slot_size** *(required, integer)* : Taille de la plage de livraison demandée (en minutes).   
 Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.
-+ **points** *(required, array of **Points**)* : Informations sur les points de retrait et de livraison.    
++ **points** *(required, array of <strong>Points</strong>)* : Informations sur les points de retrait et de livraison.    
 Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités **Point**, l'une ayant comme valeur de **point_type** ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
 + **packets** *(required, array of hashes)* : Informations sur les colis
   + **product_description** *(optional, string)* : Typologie/dénomination du/des produits contenue dans ce "packet".   
