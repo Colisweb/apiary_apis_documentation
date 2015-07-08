@@ -5,12 +5,12 @@ HOST: http://sandbox.api.colisweb.com
 
 Ce document décrit les points d'entrée, appelés **endpoints** dans la suite de ce document, de l'API que fournit **Colisweb** ainsi que les workflows d'utilisations de cette API qui permettent d'effectuer certaines actions complexes.
 
-## Autorisations d'accès
+# Autorisations d'accès
 
 Une clé API est nécéssaire pour l'utilisation de cette API.   
 Afin d'obtenir une clé, vous devez effectuer une demande par mail à support@colisweb.com.
 
-## Environnements
+# Environnements
 
 Deux environnements sont disponibles :  
 
@@ -20,14 +20,14 @@ https://sandbox.api.colisweb.com
 **production** : Après validation des tests en sandbox.   
 https://api.colisweb.com
 
-## URL d'appels
+# URL d'appels
 
 L'URL d'appel à l'API est:   
 https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 **end_point** = Méthodes décrites dans ce document
 
-## Codes d'erreurs
+# Codes d'erreurs
 
 | Error name                | HTTP Status       | Description                       |
 | ------------------------  | ----------------  | --------------------------------- |
@@ -37,9 +37,9 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 | no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
 | missing_delivery          | 404 not found     | Numéro de commande inconnue       |
 
-## Entitées
+# Entitées
 
-### Introduction
+## Introduction
 
 Nous gérons des livraisons partant d'un point A (point de retrait) et arrivant à un point B (point de livraison).   
 Nous avons formalisé cette notion de "points" dans des types de données spécifiques.
@@ -48,7 +48,7 @@ Un schéma vallant mille mots, voici un schéma UML des entités décrites ci-de
 
 ![alt text](https://photos-3.dropbox.com/t/2/AABb5vgJqqMVz0sT3K2hhzUFZzEvg6asyl4vr3q1ipFEUg/12/8290481/png/32x32/1/_/1/2/apiv4_entities.png/EJPblQYYh4krIAEgAigB/Ojc6sY27se8xUvqv9ta96UGmvPKniXaASdBfgddj5lo?size=1280x960&size_mode=2 "UML des entitées composant un Point")
 
-### L'entité "Point"
+## L'entité "Point"
 
 + Un **Point** posséde un attribut **point_type**, qui peut prendre les valeurs suivantes :
     + ```"PICKUP"``` : Signifie que le **Point** sera un point de retrait.
@@ -56,13 +56,13 @@ Un schéma vallant mille mots, voici un schéma UML des entités décrites ci-de
 
 + Un **Point** est composé d'une **Location** : l'endroit physique qui servira de point de retrait ou de livraison.   
 
-### L'entité "Location"
+## L'entité "Location"
 
 Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
 + Une **Address** : Adresse quelconque (celle d'un client que vous souhaitez livrer, par exemple).   
 + Un **Store** : Un de vos magasins.
 
-### L'entité "Address"
+## L'entité "Address"
 
 Une **Address** est composée des attributs suivants : 
 
@@ -83,7 +83,7 @@ Une **Address** est composée des attributs suivants :
 + **send_survey** *(optional, boolean)* : Envoyer  l'enquête de satisfaction au consommateur.
     + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 
-### L'entité "Store"
+## L'entité "Store"
 
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat.   
 Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
@@ -92,9 +92,9 @@ Un **Store** est composé de l'attribut suivant :
 
 + **store_code** *(required, string)* : Code magasin.   
 
-## Types de livraison disponibles
+# Types de livraison disponibles
 
-### Introduction
+## Introduction
 
 Via notre API, vous êtes en mesure de commander **quatres types de livraisons** :
 
@@ -105,7 +105,7 @@ Via notre API, vous êtes en mesure de commander **quatres types de livraisons**
 
 Nous identifions le type de livraison que vous commandez en regardant quel type de **Location** vous nous envoyez dans vos paramètres de requêtes.
 
-### Exemple de paramètre de requête pour du B2B :
+## Exemple de paramètre de requête pour du B2B
 
 ```
 {
@@ -128,7 +128,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
 }
 ```
 
-### Exemple de paramètre de requête pour du B2C :
+## Exemple de paramètre de requête pour du B2C
 
 ```
 {
@@ -164,7 +164,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
 }
 ```
 
-### Exemple de paramètre de requête pour du C2B :
+## Exemple de paramètre de requête pour du C2B
 
 ```
 {
@@ -200,7 +200,7 @@ Nous identifions le type de livraison que vous commandez en regardant quel type 
 }
 ```
 
-### Exemple de paramètre de requête pour du C2C :
+## Exemple de paramètre de requête pour du C2C
 
 ```
 {
