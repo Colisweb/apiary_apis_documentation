@@ -125,7 +125,7 @@ Un **Store** est composé de l'attribut suivant:
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 5.00
                 },
                 "points": [
                     {
@@ -159,14 +159,14 @@ Un **Store** est composé de l'attribut suivant:
                         "product_description": "Ipad mini",
                         "weight": 1.55,
                         "height": 14.55,
-                        "length": 15.55,
+                        "length": 15.00,
                         "width": 16.55
                     },
                     {
                         "product_description": "Iphone",
                         "weight": 2.55,
                         "height": 24.55,
-                        "length": 25.55,
+                        "length": 25.00,
                         "width": 26.55
                     }
                 ]
@@ -416,13 +416,13 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                 {
                     "weight": 1.55,
                     "height": 14.55,
-                    "length": 15.55,
+                    "length": 15.00,
                     "width": 16.55
                 },
                 {
                     "weight": 2.55,
                     "height": 24.55,
-                    "length": 25.55,
+                    "length": 25.00,
                     "width": 26.55
                 }
             ]
@@ -434,20 +434,23 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             "now": [
                 {
                     "slot_size": 120,
-                    "price": 8.00,
+                    "price": 16.00,
                     "service_class": "premium"
                 },
                 {
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 8.00,
+                    "service_class": "standard"
                 },
                 {
                     "slot_size": 180,
-                    "price": 5.55
+                    "price": 10.00,
+                    "service_class": "premium"
                 },
                 {
                     "slot_size": 180,
-                    "price": 5.55
+                    "price": 5.00,
+                    "service_class": "standard"
                 }
             ],
             "planned": [
@@ -455,37 +458,50 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "starts_at": "2015-04-22T10:00:00+00:00",
                     "ends_at": "2015-04-22T12:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 16.00,
+                    "service_class": "premium"
+                },
+                {
+                    "starts_at": "2015-04-22T10:00:00+00:00",
+                    "ends_at": "2015-04-22T12:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 8.00,
+                    "service_class": "standard"
+                },
+                {
+                    "starts_at": "2015-04-22T10:00:00+00:00",
+                    "ends_at": "2015-04-22T13:00:00+00:00",
+                    "slot_size": 180,
+                    "price": 10.00,
+                    "service_class": "premium"
+                },
+                {
+                    "starts_at": "2015-04-22T10:00:00+00:00",
+                    "ends_at": "2015-04-22T13:00:00+00:00",
+                    "slot_size": 180,
+                    "price": 5.00,
+                    "service_class": "standard"
+                },
+                {
+                    "starts_at": "2015-04-22T11:00:00+00:00",
+                    "ends_at": "2015-04-22T13:00:00+00:00",
+                    "slot_size": 120,
+                    "price": 8.00,
+                    "service_class": "standard"
+                },
+                {
+                    "starts_at": "2015-04-22T11:00:00+00:00",
+                    "ends_at": "2015-04-22T14:00:00+00:00",
+                    "slot_size": 180,
+                    "price": 5.00,
+                    "service_class": "standard"
                 },
                 {
                     "starts_at": "2015-04-22T12:00:00+00:00",
                     "ends_at": "2015-04-22T14:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
-                },
-                {
-                    "starts_at": "2015-04-22T14:00:00+00:00",
-                    "ends_at": "2015-04-22T15:00:00+00:00",
-                    "slot_size": 60,
-                    "price": 5.55
-                },
-                {
-                    "starts_at": "2015-04-23T10:00:00+00:00",
-                    "ends_at": "2015-04-23T12:00:00+00:00",
-                    "slot_size": 120,
-                    "price": 5.55
-                },
-                {
-                    "starts_at": "2015-04-23T12:00:00+00:00",
-                    "ends_at": "2015-04-23T14:00:00+00:00",
-                    "slot_size": 120,
-                    "price": 5.55
-                },
-                {
-                    "starts_at": "2015-04-23T14:00:00+00:00",
-                    "ends_at": "2015-04-23T15:00:00+00:00",
-                    "slot_size": 60,
-                    "price": 5.55
+                    "price": 8.00,
+                    "service_class": "standard"
                 }
             ]
         }
@@ -554,14 +570,14 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "product_description": "Ipad mini",
                     "weight": 1.55,
                     "height": 14.55,
-                    "length": 15.55,
+                    "length": 15.00,
                     "width": 16.55
                 },
                 {
                     "product_description": "Iphone",
                     "weight": 2.55,
                     "height": 24.55,
-                    "length": 25.55,
+                    "length": 25.00,
                     "width": 26.55
                 }
             ]
@@ -579,7 +595,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 5.00
                 }
             }
         }
@@ -624,14 +640,14 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "product_description": "Ipad mini",
                     "weight": 1.55,
                     "height": 14.55,
-                    "length": 15.55,
+                    "length": 15.00,
                     "width": 16.55
                 },
                 {
                     "product_description": "Iphone",
                     "weight": 2.55,
                     "height": 24.55,
-                    "length": 25.55,
+                    "length": 25.00,
                     "width": 26.55
                 }
             ]
@@ -649,7 +665,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 5.00
                 }
             }
         }
@@ -694,14 +710,14 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "product_description": "Ipad mini",
                     "weight": 1.55,
                     "height": 14.55,
-                    "length": 15.55,
+                    "length": 15.00,
                     "width": 16.55
                 },
                 {
                     "product_description": "Iphone",
                     "weight": 2.55,
                     "height": 24.55,
-                    "length": 25.55,
+                    "length": 25.00,
                     "width": 26.55
                 }
             ]
@@ -719,7 +735,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 5.00
                 }
             }
         }
@@ -777,14 +793,14 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "product_description": "Ipad mini",
                     "weight": 1.55,
                     "height": 14.55,
-                    "length": 15.55,
+                    "length": 15.00,
                     "width": 16.55
                 },
                 {
                     "product_description": "Iphone",
                     "weight": 2.55,
                     "height": 24.55,
-                    "length": 25.55,
+                    "length": 25.00,
                     "width": 26.55
                 }
             ]
@@ -802,7 +818,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 5.00
                 }
             }
         }
@@ -850,7 +866,7 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 5.00
                 },
                 "order_ref": "R10390",
                 "order_id": "987663"
@@ -896,7 +912,7 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
                     "slot_size": 120,
-                    "price": 5.55
+                    "price": 5.00
                 },
                 "order_ref": "R10390",
                 "order_id": "987663"
