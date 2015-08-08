@@ -95,7 +95,7 @@ Une **Address** est composée des attributs suivants:
 + ```postal_code``` *(required, string)*: Code postal.
 + ```city``` *(required, string)*: Ville.
 + ```country``` *(required, string)*: Pays.
-+ ```send_delivery_statuses``` *(optional, boolean)*: Envoyer les statuts de livraison par sms/email au consommateur.
++ ```send_command_statuses``` *(optional, boolean)*: Envoyer les statuts de livraison par sms/email au consommateur.
     + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 + ```send_survey``` *(optional, boolean)*: Envoyer  l'enquête de satisfaction au consommateur.
     + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
@@ -111,65 +111,20 @@ Un **Store** est composé de l'attribut suivant:
 
 ## L'entité "Delivery"
 
-<!-- TODO Jules 
+<!-- TODO Jules: Décrire ce qu'est une Delivery -->
+<!-- TODO Jules: Decider si l'on renvoie toutes les informations sur la delivery (avec packets && points) ou juste ce qui suit. Pour l'instant je suis plutôt partie sur la version minimal (sans packets && points) : 
 
         {
             "delivery": {
-                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "order_ref": "R10390",
-                "order_id": "987663"
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
                 "command_status": "CANCELED",
-                "transporter_status": "CANCELED",
-                "sender_status": "C ANCELED",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+02:00",
-                    "ends_at": "2015-04-22T18:00:00+02:00",
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T12:00:00+02:00",
                     "slot_size": 120,
-                    "price": 5.00
-                },
-                "points": [
-                    {
-                        "point_type": "PICKUP",
-                        "point": {
-                            "society": "Twelve factors & C",
-                            "first_name": "Helmout",
-                            "last_name": "Ardelpik",
-                            "email": "helmoutardelpik@gmail.com",
-                            "primary_phone": "0694385693",
-                            "secondary_phone": "0354678942",
-                            "line1": "165, avenue des champs Elysées",
-                            "line2": "Batiment Leblanc",
-                            "additional_informations": "Digicode B345, 3 éme etage",
-                            "postal_code": "75001",
-                            "city": "Paris",
-                            "country": "France",
-                            "send_delivery_statuses": true,
-                            "send_survey": true
-                        }
-                    },
-                    {
-                        "point_type": "SHIPPING"
-                        "point" {
-                            "store_code": "100002"
-                        }
-                    }
-                ],
-                "packets": [
-                    {
-                        "product_description": "Ipad mini",
-                        "weight": 1.55,
-                        "height": 14.55,
-                        "length": 15.00,
-                        "width": 16.55
-                    },
-                    {
-                        "product_description": "Iphone",
-                        "weight": 2.55,
-                        "height": 24.55,
-                        "length": 25.00,
-                        "width": 26.55
-                    }
-                ]
+                    "price": 5.00,
+                    "service_class": "standard"
+                }
             }
         }
         -->
@@ -245,7 +200,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
                 "postal_code": "75001",
                 "city": "Paris",
                 "country": "France",
-                "send_delivery_statuses": true,
+                "send_command_statuses": true,
                 "send_survey": true
             }
         }
@@ -276,7 +231,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
                 "postal_code": "75001",
                 "city": "Paris",
                 "country": "France",
-                "send_delivery_statuses": true,
+                "send_command_statuses": true,
                 "send_survey": true
             }
         },
@@ -314,7 +269,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
                 "postal_code": "75015",
                 "city": "Paris",
                 "country": "France",
-                "send_delivery_statuses": true,
+                "send_command_statuses": true,
                 "send_survey": true
             }
         },
@@ -334,7 +289,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
                 "postal_code": "75001",
                 "city": "Paris",
                 "country": "France",
-                "send_delivery_statuses": true,
+                "send_command_statuses": true,
                 "send_survey": true
             }
         }
@@ -538,11 +493,10 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
 ## Contenu de la réponse
 
-+ ```delivery``` *(<strong>Delivery</strong>)*: Informations sur la livraison créée
-  + ```command``` *(hash)*: Informations sur l'état de la commande
-      + ```command_id``` *(string)* - Identifiant de la commande créée.   
-      **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
-      + ```status```: ```"PRE_ORDERED"```
++ ```delivery``` *(hash)*: Informations sur la livraison créée
+  + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
+  **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
+  + ```command_status```: ```"PRE_ORDERED"```
   + ```slot``` *(hash)*: Informations de la plage horaire commandée.
     + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
     + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
@@ -600,10 +554,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "command": {
-                    "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                    "status": "PRE_ORDERED"
-                },
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
                 "slot": {
                     "starts_at": "2015-04-22T10:00:00+02:00",
                     "ends_at": "2015-04-22T12:00:00+02:00",
@@ -649,7 +601,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                         "postal_code": "75001",
                         "city": "Paris",
                         "country": "France",
-                        "send_delivery_statuses": true,
+                        "send_command_statuses": true,
                         "send_survey": true
                     }
                 }
@@ -676,10 +628,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "command": {
-                    "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                    "status": "PRE_ORDERED"
-                },
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
                 "slot": {
                     "starts_at": "2015-04-22T10:00:00+02:00",
                     "ends_at": "2015-04-22T12:00:00+02:00",
@@ -718,7 +668,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                         "postal_code": "75001",
                         "city": "Paris",
                         "country": "France",
-                        "send_delivery_statuses": true,
+                        "send_command_statuses": true,
                         "send_survey": true
                     }
                 },
@@ -752,10 +702,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "command": {
-                    "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                    "status": "PRE_ORDERED"
-                },
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
                 "slot": {
                     "starts_at": "2015-04-22T10:00:00+02:00",
                     "ends_at": "2015-04-22T12:00:00+02:00",
@@ -794,7 +742,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                         "postal_code": "75015",
                         "city": "Paris",
                         "country": "France",
-                        "send_delivery_statuses": true,
+                        "send_command_statuses": true,
                         "send_survey": true
                     }
                 },
@@ -814,7 +762,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                         "postal_code": "75001",
                         "city": "Paris",
                         "country": "France",
-                        "send_delivery_statuses": true,
+                        "send_command_statuses": true,
                         "send_survey": true
                     }
                 }
@@ -841,10 +789,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "command": {
-                    "id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                    "status": "PRE_ORDERED"
-                },
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "PRE_ORDERED",
                 "slot": {
                     "starts_at": "2015-04-22T10:00:00+02:00",
                     "ends_at": "2015-04-22T12:00:00+02:00",
@@ -857,21 +803,29 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
 # Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
 
-Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```command_id``` de votre commande, vous devez la confirmer pour finaliser votre commande.
+Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```delivery_id``` de votre commande, vous devez la confirmer pour finaliser votre commande.
 
 ***Attention***: Un maximum de **15 minutes** est autorisé entre la pré-commande et la confirmation de la commande.   
-Au delà, une erreur **delivery_has_expired** est renvoyée.
+Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 
 ## Paramètres de requête
 
 + ```api_key``` *(required, string)*: Clé API Colisweb
-+ ```order_ref``` *(required if not C2C, string)*: Référence commande de votre plateforme   
-(permet au transporteur d'identifier le colis en boutique).
-+ ```order_id``` *(optional, string)*: identifiant commande interne à votre plateforme.
++ ```primary_order_reference:``` *(required if not C2C, string)*: Référence primaire commande de votre plateforme.   
+**Cette référence permet au transporteur d'identifier le colis au moment de la récupération du colis.**
++ ```secondary_order_reference``` *(optional, string)*: Référence secondaire commande de votre plateforme, si vous en avez.
 
 ## Contenu de la réponse
 
-+ ```delivery``` *(<strong>Delivery</strong>)*: Informations sur la livraison commandé
++ ```delivery``` *(hash)*: Informations sur la livraison confirmé
+  + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
+  + ```command_status```: ```"CONFIRMED"```
+  + ```slot``` *(hash)*: Informations de la plage horaire commandée.
+    + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
+    + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
+    + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
+    + ```price``` *(float)*: Coût HT de la livraison (en euro).
+    + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
 
 ## PUT
 
@@ -882,26 +836,23 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
 
         {
             "api_key": "3025688655a161aeb167b7b33f03c013",
-            "order_ref": "R10390",
-            "order_id": "987663"
+            "primary_order_reference:": "R10390",
+            "secondary_order_reference": "987663"
         }
 
 + Response 200 (application/json)
         
         {
             "delivery": {
-                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
                 "command_status": "CONFIRMED",
-                "transporter_status": "IDLE",
-                "sender_status": "PREPARING",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+02:00",
-                    "ends_at": "2015-04-22T18:00:00+02:00",
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T12:00:00+02:00",
                     "slot_size": 120,
-                    "price": 5.00
-                },
-                "order_ref": "R10390",
-                "order_id": "987663"
+                    "price": 5.00,
+                    "service_class": "standard"
+                }
             }
         }
         
@@ -912,14 +863,23 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
 Vous pouvez annuler une livraison jusqu'à un certain stade d'avancement de celle-ci.   
 Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable.
 
+<!-- TODO: améliorer le description en disant ce qu'il se passe lorsque l'annulation est refusé.  -->
+
 ## Paramètres de requête
 
 + ```api_key``` *(required, string)*: Clé API Colisweb
 
 ## Contenu de la réponse
 
-+ ```delivery``` *(<strong>Delivery</strong>)*: Informations sur la livraison commandé
-
++ ```delivery``` *(hash)*: Informations sur la livraison confirmé
+  + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
+  + ```command_status```: ```"CANCELED"```
+  + ```slot``` *(hash)*: Informations de la plage horaire commandée.
+    + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
+    + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
+    + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
+    + ```price``` *(float)*: Coût HT de la livraison (en euro).
+    + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
 
 ## PUT
 
@@ -936,18 +896,15 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 
         {
             "delivery": {
-                "command_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
                 "command_status": "CANCELED",
-                "transporter_status": "CANCELED",
-                "sender_status": "CANCELED",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+02:00",
-                    "ends_at": "2015-04-22T18:00:00+02:00",
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T12:00:00+02:00",
                     "slot_size": 120,
-                    "price": 5.00
-                },
-                "order_ref": "R10390",
-                "order_id": "987663"
+                    "price": 5.00,
+                    "service_class": "standard"
+                }
             }
         }
 
