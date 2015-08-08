@@ -44,8 +44,11 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 Nous gérons des **livraisons** partant d'un **point A** (point de retrait) et arrivant à un **point B** (point de livraison).   
 Nous avons formalisé ces notions de **livraisons** et de **points** dans des types de données spécifiques.
 
+Les échanges de données se feront grâce à ces types de données.
+
 Voici un schéma UML des entités décrites ci-dessous.   
 
+<!-- TODO : Mettre à jour le schéma -->
 ![alt text](https://photos-5.dropbox.com/t/2/AAA5du9CNqQyOgj7LI5yVEfP0XvJ8ygSmqYD6vSBTx0K5A/12/8290481/png/32x32/1/_/1/2/apiv4_entities_v3.png/EJPblQYYjYkrIAEgAigB/683o8fd9fePEBZxdLwOJycwUXN5g2UTcY48GC0zoAq0?size=1280x960&size_mode=2 "UML des entitées de l'API")
 
 ## L'entité "Point"
@@ -56,7 +59,7 @@ Voici un schéma UML des entités décrites ci-dessous.
         + ```"SHIPPING"``` : signifie que le **Point** représente un point de livraison.
     + L'attribut ```address_type``` qui peut prendre les valeurs suivantes :
         + ```"STORE"``` : signifie que le **Point** représente un magasin.
-        + ```"CONSUMER"``` : signifie que le **Point** représente l'adresse d'une personne. // TODO: trouver un meilleur terme que "personne"
+        + ```"CONSUMER"``` : signifie que le **Point** représente l'adresse d'une personne. <!-- TODO: trouver un meilleur terme que "personne" -->
 
 
 + Un **Point** est composé d'une **Location** : l'endroit physique qui servira de point de retrait ou de livraison.   
@@ -107,7 +110,7 @@ Un **Store** est composé de l'attribut suivant :
 
 ## L'entité "Delivery"
 
-TODO Jules
+<!-- TODO Jules 
 
         {
             "delivery": {
@@ -116,7 +119,7 @@ TODO Jules
                 "order_id": "987663"
                 "command_status": "CANCELED",
                 "transporter_status": "CANCELED",
-                "sender_status": "CANCELED",
+                "sender_status": "C ANCELED",
                 "slot": {
                     "starts_at": "2015-04-22T16:00:00+00:00",
                     "ends_at": "2015-04-22T18:00:00+00:00",
@@ -168,6 +171,7 @@ TODO Jules
                 ]
             }
         }
+        -->
 
 # Entités en sortie
 
@@ -336,7 +340,7 @@ Exemple :
 2015-04-22T12:00:00+00:00
 ```
 
-TODO Jules
+<!-- TODO Jules -->
 
 
 # Group Gestion et commande de livraisons
