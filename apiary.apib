@@ -130,7 +130,7 @@ Un **Store** est composé de l'attribut suivant :
                 "points": [
                     {
                         "point_type": "PICKUP",
-                        "address": {
+                        "point": {
                             "society": "Twelve factors & C",
                             "first_name": "Helmout",
                             "last_name": "Ardelpik",
@@ -149,7 +149,7 @@ Un **Store** est composé de l'attribut suivant :
                     },
                     {
                         "point_type": "SHIPPING"
-                        "store" {
+                        "point" {
                             "store_code": "100002"
                         }
                     }
@@ -176,6 +176,8 @@ Un **Store** est composé de l'attribut suivant :
 
 # Entités en sortie
 
+<!-- TODO Jules -->
+
 # Types de livraison disponibles
 
 ## Introduction
@@ -187,7 +189,7 @@ Via notre API, vous êtes en mesure de commander **quatres types de livraisons**
 + **C2B** (exemple : retour magasin)
 + **C2C** (exemple : livraison entres deux adresses quelconques)
 
-Nous identifions le type de livraison que vous commandez en regardant quels types d'entités **Location** vous nous envoyez dans vos paramètres de requêtes.
+Nous identifions le type de livraison que vous commandez en regardant avec l'attribut ```address_type``` des **Points** que vous nous envoyez.
 
 ## Exemple de paramètre de requête pour du B2B
 
@@ -197,13 +199,15 @@ Nous identifions le type de livraison que vous commandez en regardant quels type
     "points": [
         {
             "point_type": "PICKUP",
-            "store" {
+            "address_type": "STORE",
+            "point" {
                 "store_code": "100001"
             }
         },
         {
-            "point_type": "SHIPPING"
-            "store" {
+            "point_type": "SHIPPING",
+            "address_type": "STORE",
+            "point" {
                 "store_code": "100002"
             }
         }
@@ -220,13 +224,15 @@ Nous identifions le type de livraison que vous commandez en regardant quels type
     "points": [
         {
             "point_type": "PICKUP",
-            "store" {
+            "address_type": "STORE",
+            "point" {
                 "store_code": "100001"
             }
         },
         {
             "point_type": "SHIPPING",
-            "address": {
+            "address_type": "CONSUMER",
+            "point": {
                 "society": "Twelve factors & C",
                 "first_name": "Helmout",
                 "last_name": "Ardelpik",
@@ -256,7 +262,8 @@ Nous identifions le type de livraison que vous commandez en regardant quels type
     "points": [
         {
             "point_type": "PICKUP",
-            "address": {
+            "address_type": "CONSUMER",
+            "point": {
                 "society": "Twelve factors & C",
                 "first_name": "Helmout",
                 "last_name": "Ardelpik",
@@ -274,8 +281,9 @@ Nous identifions le type de livraison que vous commandez en regardant quels type
             }
         },
         {
-            "point_type": "SHIPPING"
-            "store" {
+            "point_type": "SHIPPING",
+            "address_type": "STORE",
+            "point" {
                 "store_code": "100002"
             }
         }
@@ -292,7 +300,8 @@ Nous identifions le type de livraison que vous commandez en regardant quels type
     "points": [
         {
             "point_type": "PICKUP",
-            "address": {
+            "address_type": "CONSUMER",
+            "point": {
                 "society": "",
                 "first_name": "Alan",
                 "last_name": "Turing",
@@ -311,7 +320,8 @@ Nous identifions le type de livraison que vous commandez en regardant quels type
         },
         {
             "point_type": "SHIPPING",
-            "address": {
+            "address_type": "CONSUMER",
+            "point": {
                 "society": "Twelve factors & C",
                 "first_name": "Helmout",
                 "last_name": "Ardelpik",
@@ -387,13 +397,13 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             "points": [
                 {
                    "point_type": "PICKUP",
-                   "address": {
+                   "point": {
                        "zip_code": "75012"                       
                    }
                 },
                 {
                     "point_type": "SHIPPING",
-                    "store": {
+                    "point": {
                         "store_code": "100001"                        
                     }
                 }
@@ -510,13 +520,13 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             "points": [
                 {
                     "point_type": "PICKUP",
-                    "store": {
+                    "point": {
                         "store_code": "100001"
                     }
                 },
                 {
                     "point_type": "SHIPPING",
-                    "store": {
+                    "point": {
                         "store_code": "100002"
                     }
                 }
@@ -567,13 +577,13 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             "points": [
                 {
                     "point_type": "PICKUP",
-                    "store": {
+                    "point": {
                         "store_code": "100001"
                     }
                 },
                 {
                     "point_type": "SHIPPING",
-                    "address": {
+                    "point": {
                         "society": "Twelve factors & C",
                         "first_name": "Helmout",
                         "last_name": "Ardelpik",
@@ -637,7 +647,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             "points": [
                 {
                     "point_type": "PICKUP",
-                    "address": {
+                    "point": {
                         "society": "Twelve factors & C",
                         "first_name": "Helmout",
                         "last_name": "Ardelpik",
@@ -656,7 +666,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                 },
                 {
                     "point_type": "SHIPPING",
-                    "store": {
+                    "point": {
                         "store_code": "100001"
                     }
                 }
@@ -707,7 +717,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             "points": [
                 {
                     "point_type": "PICKUP",
-                    "address": {
+                    "point": {
                         "society": "",
                         "first_name": "Alan",
                         "last_name": "Turing",
@@ -726,7 +736,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                 },
                 {
                     "point_type": "SHIPPING",
-                    "address": {
+                    "point": {
                         "society": "Twelve factors & C",
                         "first_name": "Helmout",
                         "last_name": "Ardelpik",
