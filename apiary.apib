@@ -122,8 +122,8 @@ Un **Store** est composé de l'attribut suivant:
                 "transporter_status": "CANCELED",
                 "sender_status": "C ANCELED",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+00:00",
-                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "starts_at": "2015-04-22T16:00:00+02:00",
+                    "ends_at": "2015-04-22T18:00:00+02:00",
                     "slot_size": 120,
                     "price": 5.00
                 },
@@ -455,50 +455,50 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ],
             "planned": [
                 {
-                    "starts_at": "2015-04-22T10:00:00+00:00",
-                    "ends_at": "2015-04-22T12:00:00+00:00",
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T12:00:00+02:00",
                     "slot_size": 120,
                     "price": 16.00,
                     "service_class": "premium"
                 },
                 {
-                    "starts_at": "2015-04-22T10:00:00+00:00",
-                    "ends_at": "2015-04-22T12:00:00+00:00",
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T12:00:00+02:00",
                     "slot_size": 120,
                     "price": 8.00,
                     "service_class": "standard"
                 },
                 {
-                    "starts_at": "2015-04-22T10:00:00+00:00",
-                    "ends_at": "2015-04-22T13:00:00+00:00",
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T13:00:00+02:00",
                     "slot_size": 180,
                     "price": 10.00,
                     "service_class": "premium"
                 },
                 {
-                    "starts_at": "2015-04-22T10:00:00+00:00",
-                    "ends_at": "2015-04-22T13:00:00+00:00",
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T13:00:00+02:00",
                     "slot_size": 180,
                     "price": 5.00,
                     "service_class": "standard"
                 },
                 {
-                    "starts_at": "2015-04-22T11:00:00+00:00",
-                    "ends_at": "2015-04-22T13:00:00+00:00",
+                    "starts_at": "2015-04-22T11:00:00+02:00",
+                    "ends_at": "2015-04-22T13:00:00+02:00",
                     "slot_size": 120,
                     "price": 8.00,
                     "service_class": "standard"
                 },
                 {
-                    "starts_at": "2015-04-22T11:00:00+00:00",
-                    "ends_at": "2015-04-22T14:00:00+00:00",
+                    "starts_at": "2015-04-22T11:00:00+02:00",
+                    "ends_at": "2015-04-22T14:00:00+02:00",
                     "slot_size": 180,
                     "price": 5.00,
                     "service_class": "standard"
                 },
                 {
-                    "starts_at": "2015-04-22T12:00:00+00:00",
-                    "ends_at": "2015-04-22T14:00:00+00:00",
+                    "starts_at": "2015-04-22T12:00:00+02:00",
+                    "ends_at": "2015-04-22T14:00:00+02:00",
                     "slot_size": 120,
                     "price": 8.00,
                     "service_class": "standard"
@@ -519,8 +519,13 @@ Pour passer une demande en mode "Instantané", passez la date / heure actuelle.
 Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.   
 + ```slot_size``` *(required, integer)*: Taille de la plage de livraison demandée (en minutes).   
 Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.
+
+<!-- TODO Jules : ici ce n'est plus vraiment vrai. Nous n'acceptons plus que les valeurs fournies par /deliveries/options. Trouver une formulation correcte -->
+
+
 + ```points``` *(required, array of <strong>Points</strong>)*: Informations sur les points de retrait et de livraison.    
 Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```point_type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
+*Remarque*: Ce endpoint n'accepte que les entités **Address** et **Store** au sein des **Point**.
 + ```packets``` *(required, array of hashes)*: Informations sur les colis
   + ```product_description``` *(optional, string)*: Typologie/dénomination du/des produits contenue dans ce "packet".   
   Exemple: "micro-onde".
@@ -549,7 +554,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "api_key": "3025688655a161aeb167b7b33f03c013",
-            "starts_at": "2015-04-22T16:00:00+00:00",
+            "starts_at": "2015-04-22T16:00:00+02:00",
             "slot_size": 120,
             "points": [
                 {
@@ -592,8 +597,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                 "transporter_status": "IDLE",
                 "sender_status": "IDLE",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+00:00",
-                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "starts_at": "2015-04-22T16:00:00+02:00",
+                    "ends_at": "2015-04-22T18:00:00+02:00",
                     "slot_size": 120,
                     "price": 5.00
                 }
@@ -606,7 +611,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "api_key": "3025688655a161aeb167b7b33f03c013",
-            "starts_at": "2015-04-22T16:00:00+00:00",
+            "starts_at": "2015-04-22T16:00:00+02:00",
             "slot_size": 120,
             "points": [
                 {
@@ -662,8 +667,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                 "transporter_status": "IDLE",
                 "sender_status": "IDLE",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+00:00",
-                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "starts_at": "2015-04-22T16:00:00+02:00",
+                    "ends_at": "2015-04-22T18:00:00+02:00",
                     "slot_size": 120,
                     "price": 5.00
                 }
@@ -676,7 +681,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "api_key": "3025688655a161aeb167b7b33f03c013",
-            "starts_at": "2015-04-22T16:00:00+00:00",
+            "starts_at": "2015-04-22T16:00:00+02:00",
             "slot_size": 120,
             "points": [
                 {
@@ -732,8 +737,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                 "transporter_status": "IDLE",
                 "sender_status": "IDLE",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+00:00",
-                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "starts_at": "2015-04-22T16:00:00+02:00",
+                    "ends_at": "2015-04-22T18:00:00+02:00",
                     "slot_size": 120,
                     "price": 5.00
                 }
@@ -746,7 +751,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "api_key": "3025688655a161aeb167b7b33f03c013",
-            "starts_at": "2015-04-22T16:00:00+00:00",
+            "starts_at": "2015-04-22T16:00:00+02:00",
             "slot_size": 120,
             "points": [
                 {
@@ -815,8 +820,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
                 "transporter_status": "IDLE",
                 "sender_status": "IDLE",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+00:00",
-                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "starts_at": "2015-04-22T16:00:00+02:00",
+                    "ends_at": "2015-04-22T18:00:00+02:00",
                     "slot_size": 120,
                     "price": 5.00
                 }
@@ -863,8 +868,8 @@ Au delà, une erreur **delivery_has_expired** est renvoyée.
                 "transporter_status": "IDLE",
                 "sender_status": "PREPARING",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+00:00",
-                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "starts_at": "2015-04-22T16:00:00+02:00",
+                    "ends_at": "2015-04-22T18:00:00+02:00",
                     "slot_size": 120,
                     "price": 5.00
                 },
@@ -909,8 +914,8 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
                 "transporter_status": "CANCELED",
                 "sender_status": "CANCELED",
                 "slot": {
-                    "starts_at": "2015-04-22T16:00:00+00:00",
-                    "ends_at": "2015-04-22T18:00:00+00:00",
+                    "starts_at": "2015-04-22T16:00:00+02:00",
+                    "ends_at": "2015-04-22T18:00:00+02:00",
                     "slot_size": 120,
                     "price": 5.00
                 },
