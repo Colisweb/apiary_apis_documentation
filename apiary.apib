@@ -41,7 +41,7 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 ## Introduction
 
-Nous gérons des **livraisons** partant d'un **point A** (point de retrait) et arrivant à un **point B** (point de livraison). Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
+Nous gérons des **livraisons** partant d'un **point A** (pickup) et arrivant à un **point B** (shipping). Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
 
 <!--
 Voici un schéma UML des entités décrites ci-dessous.   
@@ -49,18 +49,11 @@ TODO: Mettre à jour le schéma
 ![alt text](https://photos-5.dropbox.com/t/2/AAA5du9CNqQyOgj7LI5yVEfP0XvJ8ygSmqYD6vSBTx0K5A/12/8290481/png/32x32/1/_/1/2/apiv4_entities_v3.png/EJPblQYYjYkrIAEgAigB/683o8fd9fePEBZxdLwOJycwUXN5g2UTcY48GC0zoAq0?size=1280x960&size_mode=2 "UML des entitées de l'API")
  -->
  
-## L'entité "Point"
+### L'entité "Point"
 
-+ Un **Point** possède deux attributs qui définissent ce que ce point représente:
-    + L'attribut ```point_type``` qui peut prendre les valeurs suivantes:
-        + ```"PICKUP"```: signifie que le **Point** représente un point de retrait.
-        + ```"SHIPPING"```: signifie que le **Point** représente un point de livraison.
-    + L'attribut ```location_type``` qui peut prendre les valeurs suivantes:
-        + ```"STORE"```: signifie que le **Point** représente un magasin.
-        + ```"CONSUMER"```: signifie que le **Point** représente l'adresse d'un client.
-
-
-+ Un **Point** est composé d'une **Location**: l'endroit physique qui servira de point de retrait ou de livraison.   
++ Un **Point** possède deux attributs :
+    + **point_type** (required, enum["pickup", "shipping"])... La nature du point
+    + **location** (required, hash)... Information du point
 
 ## L'entité "Location"
 
@@ -101,7 +94,8 @@ Un **Store** est composé de l'attribut suivant:
 ## L'entité "Delivery"
 
 <!-- TODO Jules: Décrire ce qu'est une Delivery -->
-<!-- TODO Jules: Decider si l'on renvoie toutes les informations sur la delivery (avec packets && points) ou juste ce qui suit. Pour l'instant je suis plutôt partie sur la version minimal (sans packets && points) : 
+<!-- TODO Jules: Decider si l'on renvoie toutes les informations sur la delivery (avec packets && points) ou juste ce qui suit. 
+Pour l'instant je suis plutôt partie sur la version minimal (sans packets && points) : 
 
         {
             "delivery": {
