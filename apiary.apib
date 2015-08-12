@@ -55,7 +55,7 @@ TODO: Mettre à jour le schéma
 
 ### L'entité "Location"
 
-Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
+Une **Location** est un type abstrait qui possède trois spécialisations concrétes:
 + Une **Address** est composée des attributs suivants: 
     + **location_type** *(required, string = "address")*... La nature de la location
     + **society** *(optional, string)*... Société.
@@ -73,9 +73,12 @@ Une **Location** est un type abstrait qui possède deux spécialisations concré
         + **true** par défaut, dépend de la contractualisation avec Colisweb.
     + **send_survey** *(optional, boolean)*... Envoyer  l'enquête de satisfaction au consommateur.
         + **true** par défaut, dépend de la contractualisation avec Colisweb.
-+ Un **Store** est composé de des attributs suivants: 
++ Un **Store** est composé des attributs suivants: 
     + **location_type** *(required, string = "store")*... La nature de la location
     + **store_code** *(optional, string)*... Code magasin.  
++ Une **City** ext composée des attributs suivants:
+    + **location_type** *(required, string = "city")*... La nature de la location
+    + **postal_code** *(optional, string)*... Code postal de la ville.  
     
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
 
