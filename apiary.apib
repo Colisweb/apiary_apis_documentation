@@ -39,8 +39,6 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 # Entités en entrée
 
-## Introduction
-
 Nous gérons des **livraisons** partant d'un **point A** (pickup) et arrivant à un **point B** (shipping). Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
 
 <!--
@@ -106,9 +104,9 @@ Pour l'instant je suis plutôt partie sur la version minimal (sans packets && po
 
 <!-- TODO Jules -->
 
-# Types de livraison disponibles
+## Types de livraison disponibles
 
-## Introduction
+### Introduction
 
 Via notre API, vous êtes en mesure de commander **quatres types de livraisons**:
 
@@ -119,7 +117,7 @@ Via notre API, vous êtes en mesure de commander **quatres types de livraisons**
 
 Nous identifions le type de livraison que vous commandez en regardant avec l'attribut ```address_type``` des **Points** que vous nous envoyez.
 
-## Exemple de paramètre de requête pour du B2B
+### Exemple de paramètre de requête pour du B2B
 
 ```
 {
@@ -144,7 +142,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
 }
 ```
 
-## Exemple de paramètre de requête pour du B2C
+### Exemple de paramètre de requête pour du B2C
 
 ```
 {
@@ -182,7 +180,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
 }
 ```
 
-## Exemple de paramètre de requête pour du C2B
+### Exemple de paramètre de requête pour du C2B
 
 ```
 {
@@ -220,7 +218,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
 }
 ```
 
-## Exemple de paramètre de requête pour du C2C
+### Exemple de paramètre de requête pour du C2C
 
 ```
 {
@@ -271,7 +269,7 @@ Nous identifions le type de livraison que vous commandez en regardant avec l'att
 }
 ```
 
-# Fuseaux Horaires
+## Fuseaux Horaires
 
 Une date en entrée dans notre API n'est valide que si elle respecte le format **ISO 8601 avec indication de fuseau horaire**.   
 Exemple: 
