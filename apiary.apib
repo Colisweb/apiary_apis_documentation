@@ -72,16 +72,16 @@ Une **Location** est un type abstrait qui possède deux spécialisations concré
     + **city** *(required, string)*... Ville.
     + **country** *(required, string)*... Pays.
     + **send_command_status** *(optional, boolean)*... Envoyer les statuts de livraison par sms/email au consommateur.
-        + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-    + **send_survey** *(optional, boolean)*: Envoyer  l'enquête de satisfaction au consommateur.
-        + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+        + **true** par défaut, dépend de la contractualisation avec Colisweb.
+    + **send_survey** *(optional, boolean)*... Envoyer  l'enquête de satisfaction au consommateur.
+        + **true** par défaut, dépend de la contractualisation avec Colisweb.
 + Un **Store** est composé de l'attribut suivant: 
     + **location_type** *(required, string = "store")*... La nature de la location
-    + **store_code** *(required, string)*: Code magasin.  
+    + **store_code** *(required, string)*... Code magasin.  
     
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
 
-## L'entité "Delivery"
+### L'entité "Delivery"
 
 <!-- TODO Jules: Décrire ce qu'est une Delivery -->
 <!-- TODO Jules: Decider si l'on renvoie toutes les informations sur la delivery (avec packets && points) ou juste ce qui suit. 
