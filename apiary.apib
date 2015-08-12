@@ -3,14 +3,14 @@ HOST: http://sandbox.api.colisweb.com
 
 # Colisweb API v4
 
-Ce document décrit les points d'entrée, appelés **endpoints** dans la suite de ce document, de l'API que fournit **Colisweb** ainsi que les workflows d'utilisations de cette API qui permettent d'effectuer certaines actions complexes.
+Ce document décrit les points d'entrée, appelés **endpoints**, de l'API que fournit **Colisweb** ainsi que les workflows d'utilisations.
 
-# Autorisations d'accès
+### Autorisations d'accès
 
-Une clé API est nécéssaire pour l'utilisation de cette API.   
+Une clé API est nécessaire pour l'utilisation de cette API.   
 Afin d'obtenir une clé, vous devez effectuer une demande par mail à support@colisweb.com.
 
-# Environnements
+### Environnements
 
 Deux environnements sont disponibles:  
 
@@ -20,14 +20,14 @@ https://sandbox.api.colisweb.com
 **production**: Après validation des tests en sandbox.   
 https://api.colisweb.com
 
-# URL d'appels
+### URL d'appels
 
-L'URL d'appel à l'API est:   
+L'URL d'appel à l'API est: 
 https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 **end_point** = Méthodes décrites dans ce document
 
-# Codes d'erreurs
+### Codes d'erreurs
 
 | Error name                | HTTP Status       | Description                       |
 | ------------------------  | ----------------  | --------------------------------- |
@@ -41,16 +41,14 @@ https://[sandbox.]api.colisweb/4/<strong>end_point</strong>
 
 ## Introduction
 
-Nous gérons des **livraisons** partant d'un **point A** (point de retrait) et arrivant à un **point B** (point de livraison).   
-Nous avons formalisé ces notions de **livraisons** et de **points** dans des types de données spécifiques.
+Nous gérons des **livraisons** partant d'un **point A** (point de retrait) et arrivant à un **point B** (point de livraison). Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
 
-Les échanges de données se feront grâce à ces types de données.
-
+<!--
 Voici un schéma UML des entités décrites ci-dessous.   
-
-<!-- TODO: Mettre à jour le schéma -->
+TODO: Mettre à jour le schéma
 ![alt text](https://photos-5.dropbox.com/t/2/AAA5du9CNqQyOgj7LI5yVEfP0XvJ8ygSmqYD6vSBTx0K5A/12/8290481/png/32x32/1/_/1/2/apiv4_entities_v3.png/EJPblQYYjYkrIAEgAigB/683o8fd9fePEBZxdLwOJycwUXN5g2UTcY48GC0zoAq0?size=1280x960&size_mode=2 "UML des entitées de l'API")
-
+ -->
+ 
 ## L'entité "Point"
 
 + Un **Point** posséde deux attribut qui définissent ce que ce point représente:
