@@ -81,15 +81,20 @@ Nous enregistrons les informations de vos magasins dans notre système au moment
 
 ### L'entité "Slot"
 
++ Un **Slot** est composée des attributs suivants:
+    + **starts_at** *(required, datetime UTC)*... Début du créneau horaire.
+    + **size** *(required, integer)*... Taille de la plage de livraison (en minutes).
+
 ### L'entité "Packaging"
+
 + Un **Packaging** est composée de deux attributs:
-    + **global_description** *(optional, string)*... La description du packaging
-    + **packets** *(required, array[Packet])*... Les packets composant le packaging
+    + **global_description** *(optional, string)*... La description du packaging.
+    + **packets** *(required, array[Packet])*... Les paquets composant le packaging.
 
 ### L'entité "Packet"
 
 + Un **Packet** est composée des attributs suivants:
-    + **description** *(optional, string)*... La description du packet
+    + **description** *(optional, string)*... La description du paquets.
     + **length** *(required, float)*... Longueur du colis (en cm).
     + **width** *(required, float)*.. Largeur du colis (en cm).
     + **height** *(required, float)*.. Hauteur du colis (en cm).
