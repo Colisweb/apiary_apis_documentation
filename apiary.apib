@@ -73,18 +73,38 @@ Une **Location** est un type abstrait qui possède deux spécialisations concré
         + **true** par défaut, dépend de la contractualisation avec Colisweb.
     + **send_survey** *(optional, boolean)*... Envoyer  l'enquête de satisfaction au consommateur.
         + **true** par défaut, dépend de la contractualisation avec Colisweb.
-+ Un **Store** est composé de l'attribut suivant: 
++ Un **Store** est composé de des attributs suivants: 
     + **location_type** *(required, string = "store")*... La nature de la location
-    + **store_code** *(required, string)*... Code magasin.  
+    + **store_code** *(optional, string)*... Code magasin.  
     
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
 
+### L'entité "Slot"
+
+### L'entité "Packaging"
++ Un **Packaging** est composée de deux attributs:
+    + **global_description** *(optional, string)*... La description du packaging
+    + **packets** *(required, array[Packet])*... Les packets composant le packaging
+
+### L'entité "Packet"
+
++ Un **Packet** est composée des attributs suivants:
+    + **description** *(optional, string)*... La description du packet
+    + **length** *(required, float)*... Longueur du colis (en cm).
+    + **width** *(required, float)*.. Largeur du colis (en cm).
+    + **height** *(required, float)*.. Hauteur du colis (en cm).
+    + **weight** *(required, float)*.. Poids du colis (en grammes).
+
+
+## Entités en sortie
+
 ### L'entité "Delivery"
 
-<!-- TODO Jules: Décrire ce qu'est une Delivery -->
-<!-- TODO Jules: Decider si l'on renvoie toutes les informations sur la delivery (avec packets && points) ou juste ce qui suit. 
-Pour l'instant je suis plutôt partie sur la version minimal (sans packets && points) : 
++ Une **Delivery** est composée des attributs suivants:
+    + **delivery_id** *(optional, string)*... Uuid
+    + 
 
+```
         {
             "delivery": {
                 "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
@@ -98,7 +118,7 @@ Pour l'instant je suis plutôt partie sur la version minimal (sans packets && po
                 }
             }
         }
-        -->
+```
 
 # Entités en sortie
 
