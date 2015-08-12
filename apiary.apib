@@ -51,33 +51,24 @@ TODO: Mettre à jour le schéma
  
 ## L'entité "Point"
 
-+ Un **Point** posséde deux attribut qui définissent ce que ce point représente:
++ Un **Point** possède deux attributs qui définissent ce que ce point représente:
     + L'attribut ```point_type``` qui peut prendre les valeurs suivantes:
         + ```"PICKUP"```: signifie que le **Point** représente un point de retrait.
         + ```"SHIPPING"```: signifie que le **Point** représente un point de livraison.
-    + L'attribut ```address_type``` qui peut prendre les valeurs suivantes:
+    + L'attribut ```location_type``` qui peut prendre les valeurs suivantes:
         + ```"STORE"```: signifie que le **Point** représente un magasin.
-        + ```"CONSUMER"```: signifie que le **Point** représente l'adresse d'une personne. 
-        <!-- TODO: trouver un meilleur terme que "personne" -->
+        + ```"CONSUMER"```: signifie que le **Point** représente l'adresse d'un client.
 
 
 + Un **Point** est composé d'une **Location**: l'endroit physique qui servira de point de retrait ou de livraison.   
 
 ## L'entité "Location"
 
-Une **Location** est un type abstrait qui possède trois spécialisations concrétes:
-+ Une **Town**: représente une zone définit par un code postal.   
-Utile lorsque qu'une adresse précise n'est pas requise.
+Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
 + Une **Address**: adresse précise quelconque. Celle du client qui souhaite se faire livrer, par exemple.   
 + Un **Store**: un de vos magasins, si nous avons référencé vos magasins.
 
-## L'entité "Town"
-
-Une **Town** est composé de l'attribut suivant:
-
-+ ```postal_code``` *(required, string)*: le code postal de la ville.
-
-## L'entité "Address"
+### L'entité "Address"
 
 Une **Address** est composée des attributs suivants: 
 
@@ -98,7 +89,7 @@ Une **Address** est composée des attributs suivants:
 + ```send_survey``` *(optional, boolean)*: Envoyer  l'enquête de satisfaction au consommateur.
     + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 
-## L'entité "Store"
+### L'entité "Store"
 
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat.   
 Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
