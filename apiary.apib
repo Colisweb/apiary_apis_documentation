@@ -52,35 +52,33 @@ TODO: Mettre à jour le schéma
 ### L'entité "Point"
 
 + Un **Point** possède deux attributs :
-    + **point_type** (required, enum["pickup", "shipping"])... La nature du point
-    + **location** (required, hash)... Information du point
+    + **point_type** *(required, enum["pickup", "shipping"])*... La nature du point
+    + **location** *(required, Location)*... Information du point
 
-## L'entité "Location"
+### L'entité "Location"
 
-Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
-+ Une **Address**: adresse précise quelconque. Celle du client qui souhaite se faire livrer, par exemple.   
-+ Un **Store**: un de vos magasins, si nous avons référencé vos magasins.
++ Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
+    + Une **Address**: Celle du client qui souhaite se faire livrer, par exemple.   
+    + Un **Store**: Dans la liste de vos magasins préalablement référencés.
 
-### L'entité "Address"
 
-Une **Address** est composée des attributs suivants: 
-
-+ ```society``` *(optional, string)*: Société.
-+ ```first_name``` *(optional, string)*: Prénom.
-+ ```last_name``` *(required, string)*: Nom.
-+ ```email``` *(required, string)*: Email.
-+ ```primary_phone``` *(required, string)*: Numéro de téléphone primaire.
-+ ```secondary_phone``` *(optional, string)*: Numéro de téléphone secondaire.
-+ ```line1``` *(required, string)*: Adresse de livraison.
-+ ```line2``` *(optional, string)*: Complément d'adresse.
-+ ```additional_informations``` *(optional, string)*: Informations supplémentaire (digicode, etc.)
-+ ```postal_code``` *(required, string)*: Code postal.
-+ ```city``` *(required, string)*: Ville.
-+ ```country``` *(required, string)*: Pays.
-+ ```send_command_statuses``` *(optional, boolean)*: Envoyer les statuts de livraison par sms/email au consommateur.
-    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-+ ```send_survey``` *(optional, boolean)*: Envoyer  l'enquête de satisfaction au consommateur.
-    + ```true``` par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
++ Une **Address** est composée des attributs suivants: 
+    + **location_type** *(required, string = "address")*... La nature de la location
+    + **society** *(optional, string)*... Société.
+    + **first_name** *(optional, string)*... Prénom.
+    + **email** *(required, string)*... Email.
+    + **primary_phone** *(required, string)*... Numéro de téléphone primaire.
+    + **secondary_phone** *(optional, string)*... Numéro de téléphone secondaire.
+    + **line1** *(required, string)*.. Adresse de livraison.
+    + **line2** *(optional, string)*.. Complément d'adresse.
+    + **additional_informations** *(optional, string)*.. Informations supplémentaire (digicode, ...)
+    + **postal_code** *(required, string)*... Code postal.
+    + **city** *(required, string)*... Ville.
+    + **country** *(required, string)*... Pays.
+    + **send_command_status** *(optional, boolean)*... Envoyer les statuts de livraison par sms/email au consommateur.
+        + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
+    + **send_survey** *(optional, boolean)*: Envoyer  l'enquête de satisfaction au consommateur.
+        + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
 
 ### L'entité "Store"
 
