@@ -57,11 +57,7 @@ TODO: Mettre à jour le schéma
 
 ### L'entité "Location"
 
-+ Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
-    + Une **Address**: Celle du client qui souhaite se faire livrer, par exemple.   
-    + Un **Store**: Dans la liste de vos magasins préalablement référencés.
-
-
+Une **Location** est un type abstrait qui possède deux spécialisations concrétes:
 + Une **Address** est composée des attributs suivants: 
     + **location_type** *(required, string = "address")*... La nature de la location
     + **society** *(optional, string)*... Société.
@@ -79,15 +75,11 @@ TODO: Mettre à jour le schéma
         + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
     + **send_survey** *(optional, boolean)*: Envoyer  l'enquête de satisfaction au consommateur.
         + **true** par défaut, dépend cependant de la configuration globale au niveau de l'enseigne lors de la contractualisation avec Colisweb.
-
-### L'entité "Store"
-
-Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat.   
-Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
-
-Un **Store** est composé de l'attribut suivant: 
-
-+ **store_code** *(required, string)*: Code magasin.   
++ Un **Store** est composé de l'attribut suivant: 
+    + **location_type** *(required, string = "store")*... La nature de la location
+    + **store_code** *(required, string)*: Code magasin.  
+    
+Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
 
 ## L'entité "Delivery"
 
