@@ -573,57 +573,7 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
             }
         }
 
-# Group Suivi et gestion des livraisons
 
-## Annuler une livraison [/deliveries/{delivery_id}/cancel]
-
-Vous pouvez annuler une livraison jusqu'à un certain stade d'avancement de celle-ci.   
-Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable.
-
-### Paramètres de requête
-
-+ ```api_key``` *(required, string)*: Clé API Colisweb
-
-### Contenu de la réponse
-
-+ ```delivery``` *(hash)*: Informations sur la livraison confirmé
-  + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
-  + ```command_status```: ```"CANCELED"```
-  + ```slot``` *(hash)*: Informations de la plage horaire commandée.
-    + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
-    + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
-    + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
-    + ```price``` *(float)*: Coût HT de la livraison (en euro).
-    + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
-
-### Voir un exemple de requête [PUT]
-
-+ Parameters
-    + delivery_id - Identifiant de la livraison donnée lors de la pré-commande.
-
-+ Request (application/json)
-
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013"
-        }
-
-+ Response 200
-
-        {
-            "delivery": {
-                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "command_status": "CANCELED",
-                "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T12:00:00+02:00",
-                    "slot_size": 120,
-                    "price": 5.00,
-                    "service_class": "standard"
-                }
-            }
-        }
-
-+ Response 400
 
 # Group Glossaire
 
