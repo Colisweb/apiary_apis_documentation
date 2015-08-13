@@ -806,7 +806,7 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 
 # Group Glossaire
 
-## Codes d'erreurs
+# Codes d'erreurs
 
 | Error name                | HTTP Status       | Description                       |
 | ------------------------  | ----------------  | --------------------------------- |
@@ -816,17 +816,17 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 | no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
 | missing_delivery          | 404 not found     | Numéro de commande inconnue       |
 
-## Entités en entrée
+# Entités en entrée
 
 Nous gérons des **livraisons** partant d'un **point A** (pickup) et arrivant à un **point B** (shipping). Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
 
-### L'entité "Point"
+## L'entité "Point"
 
 + Un **Point** possède deux attributs :
     + **point_type** *(required, enum["pickup", "shipping"])*... La nature du point
     + **location** *(required, Location)*... Information du point
 
-### L'entité "Location"
+## L'entité "Location"
 
 Une **Location** est un type abstrait qui possède trois spécialisations concrétes:
 + Une **Address** est composée des attributs suivants: 
@@ -855,19 +855,19 @@ Une **Location** est un type abstrait qui possède trois spécialisations concr�
     
 Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
 
-### L'entité "Slot"
+## L'entité "Slot"
 
 + Un **Slot** est composée des attributs suivants:
     + **starts_at** *(required, datetime UTC)*... Début du créneau horaire.
     + **size** *(required, integer)*... Taille de la plage de livraison (en minutes).
 
-### L'entité "Packaging"
+## L'entité "Packaging"
 
 + Un **Packaging** est composée de deux attributs:
     + **global_description** *(optional, string)*... La description du packaging.
     + **packets** *(required, array[Packet])*... Les paquets composant le packaging.
 
-### L'entité "Packet"
+## L'entité "Packet"
 
 + Un **Packet** est composée des attributs suivants:
     + **description** *(optional, string)*... La description du paquets.
@@ -877,9 +877,9 @@ Nous enregistrons les informations de vos magasins dans notre système au moment
     + **weight** *(required, float)*.. Poids du colis (en grammes).
 
 
-## Entités en sortie
+# Entités en sortie
 
-### L'entité "Delivery"
+## L'entité "Delivery"
 
 + Une **Delivery** est composée des attributs suivants:
     + **delivery_id** *(optional, string)*... Uuid
