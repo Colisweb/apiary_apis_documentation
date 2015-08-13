@@ -626,8 +626,160 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 + Response 400
 
 
-# Group prout
+# Group Glossaire
 
-## Annuler une livraiso
+## Codes d'erreurs
 
-cfvgbhnj
+| Error name                | HTTP Status       | Description                       |
+| ------------------------  | ----------------  | --------------------------------- |
+| wrong_api_key             | 401 Unauthorized  | Clé API manquante / inconnue      |
+| missing_parameters        | 400 Bad Request   | Il manque des paramètres          |
+| fail_to_confirm_delivery  | 400 Bad Request   | Le commande de livraison a échoué |
+| no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
+| missing_delivery          | 404 not found     | Numéro de commande inconnue       |
+
+## Formats de dates
+
+Les dates sont au format **ISO 8601 avec indication de fuseau horaire**.   
+Exemple: 
+```
+2015-04-22T12:00:00+02:00
+```
+
+## Entités en entrée
+
+Nous gérons des **livraisons** partant d'un **point A** (pickup) et arrivant à un **point B** (shipping). Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
+
+### L'entité "Point"
+
++ Un **Point** possède deux attributs :
+    + **point_type** *(required, enum["pickup", "shipping"])*... La nature du point
+    + **location** *(required, Location)*... Information du point
+
+### L'entité "Location"
+
+Une **Location** est un type abstrait qui possède trois spécialisations concrétes:
++ Une **Address** est composée des attributs suivants: 
+    + **location_type** *(required, string = "address")*... La nature de la location
+    + **society** *(optional, string)*... Société.
+    + **first_name** *(optional, string)*... Prénom.
+    + **email** *(required, string)*... Email.
+    + **primary_phone** *(required, string)*... Numéro de téléphone primaire.
+    + **secondary_phone** *(optional, string)*... Numéro de téléphone secondaire.
+    + **line1** *(required, string)*.. Adresse de livraison.
+    + **line2** *(optional, string)*.. Complément d'adresse.
+    + **additional_informations** *(optional, string)*.. Informations supplémentaire (digicode, ...)
+    + **postal_code** *(required, string)*... Code postal.
+    + **city** *(required, string)*... Ville.
+    + **country** *(required, string)*... Pays.
+    + **send_command_status** *(optional, boolean)*... Envoyer les statuts de livraison par sms/email au consommateur.
+        + **true** par défaut, dépend de la contractualisation avec Colisweb.
+    + **send_survey** *(optional, boolean)*... Envoyer  l'enquête de satisfaction au consommateur.
+        + **true** par défaut, dépend de la contractualisation avec Colisweb.
++ Un **Store** est composé des attributs suivants: 
+    + **location_type** *(required, string = "store")*... La nature de la location
+    + **store_code** *(optional, string)*... Code magasin.  
++ Une **City** ext composée des attributs suivants:
+    + **location_type** *(required, string = "city")*... La nature de la location
+    + **postal_code** *(optional, string)*... Code postal de la ville.  
+    
+Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
+
+### L'entité "Slot"
+
++ Un **Slot** est composée des attributs suivants:
+    + **starts_at** *(required, datetime UTC)*... Début du créneau horaire.
+    + **size** *(required, integer)*... Taille de la plage de livraison (en minutes).
+
+### L'entité "Packaging"
+
++ Un **Packaging** est composée de deux attributs:
+    + **global_description** *(optional, string)*... La description du packaging.
+    + **packets** *(required, array[Packet])*... Les paquets composant le packaging.
+
+### L'entité "Packet"
+
++ Un **Packet** est composée des attributs suivants:
+    + **description** *(optional, string)*... La description du paquets.
+    + **length** *(required, float)*... Longueur du colis (en cm).
+    + **width** *(required, float)*.. Largeur du colis (en cm).
+    + **height** *(required, float)*.. Hauteur du colis (en cm).
+    + **weight** *(required, float)*.. Poids du colis (en grammes).
+
+
+## Entités en sortie
+
+### L'entité "Delivery"
+
++ Une **Delivery** est composée des attributs suivants:
+    + **delivery_id** *(optional, string)*... Uuid
+    + 
+
+```
+        {
+            "delivery": {
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "CANCELED",
+                "slot": {
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T12:00:00+02:00",
+                    "slot_size": 120,
+                    "price": 5.00,
+                    "service_class": "standard"
+                }
+            }
+        }
+```
+
+# Group toto
+
+## Annuler une livraison [/prout/{delivery_id}/cancel]
+
+Vous pouvez annuler une livraison jusqu'à un certain stade d'avancement de celle-ci.   
+Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable.
+
+### Paramètres de requête
+
++ ```api_key``` *(required, string)*: Clé API Colisweb
+
+### Contenu de la réponse
+
++ ```delivery``` *(hash)*: Informations sur la livraison confirmé
+  + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
+  + ```command_status```: ```"CANCELED"```
+  + ```slot``` *(hash)*: Informations de la plage horaire commandée.
+    + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
+    + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
+    + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
+    + ```price``` *(float)*: Coût HT de la livraison (en euro).
+    + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
+
+### Voir un exemple de requête [PUT]
+
++ Parameters
+    + delivery_id - Identifiant de la livraison donnée lors de la pré-commande.
+
++ Request (application/json)
+
+        {
+            "api_key": "3025688655a161aeb167b7b33f03c013"
+        }
+
++ Response 200
+
+        {
+            "delivery": {
+                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "command_status": "CANCELED",
+                "slot": {
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "ends_at": "2015-04-22T12:00:00+02:00",
+                    "slot_size": 120,
+                    "price": 5.00,
+                    "service_class": "standard"
+                }
+            }
+        }
+
++ Response 400
+
