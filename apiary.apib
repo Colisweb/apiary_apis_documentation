@@ -7,8 +7,8 @@ Ce document décrit les points d'entrée, appelés **endpoints**, de l'API que f
 
 ## Autorisations d'accès
 
-Une clé API est nécessaire pour l'utilisation de cette API.   
-Afin d'obtenir une clé, vous devez effectuer une demande par mail à support@colisweb.com.
+Une clé API est nécessaire pour pouvoir échanger avec l'API.   
+Pour obtenir une clé, veuillez en faire la demande à support@colisweb.com.
 
 ## Environnements
 
@@ -20,26 +20,26 @@ http://sandbox.api.colisweb.com
 + **production**: Après validation des tests en sandbox.   
 http://api.colisweb.com
 
+***Les clés API sont différentes selon les deux environnements***
+
 ## URL d'appels
 
 L'URL d'appel à l'API est: 
 http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 
-**environnement** = environnement sandbox ou production
-**end_point** = Méthodes décrites dans ce document
++ **environnement** = environnement sandbox ou production
++ **end_point** = Méthodes décrites dans ce document
 
 ## Types de livraison disponibles
 
 ### Introduction
 
-Via notre API, vous êtes en mesure de commander **quatres types de livraisons**:
+Vous êtes en mesure de commander **quatres types de livraisons**:
 
-+ **B2B** (exemple: réapprovisionnement entre magasins)
-+ **B2C** (exemple: livraison d'un client final)
++ **B2B** (exemple: réapprovisionnement entre magasins référencés)
++ **B2C** (exemple: livraison depuis un dépôt référencé vers une adresse quelconques)
 + **C2B** (exemple: retour magasin)
 + **C2C** (exemple: livraison entres deux adresses quelconques)
-
-Nous identifions le type de livraison que vous commandez en regardant avec l'attribut ```address_type``` des **Points** que vous nous envoyez.
 
 ### Exemple de paramètre de requête pour du B2B
 
