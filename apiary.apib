@@ -575,16 +575,16 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 
 # Group Suivi et gestion des livraisons
 
-# Annuler une livraison [/deliveries/{delivery_id}/cancel]
+## Annuler une livraison [/deliveries/{delivery_id}/cancel]
 
 Vous pouvez annuler une livraison jusqu'à un certain stade d'avancement de celle-ci.   
 Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable.
 
-## Paramètres de requête
+### Paramètres de requête
 
 + ```api_key``` *(required, string)*: Clé API Colisweb
 
-## Contenu de la réponse
+### Contenu de la réponse
 
 + ```delivery``` *(hash)*: Informations sur la livraison confirmé
   + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
@@ -596,7 +596,7 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
     + ```price``` *(float)*: Coût HT de la livraison (en euro).
     + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
 
-## Voir un exemple de requête [PUT]
+### Voir un exemple de requête [PUT]
 
 + Parameters
     + delivery_id - Identifiant de la livraison donnée lors de la pré-commande.
@@ -625,9 +625,9 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 
 + Response 400
 
-# Group le Glossaire
+# Group Glossaire
 
-## Codes d'erreurs
+## Codes d'erreurs  [/deliveries/{delivery_id}/canceled]
 
 | Error name                | HTTP Status       | Description                       |
 | ------------------------  | ----------------  | --------------------------------- |
