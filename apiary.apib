@@ -37,169 +37,9 @@ http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 Vous êtes en mesure de commander **quatres types de livraisons**:
 
 + **B2B** (exemple: réapprovisionnement entre magasins référencés)
-+ **B2C** (exemple: livraison depuis un dépôt référencé vers une adresse quelconques)
++ **B2C** (exemple: livraison depuis un dépôt référencé vers une adresse quelconque)
 + **C2B** (exemple: retour magasin)
 + **C2C** (exemple: livraison entres deux adresses quelconques)
-
-### Exemple de paramètre de requête pour du B2B
-
-```
-{
-    ...
-    "points": [
-        {
-            "point_type": "PICKUP",
-            "address_type": "STORE",
-            "point" {
-                "store_code": "100001"
-            }
-        },
-        {
-            "point_type": "SHIPPING",
-            "address_type": "STORE",
-            "point" {
-                "store_code": "100002"
-            }
-        }
-    ]
-    ...
-}
-```
-
-### Exemple de paramètre de requête pour du B2C
-
-```
-{
-    ...
-    "points": [
-        {
-            "point_type": "PICKUP",
-            "address_type": "STORE",
-            "point" {
-                "store_code": "100001"
-            }
-        },
-        {
-            "point_type": "SHIPPING",
-            "address_type": "CONSUMER",
-            "point": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage",
-                "postal_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_command_statuses": true,
-                "send_survey": true
-            }
-        }
-    ]
-    ...
-}
-```
-
-### Exemple de paramètre de requête pour du C2B
-
-```
-{
-    ...
-    "points": [
-        {
-            "point_type": "PICKUP",
-            "address_type": "CONSUMER",
-            "point": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage",
-                "postal_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_command_statuses": true,
-                "send_survey": true
-            }
-        },
-        {
-            "point_type": "SHIPPING",
-            "address_type": "STORE",
-            "point" {
-                "store_code": "100002"
-            }
-        }
-    ]
-    ...
-}
-```
-
-### Exemple de paramètre de requête pour du C2C
-
-```
-{
-    ...
-    "points": [
-        {
-            "point_type": "PICKUP",
-            "address_type": "CONSUMER",
-            "point": {
-                "society": "",
-                "first_name": "Alan",
-                "last_name": "Turing",
-                "email": "alan.turing@gmail.com",
-                "primary_phone": "0624243624",
-                "secondary_phone": "",
-                "line1": "125 rue de Vaugirard",
-                "line2": "",
-                "additional_informations": "",
-                "postal_code": "75015",
-                "city": "Paris",
-                "country": "France",
-                "send_command_statuses": true,
-                "send_survey": true
-            }
-        },
-        {
-            "point_type": "SHIPPING",
-            "address_type": "CONSUMER",
-            "point": {
-                "society": "Twelve factors & C",
-                "first_name": "Helmout",
-                "last_name": "Ardelpik",
-                "email": "helmoutardelpik@gmail.com",
-                "primary_phone": "0694385693",
-                "secondary_phone": "0354678942",
-                "line1": "165, avenue des champs Elysées",
-                "line2": "Batiment Leblanc",
-                "additional_informations": "Digicode B345, 3 éme etage",
-                "postal_code": "75001",
-                "city": "Paris",
-                "country": "France",
-                "send_command_statuses": true,
-                "send_survey": true
-            }
-        }
-    ]
-    ...
-}
-```
-
-## Fuseaux Horaires
-
-Une date en entrée dans notre API n'est valide que si elle respecte le format **ISO 8601 avec indication de fuseau horaire**.   
-Exemple: 
-```
-2015-04-22T12:00:00+00:00
-```
 
 Notre API renverra toujours les dates formattées avec ce format, en réutilisant le fuseau que vous nous avez envoyé.    
 Par exemple, si vous nous envoyez de l'UTC (+00:00), nous répondrons en UTC
@@ -813,6 +653,14 @@ Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable
 | fail_to_confirm_delivery  | 400 Bad Request   | Le commande de livraison a échoué |
 | no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
 | missing_delivery          | 404 not found     | Numéro de commande inconnue       |
+
+# Formats de dates
+
+Les dates sont au format **ISO 8601 avec indication de fuseau horaire**.   
+Exemple: 
+```
+2015-04-22T12:00:00+02:00
+```
 
 # Entités en entrée
 
