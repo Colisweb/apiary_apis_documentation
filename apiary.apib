@@ -5,7 +5,7 @@ HOST: http://sandbox.api.colisweb.com
 
 Ce document décrit les points d'entrée, appelés **endpoints**, de l'API ainsi que les workflows d'utilisations.
 
-## Autorisations d'accès
+## Autorisations
 
 Une clé API est nécessaire pour pouvoir échanger avec l'API.   
 Pour obtenir une clé, veuillez en faire la demande à support@colisweb.com.
@@ -22,7 +22,7 @@ http://api.colisweb.com
 
 ***Les clés API sont différentes selon les deux environnements***
 
-## URL d'appels
+## URL
 
 L'URL d'appel à l'API est: 
 http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
@@ -32,7 +32,7 @@ http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 
 # Group Commander une livraison
 
-# Obtenir les options de livraison disponibles [/deliveries/options]
+## Obtenir les options de livraison disponibles [/deliveries/options]
 
 Permet de récupérer les options de livraisons disponibles.
 
@@ -573,15 +573,13 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
                 }
             }
         }
-        
+
 # Group Suivi et gestion des livraisons
 
 # Annuler une livraison [/deliveries/{delivery_id}/cancel]
 
 Vous pouvez annuler une livraison jusqu'à un certain stade d'avancement de celle-ci.   
 Par exemple, si la livraison est au statut "livrée", elle ne sera pas annulable.
-
-<!-- TODO: améliorer le description en disant ce qu'il se passe lorsque l'annulation est refusé.  -->
 
 ## Paramètres de requête
 
