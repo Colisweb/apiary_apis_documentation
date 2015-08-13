@@ -5,26 +5,27 @@ HOST: http://sandbox.api.colisweb.com
 
 Ce document décrit les points d'entrée, appelés **endpoints**, de l'API que fournit **Colisweb** ainsi que les workflows d'utilisations.
 
-### Autorisations d'accès
+## Autorisations d'accès
 
 Une clé API est nécessaire pour l'utilisation de cette API.   
 Afin d'obtenir une clé, vous devez effectuer une demande par mail à support@colisweb.com.
 
-### Environnements
+## Environnements
 
 Deux environnements sont disponibles:  
 
-**sandbox**: Environnement "bac à sable" pour vos tests avant mise en production.   
-https://sandbox.api.colisweb.com
++ **sandbox**: Environnement "bac à sable" pour vos tests avant mise en production.   
+http://sandbox.api.colisweb.com
 
-**production**: Après validation des tests en sandbox.   
-https://api.colisweb.com
++ **production**: Après validation des tests en sandbox.   
+http://api.colisweb.com
 
-### URL d'appels
+## URL d'appels
 
 L'URL d'appel à l'API est: 
-https://sandbox.api.colisweb/4/<strong>end_point</strong>
+http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 
+**environnement** = environnement sandbox ou production
 **end_point** = Méthodes décrites dans ce document
 
 ## Types de livraison disponibles
@@ -202,9 +203,6 @@ Exemple:
 
 Notre API renverra toujours les dates formattées avec ce format, en réutilisant le fuseau que vous nous avez envoyé.    
 Par exemple, si vous nous envoyez de l'UTC (+00:00), nous répondrons en UTC
-
-<!-- TODO Jules: A valider ! -->
-
 
 # Group Gestion et commande de livraisons
 
