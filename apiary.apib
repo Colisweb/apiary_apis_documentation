@@ -36,7 +36,7 @@ http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 
 Permet de récupérer les options de livraisons disponibles.
 
-## Paramètres de requête
+### Paramètres de requête
 
 + ```api_key``` *(required, string)*: Clé API Colisweb.
 + ```points``` *(required, array of <strong>Point</strong>)*: Informations sur les points de retrait et de livraison.    
@@ -48,7 +48,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
   + ```height``` *(required, float)*: hauteur du colis (en cm).
   + ```weight``` *(required, float)*: poids du colis (en grammes).
 
-## Contenu de la réponse
+### Contenu de la réponse
 
 + ```now``` *(array of hashes)*: Disponibilités de l'offre "instantanée". Vide si aucune dispobilité pour l'offre "instantanée".
   + ```slot_size``` *(integer)*: Taille du créneau horaire en minutes de la livraison "instantanée" (en minutes).
@@ -61,9 +61,8 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
   + ```price``` *(float)*: Coût HT de la livraison dans ce créneau (en euro).
   + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
   
-  <!-- TODO Jules: service_class n'est pas forcément le meilleur nom possible -->
   
-## POST
+### Voir un exemple de requête [POST]
 
 + Request (application/json)
 
@@ -179,12 +178,12 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ]
         }
 
-# Pré-commander une livraison [/deliveries/book]
+## Pre-commander une livraison [/deliveries/book]
 
 Permet d'effectuer une pré-commande de livraison.   
 Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une commande de livraison](#reference/gestion-et-commande-de-livraisons/finaliser-une-commande-de-livraison).
 
-## Paramètres de requête
+### Paramètres de requête
 
 + ```api_key``` *(required, string)*: Clé API Colisweb
 + ```slot``` *(required, hash)*: Informations sur le slot demandé 
@@ -209,7 +208,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
   + ```height``` *(required, float)*: Hauteur du colis (en cm).
   + ```weight``` *(required, float)*: Poids du colis (en grammes).
 
-## Contenu de la réponse
+### Contenu de la réponse
 
 + ```delivery``` *(hash)*: Informations sur la livraison créée
   + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
@@ -223,7 +222,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
     + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
 
   
-## Exemple de pré-commande de livraison B2B [POST]
+### Exemple de pré-commande de livraison B2B [POST]
 
 + Request (application/json)
 
