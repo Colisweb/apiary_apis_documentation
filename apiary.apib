@@ -46,8 +46,9 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 #### L'entité "Point"
 ***
 + Un ```Point``` est composé des attributs suivants:
-    + ```point_type``` *(string)*... La nature du point.    
-        les valeurs peuvent être : **"pickup"** (point de retrait) ou **"shipping"** (point de livraison)
+    + ```point_type``` *(string)*... La nature du point, les valeurs peuvent être :
+        + **"pickup"** (point de retrait).
+        + **"shipping"** (point de livraison).
     + ```location``` *(Location)*... Informations du point.
 
 #### L'entité "Location"
@@ -55,7 +56,7 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:   
 
 + Soit une adresse quelconque avec les attributs suivants: 
-    + ```location_type ``` *(string = "address")* ... La nature de la location
+    + ```location_type ``` *(string = "address")* ... Type de la location
     + ```society``` *(string)*... Société.
     + ```first_name``` *(string)*... Prénom.
     + ```email``` *(string)*... Email.
@@ -69,13 +70,13 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```country``` *(string)*... Pays.
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
-    + ```location_type``` *(required, string = "store")*... La nature de la location
+    + ```location_type``` *(required, string = "store")*... Type de la location
     + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
     Nous Réferençons vos magasins dans notre système au moment de la signature du contrat.
 
 + Soit un code postal avec attributs suivants:
-    + ```location_type``` *(required, string = "city")*... La nature de la location
+    + ```location_type``` *(required, string = "city")*... Type de la location
     + ```postal_code``` *(optional, string)*... Code postal.  
 
 
@@ -101,38 +102,16 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```weight``` *(required, integer)*.. Poids du colis (en grammes).
 
 ***
-### Entités en sortie
-***
-#### L'entité "Delivery"
-***
-+ Une **Delivery** est composée des attributs suivants:
-    + ```delivery_id``` *(optional, string)*... Uuid
-```
-        {
-            "delivery": {
-                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "command_status": "CANCELED",
-                "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T12:00:00+02:00",
-                    "slot_size": 120,
-                    "price": 5.00,
-                    "service_class": "standard"
-                }
-            }
-        }
-```
-
 ### Formats de dates
-
+***
 Les dates sont au format **ISO 8601 avec indication de fuseau horaire**.   
 Exemple: 
 ```
 2015-04-22T12:00:00+02:00
 ```
-
+***
 ### Codes erreurs
-
+***
 | Error name                | HTTP Status       | Description                       |
 | ------------------------  | ----------------  | --------------------------------- |
 | wrong_api_key             | 401 Unauthorized  | Clé API manquante / inconnue      |
