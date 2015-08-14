@@ -81,7 +81,7 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
 
 #### L'entité "Packaging"
 ***
-+ Un **Packaging** est composé des attributes suivants:
++ Un **Packaging** est composé des attributs suivants:
     + ```global_description``` *(optional, string)*... La description globale du packaging.
     + ```packets``` *(required, array[Packet])*... Les paquets composant le packaging.
 
@@ -129,8 +129,8 @@ Permet de récupérer les options de livraisons disponibles.
     + ```point``` *(required, hash)*
         + ```point_type``` *(required, string = shipping)*... Point de livraison
         + ```location``` *(required, Location)*... Informations du point.
-Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```point_type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
-*Remarque*: Ce endpoint n'accepte que les entités **Town** et **Store** au sein des **Point**.
+Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```point_type``` ```"pickup"``` et l'autre  ```"shipping"```.    
+*Remarque*: Ce endpoint n'accepte que les entités **City** et **Store** au sein des **Point**.
 + ```packets``` *(required, array of hashes)*: Informations sur les colis.
   + ```length``` *(required, integer)*: Longueur du colis (en millimètres).
   + ```width``` *(required, integer)*: largeur du colis (en millimètres).
@@ -139,11 +139,11 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
 ### Contenu de la réponse
 
-+ ```now``` *(array of hashes)*: Disponibilités de l'offre "instantanée". Vide si aucune dispobilité pour l'offre "instantanée".
++ ```now``` *(array of hashes)*: Disponibilités de l'offre "instantanée". Vide si aucune disponbilité pour l'offre "instantanée".
   + ```slot_size``` *(integer)*: Taille du créneau horaire en minutes de la livraison "instantanée" (en minutes).
   + ```price``` *(float)*: Coût HT de la livraison "instantanée" pour ce créneau (en euro).
   + ```service_class``` *(string)*: Qualité de service pour ce créneau. (Premium, standard, ...)
-+ ```planned``` *(array of hashes)*: Disponibilités de l'offre "sur rendez-vous". Vide si aucune dispobilité pour l'offre "sur rendez-vous".
++ ```planned``` *(array of hashes)*: Disponibilités de l'offre "sur rendez-vous". Vide si aucune disponbilité pour l'offre "sur rendez-vous".
   + ```starts_at``` *(datetime UTC)*: Début du créneau horaire.
   + ```ends_at``` *(datetime UTC)*: Fin du créneau horaire.
   + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
