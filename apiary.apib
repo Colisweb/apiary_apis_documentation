@@ -38,60 +38,61 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 #### L'entité "Point"
 ***
 + Un ```Point``` est composé des attributs suivants:
-    + ```point_type``` *(string)*... La nature du point, les valeurs peuvent être :
+    + ```point_type``` *(required, string)*... La nature du point, les valeurs peuvent être :
         + **"pickup"** (point de retrait).
         + **"shipping"** (point de livraison).
-    + ```location``` *(Location)*... Informations du point.
+    + ```location``` *(required, Location)*... Informations du point.
 
 #### L'entité "Location"
 ***
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:   
 
 + Soit une adresse quelconque avec les attributs suivants: 
-    + ```location_type ``` *(string = "address")* ... Type de la location
-    + ```society``` *(string)*... Société.
-    + ```first_name``` *(string)*... Prénom.
-    + ```email``` *(string)*... Email.
-    + ```primary_phone``` *(string)*... Numéro de téléphone primaire.
-    + ```secondary_phone``` *(string)*... Numéro de téléphone secondaire.
-    + ```line1``` *(string)*.. Adresse de livraison.
-    + ```line2``` *(string)*.. Complément d'adresse.
-    + ```additional_informations``` *(string)*.. Informations supplémentaire (digicode, ...)
-    + ```postal_code``` *(string)*... Code postal.
-    + ```city``` *(string)*... Ville.
-    + ```country``` *(string)*... Pays.
+    + ```location_type ``` *(required, string = "address")* ... Type de la location
+    + ```society``` *(optional, string)*... Société.
+    + ```first_name``` *(optional, string)*... Prénom.
+    + ```last_name``` *(required, string)*... Nom (ou concaténation prénom + nom).
+    + ```email``` *(required, string)*... Email.
+    + ```primary_phone``` *(required, string)*... Numéro de téléphone primaire.
+    + ```secondary_phone``` *(optional, string)*... Numéro de téléphone secondaire.
+    + ```line1``` *(required, string)*... Adresse de livraison.
+    + ```line2``` *(optional, string)*... Complément d'adresse.
+    + ```additional_informations``` *(optional, string)*... Informations supplémentaire (digicode, ...)
+    + ```postal_code``` *(required, string)*... Code postal.
+    + ```city``` *(required, string)*... Ville.
+    + ```country``` *(required, string)*... Pays.
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
-    + ```location_type``` *(string = "store")*... Type de la location
-    + ```store_code``` *(string)*... Code magasin/entrepôt.  
+    + ```location_type``` *(required, string = "store")*... Type de la location
+    + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
     Nous Réferençons vos magasins dans notre système au moment de la signature du contrat.
 
 + Soit un code postal avec attributs suivants:
-    + ```location_type``` *(string = "city")*... Type de la location
-    + ```postal_code``` *(string)*... Code postal.  
+    + ```location_type``` *(required, string = "city")*... Type de la location
+    + ```postal_code``` *(required, string)*... Code postal.  
 
 
 #### L'entité "Slot"
 ***
 + Un **Slot** est composé des attributs suivants:
-    + ```starts_at``` *(datetime)*... Début du créneau horaire.
-    + ```size``` *(integer)*... Taille de la plage de livraison (en minutes).
+    + ```starts_at``` *(required, datetime)*... Début du créneau horaire.
+    + ```size``` *(required, integer)*... Taille de la plage de livraison (en minutes).
 
 #### L'entité "Packaging"
 ***
 + Un **Packaging** est composé des attributes suivants:
-    + ```global_description``` *(string)*... La description globale du packaging.
-    + ```packets``` *(array[Packet])*... Les paquets composant le packaging.
+    + ```global_description``` *(optional, string)*... La description globale du packaging.
+    + ```packets``` *(required, array[Packet])*... Les paquets composant le packaging.
 
 #### L'entité "Packet"
 ***
 + Un **Packet** est composé des attributs suivants:
-    + ```description``` *(string)*... La description du paquet.
-    + ```length``` *(integer)*... Longueur du colis (en millimètres).
-    + ```width``` *(integer)*.. Largeur du colis (en millimètres).
-    + ```height``` *(integer)*.. Hauteur du colis (en millimètres).
-    + ```weight``` *(integer)*.. Poids du colis (en grammes).
+    + ```description``` *(optional , string)*... La description du paquet.
+    + ```length``` *(required, integer)*... Longueur du colis (en millimètres).
+    + ```width``` *(required, integer)*.. Largeur du colis (en millimètres).
+    + ```height``` *(required, integer)*.. Hauteur du colis (en millimètres).
+    + ```weight``` *(required, integer)*.. Poids du colis (en grammes).
 
 ***
 ### Formats de dates
@@ -122,6 +123,11 @@ Permet de récupérer les options de livraisons disponibles.
 
 + ```api_key``` *(required, string)*: Clé API Colisweb.
 + ```points``` *(required, array of <strong>Point</strong>)*: Informations sur les points de retrait et de livraison.    
+    + ```point``` *(required, hash)*
+        + ```point_type``` *(required, string = pickup)*... 
+        + ```location``` *(required, Location)*... Informations du point.
+        
+        
 Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```point_type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
 *Remarque*: Ce endpoint n'accepte que les entités **Town** et **Store** au sein des **Point**.
 + ```packets``` *(required, array of hashes)*: Informations sur les colis.
