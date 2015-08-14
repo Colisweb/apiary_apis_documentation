@@ -4,13 +4,15 @@ HOST: http://sandbox.api.colisweb.com
 # Colisweb API v4
 
 Ce document décrit les points d'entrée, appelés **endpoints**, de l'API ainsi que les workflows d'utilisations.
-
+***
 ## Autorisations
-
+***
 Une clé API est nécessaire pour pouvoir échanger avec l'API.   
 Pour obtenir une clé, veuillez en faire la demande à support@colisweb.com.
 
+***
 ## Environnements
+***
 
 Deux environnements sont disponibles:  
 
@@ -22,7 +24,9 @@ http://api.colisweb.com
 
 > ***Les clés API sont différentes selon les deux environnements***
 
+***
 ## URL
+***
 
 L'URL d'appel à l'API est: 
 http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
@@ -30,6 +34,7 @@ http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 + **environnement** = environnement sandbox ou production
 + **end_point** = Méthodes décrites dans ce document
 
+***
 ## Glossaire
 ***
 ### Entités en entrée
@@ -39,9 +44,9 @@ Nous gérons des **livraisons** partant d'un **point A** (```pickup```) et arriv
 #### L'entité "Point"
 ***
 + Un ```Point``` possède deux attributs :
-    + ```point_type``` *(required, string)*... La nature du point dont les valeurs peuvent être :   
-```shipping``` (point de retrait)    
-```pickup```(point de livraison)
+    + ```point_type``` *(required, string)*... La nature du point.    
+        les valeurs peuvent être :    
+        **"shipping"** (point de retrait) ou **"pickup"*** (point de livraison)
     + ```location``` *(required, Location)*... Information du point
 
 #### L'entité "Location"
