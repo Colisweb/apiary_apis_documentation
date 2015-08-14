@@ -3,7 +3,9 @@ HOST: http://sandbox.api.colisweb.com
 
 # Colisweb API v4
 
-Ce document décrit les points d'entrée, appelés **endpoints**, de l'API ainsi que les workflows d'utilisations.
+Ce document décrit les points d'entrée, appelés **endpoints**, de l'API ainsi que les workflows d'utilisations.   
+> **ATTENTION**: Nous nous réservons le droit **d'ajouter** certains attributs tout au long du cycle de vie de cette API.
+
 ***
 ## Autorisations
 ***
@@ -43,36 +45,35 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 
 #### L'entité "Point"
 ***
-+ Un ```Point``` possède deux attributs :
-    + ```point_type``` *(required, string)*... La nature du point.    
++ Un ```Point``` est composé des attributs suivants:
+    + ```point_type``` *(string)*... La nature du point.    
         les valeurs peuvent être : **"pickup"** (point de retrait) ou **"shipping"** (point de livraison)
-    + ```location``` *(required, Location)*... Informations du point.
+    + ```location``` *(Location)*... Informations du point.
+    + ```Notifications
 
 #### L'entité "Location"
 ***
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:
 + Soit une adresse quelconque composée des attributs suivants: 
-    + ```location_type``` *(required, string = "address")*... La nature de la location
-    + ```society``` *(optional, string)*... Société.
-    + ```first_name``` *(optional, string)*... Prénom.
-    + ```email``` *(required, string)*... Email.
-    + ```primary_phone``` *(required, string)*... Numéro de téléphone primaire.
-    + ```secondary_phone``` *(optional, string)*... Numéro de téléphone secondaire.
-    + ```line1``` *(required, string)*.. Adresse de livraison.
-    + ```line2``` *(optional, string)*.. Complément d'adresse.
-    + ```additional_informations``` *(optional, string)*.. Informations supplémentaire (digicode, ...)
-    + ```postal_code``` *(required, string)*... Code postal.
-    + ```city``` *(required, string)*... Ville.
-    + ```country``` *(required, string)*... Pays.
-    + ```send_command_status``` *(optional, boolean)*... Envoyer les statuts de livraison par sms/email au consommateur.
-        + ```true``` par défaut, dépend de la contractualisation avec Colisweb.
-    + ```send_survey``` *(optional, boolean)*... Envoyer  l'enquête de satisfaction au consommateur.
-        + ```true``` par défaut, dépend de la contractualisation avec Colisweb.
+    + ```location_type``` *(string = "address")*... La nature de la location
+    + ```society``` *(string)*... Société.
+    + ```first_name``` *(string)*... Prénom.
+    + ```email``` *(string)*... Email.
+    + ```primary_phone``` *(string)*... Numéro de téléphone primaire.
+    + ```secondary_phone``` *(string)*... Numéro de téléphone secondaire.
+    + ```line1``` *(string)*.. Adresse de livraison.
+    + ```line2``` *(string)*.. Complément d'adresse.
+    + ```additional_informations``` *(string)*.. Informations supplémentaire (digicode, ...)
+    + ```postal_code``` *(string)*... Code postal.
+    + ```city``` *(string)*... Ville.
+    + ```country``` *(string)*... Pays.
+
 + Soit un magasin/entrepôt composé des attributs suivants: 
     + ```location_type``` *(required, string = "store")*... La nature de la location
     + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
     Nous Réferençons vos magasins dans notre système au moment de la signature du contrat.
+
 + Une **City** ext composée des attributs suivants:
     + ```location_type``` *(required, string = "city")*... La nature de la location
     + ```postal_code``` *(optional, string)*... Code postal de la ville.  
