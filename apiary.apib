@@ -32,24 +32,6 @@ http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 
 ## Glossaire
 
-### Codes erreurs
-
-| Error name                | HTTP Status       | Description                       |
-| ------------------------  | ----------------  | --------------------------------- |
-| wrong_api_key             | 401 Unauthorized  | Clé API manquante / inconnue      |
-| missing_parameters        | 400 Bad Request   | Il manque des paramètres          |
-| fail_to_confirm_delivery  | 400 Bad Request   | Le commande de livraison a échoué |
-| no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
-| missing_delivery          | 404 not found     | Numéro de commande inconnue       |
-
-### Formats de dates
-
-Les dates sont au format **ISO 8601 avec indication de fuseau horaire**.   
-Exemple: 
-```
-2015-04-22T12:00:00+02:00
-```
-
 ### Entités en entrée
 
 Nous gérons des **livraisons** partant d'un **point A** (pickup) et arrivant à un **point B** (shipping). Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
@@ -135,7 +117,23 @@ Nous enregistrons les informations de vos magasins dans notre système au moment
         }
 ```
 
+### Formats de dates
 
+Les dates sont au format **ISO 8601 avec indication de fuseau horaire**.   
+Exemple: 
+```
+2015-04-22T12:00:00+02:00
+```
+
+### Codes erreurs
+
+| Error name                | HTTP Status       | Description                       |
+| ------------------------  | ----------------  | --------------------------------- |
+| wrong_api_key             | 401 Unauthorized  | Clé API manquante / inconnue      |
+| missing_parameters        | 400 Bad Request   | Il manque des paramètres          |
+| fail_to_confirm_delivery  | 400 Bad Request   | Le commande de livraison a échoué |
+| no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
+| missing_delivery          | 404 not found     | Numéro de commande inconnue       |
 
 # Group Commander une livraison
 
