@@ -153,10 +153,10 @@ Permet de récupérer les options de livraisons disponibles.
 Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```point_type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
 *Remarque*: Ce endpoint n'accepte que les entités **Town** et **Store** au sein des **Point**.
 + ```packets``` *(required, array of hashes)*: Informations sur les colis.
-  + ```length``` *(required, float)*: Longueur du colis (en cm).
-  + ```width``` *(required, float)*: largeur du colis (en cm).
-  + ```height``` *(required, float)*: hauteur du colis (en cm).
-  + ```weight``` *(required, float)*: poids du colis (en grammes).
+  + ```length``` *(required, integer)*: Longueur du colis (en millimètres).
+  + ```width``` *(required, integer)*: largeur du colis (en millimètres).
+  + ```height``` *(required, integer)*: hauteur du colis (en millimètres).
+  + ```weight``` *(required, integer)*: poids du colis (en grammes).
 
 ### Contenu de la réponse
 
@@ -196,16 +196,16 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ],
             "packets": [
                 {
-                    "weight": 1.55,
-                    "height": 14.55,
-                    "length": 15.00,
-                    "width": 16.55
+                    "weight": 1000,
+                    "height": 140,
+                    "length": 150,
+                    "width": 165
                 },
                 {
-                    "weight": 2.55,
-                    "height": 24.55,
-                    "length": 25.00,
-                    "width": 26.55
+                    "weight": 2550,
+                    "height": 245,
+                    "length": 250,
+                    "width": 265
                 }
             ]
         }
@@ -313,10 +313,10 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 + ```packets``` *(required, array of hashes)*: Informations sur les colis
   + ```product_description``` *(optional, string)*: Typologie/dénomination du/des produits contenue dans ce "packet".   
   Exemple: "micro-onde".
-  + ```length``` *(required, float)*: Longueur du colis (en cm).
-  + ```width``` *(required, float)*: Largeur du colis (en cm).
-  + ```height``` *(required, float)*: Hauteur du colis (en cm).
-  + ```weight``` *(required, float)*: Poids du colis (en grammes).
+  + ```length``` *(required, integer)*: Longueur du colis (en millimètres).
+  + ```width``` *(required, integer)*: Largeur du colis (en millimètres).
+  + ```height``` *(required, integer)*: Hauteur du colis (en millimètres).
+  + ```weight``` *(required, integer)*: Poids du colis (en millimètres).
 
 ### Contenu de la réponse
 
@@ -361,18 +361,16 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ],
             "packets": [
                 {
-                    "product_description": "Ipad mini",
-                    "weight": 1.55,
-                    "height": 14.55,
-                    "length": 15.00,
-                    "width": 16.55
+                    "weight": 1000,
+                    "height": 140,
+                    "length": 150,
+                    "width": 165
                 },
                 {
-                    "product_description": "Iphone",
-                    "weight": 2.55,
-                    "height": 24.55,
-                    "length": 25.00,
-                    "width": 26.55
+                    "weight": 2550,
+                    "height": 245,
+                    "length": 250,
+                    "width": 265
                 }
             ]
         }
@@ -435,18 +433,16 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ],
             "packets": [
                 {
-                    "product_description": "Ipad mini",
-                    "weight": 1.55,
-                    "height": 14.55,
-                    "length": 15.00,
-                    "width": 16.55
+                    "weight": 1000,
+                    "height": 140,
+                    "length": 150,
+                    "width": 165
                 },
                 {
-                    "product_description": "Iphone",
-                    "weight": 2.55,
-                    "height": 24.55,
-                    "length": 25.00,
-                    "width": 26.55
+                    "weight": 2550,
+                    "height": 245,
+                    "length": 250,
+                    "width": 265
                 }
             ]
         }
@@ -509,18 +505,16 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ],
             "packets": [
                 {
-                    "product_description": "Ipad mini",
-                    "weight": 1.55,
-                    "height": 14.55,
-                    "length": 15.00,
-                    "width": 16.55
+                    "weight": 1000,
+                    "height": 140,
+                    "length": 150,
+                    "width": 165
                 },
                 {
-                    "product_description": "Iphone",
-                    "weight": 2.55,
-                    "height": 24.55,
-                    "length": 25.00,
-                    "width": 26.55
+                    "weight": 2550,
+                    "height": 245,
+                    "length": 250,
+                    "width": 265
                 }
             ]
         }
@@ -596,18 +590,16 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             ],
             "packets": [
                 {
-                    "product_description": "Ipad mini",
-                    "weight": 1.55,
-                    "height": 14.55,
-                    "length": 15.00,
-                    "width": 16.55
+                    "weight": 1000,
+                    "height": 140,
+                    "length": 150,
+                    "width": 165
                 },
                 {
-                    "product_description": "Iphone",
-                    "weight": 2.55,
-                    "height": 24.55,
-                    "length": 25.00,
-                    "width": 26.55
+                    "weight": 2550,
+                    "height": 245,
+                    "length": 250,
+                    "width": 265
                 }
             ]
         }
