@@ -34,14 +34,15 @@ http://<strong>environnement</strong>.api.colisweb/4/<strong>end_point</strong>
 ***
 ### Entités en entrée
 ***
-Nous gérons des **livraisons** partant d'un **point A** (```pickup_point```) et arrivant à un **point B** (```shipping_point```).   
-Nous avons formalisé ces notions de **livraisons** et de **points** dans des entités spécifiques.
+Nous gérons des **livraisons** partant d'un **point A** (```pickup```) et arrivant à un **point B** (```shipping```).   
 
 #### L'entité "Point"
 ***
-+ Un **Point** possède deux attributs :
-    + **point_type** *(required, enum["pickup", "shipping"])*... La nature du point
-    + **location** *(required, Location)*... Information du point
++ Un ```Point``` possède deux attributs :
+    + ```point_type``` *(required, string)*... La nature du point dont les valeurs peuvent être :   
+```shipping``` (point de retrait)    
+```pickup```(point de livraison)
+    + ```location``` *(required, Location)*... Information du point
 
 #### L'entité "Location"
 ***
