@@ -45,13 +45,13 @@ Nous gérons des **livraisons** partant d'un **point A** (```pickup```) et arriv
 ***
 + Un ```Point``` possède deux attributs :
     + ```point_type``` *(required, string)*... La nature du point.    
-        les valeurs peuvent être : **"shipping"** (point de retrait) ou **"pickup"*** (point de livraison)
+        les valeurs peuvent être : **"shipping"** (point de retrait) ou **"pickup"** (point de livraison)
     + ```location``` *(required, Location)*... Information du point
 
 #### L'entité "Location"
 ***
 Une **Location** est un type abstrait qui possède trois spécialisations concrétes:
-+ Une ```Address``` est composée des attributs suivants: 
++ Une **Address** est composée des attributs suivants: 
     + ```location_type``` *(required, string = "address")*... La nature de la location
     + ```society``` *(optional, string)*... Société.
     + ```first_name``` *(optional, string)*... Prénom.
@@ -68,35 +68,36 @@ Une **Location** est un type abstrait qui possède trois spécialisations concr�
         + ```true``` par défaut, dépend de la contractualisation avec Colisweb.
     + ```send_survey``` *(optional, boolean)*... Envoyer  l'enquête de satisfaction au consommateur.
         + ```true``` par défaut, dépend de la contractualisation avec Colisweb.
-+ Un ```Store``` est composé des attributs suivants: 
++ Un **Store** est composé des attributs suivants: 
     + ```location_type``` *(required, string = "store")*... La nature de la location
     + ```store_code``` *(optional, string)*... Code magasin.  
-+ Une ```City``` ext composée des attributs suivants:
+    
+    Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.
++ Une **City** ext composée des attributs suivants:
     + ```location_type``` *(required, string = "city")*... La nature de la location
     + ```postal_code``` *(optional, string)*... Code postal de la ville.  
-    
-Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.   
+
 
 #### L'entité "Slot"
 ***
 + Un **Slot** est composée des attributs suivants:
-    + **starts_at** *(required, datetime UTC)*... Début du créneau horaire.
-    + **size** *(required, integer)*... Taille de la plage de livraison (en minutes).
+    + ```starts_at``` *(required, datetime)*... Début du créneau horaire.
+    + ```size``` *(required, integer)*... Taille de la plage de livraison (en minutes).
 
 #### L'entité "Packaging"
 ***
 + Un **Packaging** est composée de deux attributs:
-    + **global_description** *(optional, string)*... La description du packaging.
-    + **packets** *(required, array[Packet])*... Les paquets composant le packaging.
+    + ```global_description``` *(optional, string)*... La description du packaging.
+    + ```packets``` *(required, array[Packet])*... Les paquets composant le packaging.
 
 #### L'entité "Packet"
 ***
-+ Un **Packet** est composée des attributs suivants:
-    + **description** *(optional, string)*... La description du paquets.
-    + **length** *(required, float)*... Longueur du colis (en cm).
-    + **width** *(required, float)*.. Largeur du colis (en cm).
-    + **height** *(required, float)*.. Hauteur du colis (en cm).
-    + **weight** *(required, float)*.. Poids du colis (en grammes).
++ Un Packet** est composée des attributs suivants:
+    + ```description``` *(optional, string)*... La description du paquets.
+    + ```length``` *(required, integer)*... Longueur du colis (en millimètres).
+    + ```width``` *(required, integer)*.. Largeur du colis (en millimètres).
+    + ```height``` *(required, integer)*.. Hauteur du colis (en millimètres).
+    + ```weight``` *(required, integer)*.. Poids du colis (en grammes).
 
 ***
 ### Entités en sortie
@@ -104,9 +105,7 @@ Nous enregistrons les informations de vos magasins dans notre système au moment
 #### L'entité "Delivery"
 ***
 + Une **Delivery** est composée des attributs suivants:
-    + **delivery_id** *(optional, string)*... Uuid
-    + 
-
+    + ```delivery_id``` *(optional, string)*... Uuid
 ```
         {
             "delivery": {
