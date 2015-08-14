@@ -51,7 +51,7 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 #### L'entité "Location"
 ***
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:
-+ Une **Address** est composée des attributs suivants: 
++ Soit une adresse quelconque composée des attributs suivants: 
     + ```location_type``` *(required, string = "address")*... La nature de la location
     + ```society``` *(optional, string)*... Société.
     + ```first_name``` *(optional, string)*... Prénom.
@@ -68,11 +68,11 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
         + ```true``` par défaut, dépend de la contractualisation avec Colisweb.
     + ```send_survey``` *(optional, boolean)*... Envoyer  l'enquête de satisfaction au consommateur.
         + ```true``` par défaut, dépend de la contractualisation avec Colisweb.
-+ Un **Store** est composé des attributs suivants: 
++ Soit un magasin/entrepôt composé des attributs suivants: 
     + ```location_type``` *(required, string = "store")*... La nature de la location
-    + ```store_code``` *(optional, string)*... Code magasin.  
+    + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
-    Nous enregistrons les informations de vos magasins dans notre système au moment de la signature du contrat. Seul l'identifiant unique de ce magasin est donc nécessaire pour que nous puissions l'identifier.
+    Nous Réferençons vos magasins dans notre système au moment de la signature du contrat.
 + Une **City** ext composée des attributs suivants:
     + ```location_type``` *(required, string = "city")*... La nature de la location
     + ```postal_code``` *(optional, string)*... Code postal de la ville.  
