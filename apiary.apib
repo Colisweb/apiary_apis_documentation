@@ -160,13 +160,14 @@ Ce paramètre permet d'écraser la valeur configurée par défaut dans notre sys
 ### Contenu de la réponse
 
 + ```now``` *(hash)*: Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
-  + ```slot_size``` *(integer)*: Taille du créneau horaire de la livraison "instantanée" (en minutes).
-  + ```price``` *(float)*: Coût HT pour ce créneau (en euro).
-+ ```calendar``` *(array of hashes)*: . Vide si aucune disponibilité.
-  + ```starts_at``` *(datetime UTC)*: Début du créneau horaire de livraison.
-  + ```ends_at``` *(datetime UTC)*: Fin du créneau horaire de livraison.
-  + ```slot_size``` *(integer)*: Taille du créneau horaire de livraison (en minutes).
-  + ```price``` *(float)*: Coût HT de la livraison dans ce créneau (en euro).
+    + ```available```*(boolean)*... livraison maintenant dans les x minutes disponible ou non.
+    + ```slot_size``` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
+    + ```price``` *(float)*... Coût HT pour ce créneau (en euro).
++ ```calendar``` *(array of hashes)*... . Vide si aucune disponibilité.
+    + ```starts_at``` *(datetime UTC)*... Début du créneau horaire de livraison.
+    + ```ends_at``` *(datetime UTC)*... Fin du créneau horaire de livraison.
+    + ```slot_size``` *(integer)*... Taille du créneau horaire de livraison (en minutes).
+    + ```price``` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
   
   
 ### Voir un exemple de requête pour le cas d'une livraison depuis un magasin référencé vers un code postal [POST]
@@ -219,7 +220,9 @@ Ce paramètre permet d'écraser la valeur configurée par défaut dans notre sys
 
         {
             "now": {
-                slot_size
+                "available": true,
+                "slot_size": 120,
+                "price": 16.00
             },
             "calendar": [
                 {
@@ -268,23 +271,29 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
 ### Paramètres de requête
 
-+ ```api_key``` *(required, string)*: Clé API Colisweb
-+ ```slot``` *(required, hash)*: Entité Slot, créneau de livraison demandé 
-    + ```starts_at``` *(required, datetime UTC)*: Date et heure de début de la plage de livraison.   
++ ```api_key``` *(required, string)*... Clé API Colisweb
++ ```slot``` *(required, hash)*... Entité Slot, créneau de livraison demandé 
+    + ```starts_at``` *(required, datetime UTC)*... Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
-    + ```slot_size``` *(required, integer)*: Taille de la plage de livraison demandée (en minutes).   
+    + ```slot_size``` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
-+ ```route``` *(required)*: Informations sur les points de retrait et de livraison.    
-Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
-*Remarque*: Ce endpoint n'accepte que les entités **Address** et **Store** au sein des **Point**.
-+ ```packets``` *(required, array of hashes)*: Informations sur les colis
-  + ```product_description``` *(optional, string)*: Typologie/dénomination du/des produits contenue dans ce "packet".   
-  Exemple: "micro-onde".
-  + ```length``` *(required, integer)*: Longueur du colis (en millimètres).
-  + ```width``` *(required, integer)*: Largeur du colis (en millimètres).
-  + ```height``` *(required, integer)*: Hauteur du colis (en millimètres).
-  + ```weight``` *(required, integer)*: Poids du colis (en millimètres).
++ ```route``` *(required, Route entity)*
+    + ```point``` *(required, Point entity)*
+        + ```type``` *(required, Value = pickup)*... Point de **retrait**
+        + ```location``` *(required, Location entity)*
+        **Si la location est de type "store" et que la valeur passée à "store_code" est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
+    + ```point``` *(required, Point entity)*
+        + ```type``` *(required, Value = shipping)*... Point de **livraison**
+        + ```location``` *(required, Location entity)*
++ ```packaging```*(required, packaging entity)*
+    + ```global_description``` *(optional)*
+    + ```packets``` *(required)*
+        + ```description```(*optional)*
+        + ```length``` *(required)*
+        + ```width``` *(required)*
+        + ```height``` *(required)*
+        + ```weight``` *(required)*
 
 ### Contenu de la réponse
 
@@ -297,8 +306,6 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
     + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
     + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
     + ```price``` *(float)*: Coût HT de la livraison (en euro).
-    + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
-
 
 ## Exemple de pré-commande de livraison B2C [POST]
 
@@ -365,7 +372,7 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
 
         {
             "delivery": {
-                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "delivery_uid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
                 "command_status": "PRE_ORDERED",
                 "slot": {
                     "starts_at": "2015-04-22T10:00:00+02:00",
@@ -378,9 +385,9 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
         }
 
 
-# Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
+# Finaliser une commande de livraison [/deliveries/{delivery_uid}/confirm]
 
-Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```delivery_id``` de votre commande, vous devez la confirmer pour finaliser votre commande.
+Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```delivery_uid``` de votre commande, vous devez la confirmer pour finaliser votre commande.
 
 ***Attention***: Un maximum de **15 minutes** est autorisé entre la pré-commande et la confirmation de la commande.   
 Au delà, une erreur ```delivery_has_expired``` est renvoyée.
@@ -388,26 +395,25 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 ## Paramètres de requête
 
 + ```api_key``` *(required, string)*: Clé API Colisweb
-+ ```primary_order_reference:``` *(required if not C2C, string)*: Référence primaire commande de votre plateforme.   
++ ```primary_order_reference:``` *(required, string)*: Référence commande primaire.   
 **Cette référence permet au transporteur d'identifier le colis au moment de la récupération du colis.**
-+ ```secondary_order_reference``` *(optional, string)*: Référence secondaire commande de votre plateforme, si vous en avez.
++ ```secondary_order_reference``` *(optional, string)*: Référence commande secondaire.
 
 ## Contenu de la réponse
 
 + ```delivery``` *(hash)*: Informations sur la livraison confirmé
-  + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
-  + ```command_status```: ```"CONFIRMED"```
+  + ```delivery_uid``` *(string)* - Identifiant de la commande créée.   
+  + ```statuses```: ```"CONFIRMED"```
   + ```slot``` *(hash)*: Informations de la plage horaire commandée.
     + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
     + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
     + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
     + ```price``` *(float)*: Coût HT de la livraison (en euro).
-    + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
 
 ## Voir un exemple de requête [PUT]
 
 + Parameters
-    + delivery_id - Identifiant de la livraison obtenue lors de la pré-commande
+    + delivery_uid - Identifiant de la commande de livraison obtenue lors de la pré-commande
 
 + Request (application/json)
 
