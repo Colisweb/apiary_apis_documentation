@@ -46,7 +46,7 @@ Spécifie la nature d'un point ainsi que les informations d'addresse.
 Il peut être soit un "point de retrait" soit un "point de livraison" de la marchandise.   
 
 + Un ```Point``` est composé des attributs suivants:
-    + ```point_type``` *(required, string)*... La nature du point, les valeurs peuvent être :
+    + ```type``` *(required, string)*... La nature du point, les valeurs peuvent être :
         + **"pickup"** (point de retrait).
         + **"shipping"** (point de livraison).
     + ```location``` *(required, Location)*... Informations du point.
@@ -139,10 +139,10 @@ Permet de récupérer les options de livraisons disponibles.
     + ```size``` *(required)*
 + ```route``` *(required)*: Entité Route
     + ```point``` *(required)*... Entité Point
-        + ```point_type``` *(required, Value = pickup)*... Point de **retrait**
+        + ```type``` *(required, Value = pickup)*... Point de **retrait**
         + ```location``` *(required)*... Entité Location.
     + ```point``` *(required, hash)*... Entité point
-        + ```point_type``` *(required, Value = shipping)*... Point de **livraison**
+        + ```type``` *(required, Value = shipping)*... Point de **livraison**
         + ```location``` *(required, Location)*... Entité Location
 + ```packaging```*(required)*... Entité Packaging.
     + ```global_description``` *(optional)*
@@ -155,16 +155,14 @@ Permet de récupérer les options de livraisons disponibles.
 
 ### Contenu de la réponse
 
-+ ```now``` *(hash)*: Disponibilités de l'offre "instantanée". Vide si aucune dispobilité pour l'offre "instantanée".
-  + ```slot_size``` *(integer)*: Taille du créneau horaire en minutes de la livraison "instantanée" (en minutes).
++ ```now``` *(hash)*: Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
+  + ```slot_size``` *(integer)*: Taille du créneau horaire de la livraison "instantanée" (en minutes).
   + ```price``` *(float)*: Coût HT pour ce créneau (en euro).
-  + ```service_class``` *(string)*: Qualité de service pour ce créneau. (Premium, standard, ...)
-+ ```calendar``` *(array of hashes)*: . Vide si aucune dispobilité pour l'offre "sur rendez-vous".
-  + ```starts_at``` *(datetime UTC)*: Début du créneau horaire.
-  + ```ends_at``` *(datetime UTC)*: Fin du créneau horaire.
-  + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
++ ```calendar``` *(array of hashes)*: . Vide si aucune disponibilité.
+  + ```starts_at``` *(datetime UTC)*: Début du créneau horaire de livraison.
+  + ```ends_at``` *(datetime UTC)*: Fin du créneau horaire de livraison.
+  + ```slot_size``` *(integer)*: Taille du créneau horaire de livraison (en minutes).
   + ```price``` *(float)*: Coût HT de la livraison dans ce créneau (en euro).
-  + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
   
   
 ### Voir un exemple de requête [POST]
@@ -177,16 +175,16 @@ Permet de récupérer les options de livraisons disponibles.
                 "starts_at": "2015-04-22T10:00:00+02:00",
                 "size": 120
             },
-            "points": [
+            "route": [
                 {
-                    "point_type": "pickup",
+                    "type": "pickup",
                     "location": {
                         "type": "store",
                         "store_code": "100001"                        
                     }
                 },
                 {
-                    "point_type": "shipping",
+                    "type": "shipping",
                     "location": {
                         "type": "city",
                         "postal_code": "75001"                        
@@ -312,7 +310,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
     + ```service_class``` *(required, string)*: Qualité de service sélectionné. 
     
 + ```points``` *(required, array of <strong>Points</strong>)*: Informations sur les points de retrait et de livraison.    
-Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```point_type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
+Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
 *Remarque*: Ce endpoint n'accepte que les entités **Address** et **Store** au sein des **Point**.
 + ```packets``` *(required, array of hashes)*: Informations sur les colis
   + ```product_description``` *(optional, string)*: Typologie/dénomination du/des produits contenue dans ce "packet".   
@@ -335,70 +333,6 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
     + ```price``` *(float)*: Coût HT de la livraison (en euro).
     + ```service_class``` *(string)*: Qualité de service de ce créneau. (Premium, standard, ...)
 
-  
-### Exemple de pré-commande de livraison B2B [POST]
-
-+ Request (application/json)
-
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "slot": {
-                "starts_at": "2015-04-22T10:00:00+02:00",
-                "slot_size": 120,
-                "service_class": "standard"
-            },
-            "points": [
-                {
-                    "point_type": "PICKUP",
-                    "address_type": "STORE",
-                    "point": {
-                        "store_code": "100001"
-                    }
-                },
-                {
-                    "point_type": "SHIPPING",
-                    "address_type": "STORE",
-                    "point": {
-                        "store_code": "100002"
-                    }
-                }
-            ],
-            "packaging": {
-                "global_description": "Ensemble set cuisine",
-                "packets": [
-                    {
-                        "description": "micro-onde",
-                        "weight": 1000,
-                        "height": 140,
-                        "length": 150,
-                        "width": 165
-                    },
-                    {
-                        "description": "Cafetière",
-                        "weight": 2550,
-                        "height": 245,
-                        "length": 250,
-                        "width": 265
-                    }
-                ]
-            }
-        }
-
-+ Response 201 (application/json)
-
-        {
-            "delivery": {
-                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "command_status": "PRE_ORDERED",
-                "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T12:00:00+02:00",
-                    "slot_size": 120,
-                    "price": 5.00,
-                    "service_class": "standard"
-                }
-            }
-        }
 
 ## Exemple de pré-commande de livraison B2C [POST]
 
@@ -413,14 +347,14 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             },
             "points": [
                 {
-                    "point_type": "PICKUP",
+                    "type": "PICKUP",
                     "address_type": "STORE",
                     "point": {
                         "store_code": "100001"
                     }
                 },
                 {
-                    "point_type": "SHIPPING",
+                    "type": "SHIPPING",
                     "address_type": "CONSUMER",
                     "point": {
                         "society": "Twelve factors & C",
@@ -477,172 +411,6 @@ Pour que la demande soit valide, il faut absolument que ce tableau contiennent d
             }
         }
 
-## Exemple de pré-commande de livraison C2B [POST]
-
-+ Request (application/json)
-
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "slot": {
-                "starts_at": "2015-04-22T10:00:00+02:00",
-                "slot_size": 120,
-                "service_class": "standard"
-            },
-            "points": [
-                {
-                    "point_type": "PICKUP",
-                    "address_type": "CONSUMER",
-                    "point": {
-                        "society": "Twelve factors & C",
-                        "first_name": "Helmout",
-                        "last_name": "Ardelpik",
-                        "email": "helmoutardelpik@gmail.com",
-                        "primary_phone": "0694385693",
-                        "secondary_phone": "0354678942",
-                        "line1": "165, avenue des champs Elysées",
-                        "line2": "Batiment Leblanc",
-                        "additional_informations": "Digicode B345, 3 éme etage",
-                        "postal_code": "75001",
-                        "city": "Paris",
-                        "country": "France",
-                        "send_command_statuses": true,
-                        "send_survey": true
-                    }
-                },
-                {
-                    "point_type": "SHIPPING",
-                    "address_type": "STORE",
-                    "point": {
-                        "store_code": "100001"
-                    }
-                }
-            ],
-            "packaging": {
-                "global_description": "Ensemble set cuisine",
-                "packets": [
-                    {
-                        "description": "micro-onde",
-                        "weight": 1000,
-                        "height": 140,
-                        "length": 150,
-                        "width": 165
-                    },
-                    {
-                        "description": "Cafetière",
-                        "weight": 2550,
-                        "height": 245,
-                        "length": 250,
-                        "width": 265
-                    }
-                ]
-            }
-        }
-
-+ Response 201 (application/json)
-
-        {
-            "delivery": {
-                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "command_status": "PRE_ORDERED",
-                "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T12:00:00+02:00",
-                    "slot_size": 120,
-                    "price": 5.00,
-                    "service_class": "standard"
-                }
-            }
-        }
-
-## Exemple de pré-commande de livraison C2C [POST]
-
-+ Request (application/json)
-
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "slot": {
-                "starts_at": "2015-04-22T10:00:00+02:00",
-                "slot_size": 120,
-                "service_class": "standard"
-            },
-            "points": [
-                {
-                    "point_type": "PICKUP",
-                    "address_type": "CONSUMER",
-                    "point": {
-                        "society": "",
-                        "first_name": "Alan",
-                        "last_name": "Turing",
-                        "email": "alan.turing@gmail.com",
-                        "primary_phone": "0624243624",
-                        "secondary_phone": "",
-                        "line1": "125 rue de Vaugirard",
-                        "line2": "",
-                        "additional_informations": "",
-                        "postal_code": "75015",
-                        "city": "Paris",
-                        "country": "France",
-                        "send_command_statuses": true,
-                        "send_survey": true
-                    }
-                },
-                {
-                    "point_type": "SHIPPING",
-                    "address_type": "CONSUMER",
-                    "point": {
-                        "society": "Twelve factors & C",
-                        "first_name": "Helmout",
-                        "last_name": "Ardelpik",
-                        "email": "helmoutardelpik@gmail.com",
-                        "primary_phone": "0694385693",
-                        "secondary_phone": "0354678942",
-                        "line1": "165, avenue des champs Elysées",
-                        "line2": "Batiment Leblanc",
-                        "additional_informations": "Digicode B345, 3 éme etage",
-                        "postal_code": "75001",
-                        "city": "Paris",
-                        "country": "France",
-                        "send_command_statuses": true,
-                        "send_survey": true
-                    }
-                }
-            ],
-            "packaging": {
-                "global_description": "Ensemble set cuisine",
-                "packets": [
-                    {
-                        "description": "micro-onde",
-                        "weight": 1000,
-                        "height": 140,
-                        "length": 150,
-                        "width": 165
-                    },
-                    {
-                        "description": "Cafetière",
-                        "weight": 2550,
-                        "height": 245,
-                        "length": 250,
-                        "width": 265
-                    }
-                ]
-            }
-        }
-
-+ Response 201 (application/json)
-
-        {
-            "delivery": {
-                "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "command_status": "PRE_ORDERED",
-                "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T12:00:00+02:00",
-                    "slot_size": 120,
-                    "price": 5.00,
-                    "service_class": "standard"
-                }
-            }
-        }
 
 # Finaliser une commande de livraison [/deliveries/{delivery_id}/confirm]
 
