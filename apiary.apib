@@ -215,77 +215,45 @@ Ce paramètre permet d'écraser la valeur configurée par défaut dans notre sys
 + Response 200 (application/json)
 
         {
-            "now": [
-                {
-                    "slot_size": 120,
-                    "price": 16.00,
-                    "service_class": "premium"
-                },
-                {
-                    "slot_size": 120,
-                    "price": 8.00,
-                    "service_class": "standard"
-                },
-                {
-                    "slot_size": 180,
-                    "price": 10.00,
-                    "service_class": "premium"
-                },
-                {
-                    "slot_size": 180,
-                    "price": 5.00,
-                    "service_class": "standard"
-                }
-            ],
+            "now": {
+                slot_size
+            },
             "planned": [
                 {
                     "starts_at": "2015-04-22T10:00:00+02:00",
                     "ends_at": "2015-04-22T12:00:00+02:00",
                     "slot_size": 120,
-                    "price": 16.00,
-                    "service_class": "premium"
-                },
-                {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T12:00:00+02:00",
-                    "slot_size": 120,
-                    "price": 8.00,
-                    "service_class": "standard"
-                },
-                {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T13:00:00+02:00",
-                    "slot_size": 180,
-                    "price": 10.00,
-                    "service_class": "premium"
-                },
-                {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T13:00:00+02:00",
-                    "slot_size": 180,
-                    "price": 5.00,
-                    "service_class": "standard"
-                },
-                {
-                    "starts_at": "2015-04-22T11:00:00+02:00",
-                    "ends_at": "2015-04-22T13:00:00+02:00",
-                    "slot_size": 120,
-                    "price": 8.00,
-                    "service_class": "standard"
-                },
-                {
-                    "starts_at": "2015-04-22T11:00:00+02:00",
-                    "ends_at": "2015-04-22T14:00:00+02:00",
-                    "slot_size": 180,
-                    "price": 5.00,
-                    "service_class": "standard"
+                    "price": 16.00
                 },
                 {
                     "starts_at": "2015-04-22T12:00:00+02:00",
                     "ends_at": "2015-04-22T14:00:00+02:00",
                     "slot_size": 120,
-                    "price": 8.00,
-                    "service_class": "standard"
+                    "price": 8.00
+                },
+                {
+                    "starts_at": "2015-04-22T14:00:00+02:00",
+                    "ends_at": "2015-04-22T17:00:00+02:00",
+                    "slot_size": 180,
+                    "price": 10.00
+                },
+                {
+                    "starts_at": "2015-04-23T10:00:00+02:00",
+                    "ends_at": "2015-04-23T12:00:00+02:00",
+                    "slot_size": 120,
+                    "price": 16.00
+                },
+                {
+                    "starts_at": "2015-04-23T12:00:00+02:00",
+                    "ends_at": "2015-04-23T14:00:00+02:00",
+                    "slot_size": 120,
+                    "price": 8.00
+                },
+                {
+                    "starts_at": "2015-04-23T14:00:00+02:00",
+                    "ends_at": "2015-04-23T17:00:00+02:00",
+                    "slot_size": 180,
+                    "price": 10.00
                 }
             ]
         }
