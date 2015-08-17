@@ -417,7 +417,7 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 
 + ```delivery``` *(hash)*: Informations sur la livraison créée
     + ```delivery_uid``` *(string)*... Identifiant unique de la livraison.  
-    + ```status```(hash, Status entity)... Statuts.
+    + ```status```(hash, Status entity)... statuts de commande et de livraison.
         + ```global```(string = "confirmed")... Commande confirmée
     + ```slot``` *(hash)*... Informations sur la plage horaire demandée.
         + ```starts_at``` *(datetime UTC)*... Date et heure de début du créneau horaire demandé.
