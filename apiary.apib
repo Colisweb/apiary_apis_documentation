@@ -3,7 +3,7 @@ HOST: http://sandbox.api.colisweb.com
 
 # Colisweb API v4
 
-Ce document décrit les points d'entrée, appelés **endpoints**, de l'API ainsi que les workflows d'utilisations.   
+Ce document décrit les points d'entrées, appelés **endpoints**, de l'API ainsi que les workflows d'utilisations.   
 > **ATTENTION**: Nous nous réservons le droit **d'ajouter** certains attributs tout au long du cycle de vie de cette API.
 
 ***
@@ -48,7 +48,7 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:   
 
 + Soit une adresse quelconque avec les attributs suivants: 
-    + ```location_type ``` *(required, string = "address")* ... Type de la location
+    + ```location_type ``` *(required, string = "address")* ... Location de type **"address"**
     + ```society``` *(optional, string)*... Société.
     + ```first_name``` *(optional, string)*... Prénom.
     + ```last_name``` *(required, string)*... Nom (ou concaténation prénom + nom).
@@ -63,13 +63,13 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```country``` *(required, string)*... Pays.
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
-    + ```location_type``` *(required, string = "store")*... Type de la location
+    + ```location_type``` *(required, string = "store")*... Location de type **"store"**
     + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
     Nous Réferençons vos magasins dans notre système au moment de la signature du contrat.
 
 + Soit un code postal avec attributs suivants:
-    + ```location_type``` *(required, string = "city")*... Type de la location
+    + ```location_type``` *(required, string = "city")*... location de type **"city"**
     + ```postal_code``` *(required, string)*... Code postal.  
 
 
@@ -158,21 +158,25 @@ Permet de récupérer les options de livraisons disponibles.
 
         {
             "api_key": "3025688655a161aeb167b7b33f03c013",
+            "slot": {
+                "starts_at": "2015-04-22T10:00:00+02:00",
+                "size": 120
+            },
             "points": [
                 {
-                    "point_type": "PICKUP",
-                    "address_type": "STORE",
-                    "point": {
+                    "point_type": "pickup",
+                    "location": {
+                        "type": "store",
                         "store_code": "100001"                        
                     }
                 },
                 {
-                   "point_type": "SHIPPING",
-                   "address_type": "CONSUMER",
-                   "point": {
-                       "postal_code": "75012"                       
-                   }
-                }
+                    "point_type": "shipping",
+                    "location": {
+                        "type": "city",
+                        "postal_code": "75001"                        
+                    }
+                },
             ],
             "packaging": {
                 "global_description": "Ensemble set cuisine",
