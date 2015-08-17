@@ -128,26 +128,26 @@ Permet de récupérer les options de livraisons disponibles.
 
 + ```api_key``` *(required)*... Clé API Colisweb.
 + ```slot``` *(required)*
-    + ```starts_at``` *(required, datetime)*... Date et heure de début de la plage de livraison.
-    + ```size``` *(required, integer)*... Taille de la plage de livraison (en minutes).
-+ ```points``` *(required, array of <strong>Point</strong>)*: Informations sur les points de retrait et de livraison.    
-    + ```point``` *(required, hash)*
-        + ```point_type``` *(required, string = pickup)*... Point de retrait
-        + ```location``` *(required, Location)*... Informations du point.
-    + ```point``` *(required, hash)*
-        + ```point_type``` *(required, string = shipping)*... Point de livraison
-        + ```location``` *(required, Location)*... Informations du point.
-+ ```packaging```*(required, hash)*... informations sur l'ensemble du/des colis constituant la demande de livraison.
-    + ```global_description``` *(optional, string)*... 
-+ ```packets``` *(required, array of hashes)*: Informations sur les colis.
-  + ```length``` *(required, integer)*: Longueur du colis (en millimètres).
-  + ```width``` *(required, integer)*: largeur du colis (en millimètres).
-  + ```height``` *(required, integer)*: hauteur du colis (en millimètres).
-  + ```weight``` *(required, integer)*: poids du colis (en grammes).
+    + ```starts_at``` *(required)*... Date et heure de début de la plage de livraison.
+    + ```size``` *(required)*... Taille de la plage de livraison (en minutes).
++ ```points``` *(required)*: Informations sur les points de retrait et de livraison.    
+    + ```point``` *(required)*... Type Point
+        + ```point_type``` *(required, Value = pickup)*... Point de **retrait**
+        + ```location``` *(required)*... Type Location.
+    + ```point``` *(required, hash)*... Type point
+        + ```point_type``` *(required, Value = shipping)*... Point de **livraison**
+        + ```location``` *(required, Location)*... Type Location
++ ```packaging```*(required)*... informations sur l'ensemble du/des colis constituant la demande de livraison.
+    + ```global_description``` *(optional)*... 
+        + ```packets``` *(required)*: Informations sur les colis.
+        + ```length``` *(required)*: Longueur du colis (en millimètres).
+        + ```width``` *(required)*: largeur du colis (en millimètres).
+        + ```height``` *(required)*: hauteur du colis (en millimètres).
+        + ```weight``` *(required)*: poids du colis (en grammes).
 
 ### Contenu de la réponse
 
-+ ```now``` *(array of hashes)*: Disponibilités de l'offre "instantanée". Vide si aucune dispobilité pour l'offre "instantanée".
++ ```now``` *(hash)*: Disponibilités de l'offre "instantanée". Vide si aucune dispobilité pour l'offre "instantanée".
   + ```slot_size``` *(integer)*: Taille du créneau horaire en minutes de la livraison "instantanée" (en minutes).
   + ```price``` *(float)*: Coût HT pour ce créneau (en euro).
   + ```service_class``` *(string)*: Qualité de service pour ce créneau. (Premium, standard, ...)
