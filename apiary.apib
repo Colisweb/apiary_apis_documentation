@@ -134,9 +134,9 @@ Permet de récupérer les options de livraisons disponibles.
 ### Paramètres de requête
 
 + ```api_key``` *(required)*... Clé API Colisweb.
-+ ```slot``` *(required)*... Entité Slot
-    + ```starts_at``` *(required)*
-    + ```size``` *(required)*
++ ```slot``` *(optional)*... Entité Slot
+    + ```size``` *(optional)* Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h
+Ce paramètre permet d'écraser la valeur configurée par défaut dans notre système.
 + ```route``` *(required)*: Entité Route
     + ```point``` *(required)*... Entité Point
         + ```type``` *(required, Value = pickup)*... Point de **retrait**
