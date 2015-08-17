@@ -110,6 +110,19 @@ Spécifie les informations sur un colis
     + ```weight``` *(required, integer)*.. Poids du colis (en grammes).
 
 ***
+### Entités en sortie
+***
+
+#### L'entité "status"
+***
+Spécifie les informations de statuts de livraison
++ Un **status** est composé des attributs suivants:
+    + ```global``` *(string)*... statut global de la commande.
+    + ```retailer``` *(string)*... statut magasin de la commande.
+    + ```carrier``` *(string)*... statut transporteur de la commande.
+
+
+***
 ### Formats de dates
 ***
 Les dates sont au format **ISO 8601 avec indication de fuseau horaire**.   
@@ -373,7 +386,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
         {
             "delivery": {
                 "delivery_uid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "statuses": {
+                "status": {
                     "global": "pre_ordered"
                 },
                 "slot": {
@@ -404,7 +417,7 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 
 + ```delivery``` *(hash)*: Informations sur la livraison créée
     + ```delivery_uid``` *(string)* -Identifiant unique de la livraison.  
-    + ```statuses```(hash, Statuses entity)... Statuts.
+    + ```status```(hash, Status entity)... Statuts.
         + ```global```(string = "confirmed")... Commande confirmée
     + ```slot``` *(hash)*: Informations sur la plage horaire demandée.
         + ```starts_at``` *(datetime UTC)*: Date et heure de début du créneau horaire demandé.
@@ -430,7 +443,7 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
         {
             "delivery": {
                 "delivery_id": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "statuses": {
+                "status": {
                     "global": "confirmed"
                 },
                 "slot": {
