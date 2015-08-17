@@ -143,7 +143,9 @@ Ce paramètre permet d'écraser la valeur configurée par défaut dans notre sys
         + ```location``` *(required)*... Entité Location.
     + ```point``` *(required, hash)*... Entité point
         + ```type``` *(required, Value = shipping)*... Point de **livraison**
-        + ```location``` *(required, Location)*... Entité Location
+        + ```location``` *(required, Location)*... Entité Location   
+        > Code magasin de retrait
+Si la valeur passée est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.
 + ```packaging```*(required)*... Entité Packaging.
     + ```global_description``` *(optional)*
     + ```packets``` *(required)*... Array of Entité Packet.
