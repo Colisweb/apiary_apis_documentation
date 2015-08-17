@@ -133,7 +133,7 @@ Permet de récupérer les options de livraisons disponibles.
 
 ### Paramètres de requête
 
-+ ```api_key``` *(required)*... Clé API Colisweb.
++ ```api_key``` *(required, string)*... Clé API Colisweb.
 + ```slot``` *(optional)*... Entité Slot
     + ```size``` *(optional)* Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h
 Ce paramètre permet d'écraser la valeur configurée par défaut dans notre système.
@@ -218,7 +218,7 @@ Ce paramètre permet d'écraser la valeur configurée par défaut dans notre sys
             "now": {
                 slot_size
             },
-            "planned": [
+            "calendar": [
                 {
                     "starts_at": "2015-04-22T10:00:00+02:00",
                     "ends_at": "2015-04-22T12:00:00+02:00",
@@ -269,9 +269,9 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 + ```slot``` *(required, hash)*: Informations sur le slot demandé 
     + ```starts_at``` *(required, datetime UTC)*: Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
-    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.   
+    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles) garantissent une réponse positive de l'API.   
     + ```slot_size``` *(required, integer)*: Taille de la plage de livraison demandée (en minutes).   
-    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/deliveries/obtenir-les-options-de-livraison-disponbiles) garantissent une réponse positive de l'API.
+    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles) garantissent une réponse positive de l'API.
 
     <!-- TODO Jules : ici ce n'est plus vraiment vrai. Nous n'acceptons plus que les valeurs fournies par /deliveries/options. Trouver une formulation correcte -->
 
