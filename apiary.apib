@@ -137,20 +137,20 @@ Permet de récupérer les options de livraisons disponibles.
 ### Paramètres de requête
 
 + ```api_key``` *(required, string)*... Clé API Colisweb.
-+ ```slot``` *(optional)*... Entité Slot
++ ```slot``` *(optional, Slot entity)*...
     + ```size``` *(optional)* Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h
 Ce paramètre permet d'écraser la valeur configurée par défaut dans notre système.
-+ ```route``` *(required)*: Entité Route
-    + ```point``` *(required)*... Entité Point
++ ```route``` *(required, Route entity)*
+    + ```point``` *(required, Point entity)*
         + ```type``` *(required, Value = pickup)*... Point de **retrait**
-        + ```location``` *(required)*... Entité Location.   
+        + ```location``` *(required, Location entity)*
         **Si la location est de type "store" et que la valeur passée à "store_code" est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
-    + ```point``` *(required, hash)*... Entité point
+    + ```point``` *(required, Point entity)*
         + ```type``` *(required, Value = shipping)*... Point de **livraison**
-        + ```location``` *(required, Location)*... Entité Location   
-+ ```packaging```*(required)*... Entité Packaging.
+        + ```location``` *(required, Location entity)*
++ ```packaging```*(required, packaging entity)*
     + ```global_description``` *(optional)*
-    + ```packets``` *(required)*... Array of Entité Packet.
+    + ```packets``` *(required)*
         + ```description```(*optional)*
         + ```length``` *(required)*
         + ```width``` *(required)*
@@ -269,18 +269,13 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 ### Paramètres de requête
 
 + ```api_key``` *(required, string)*: Clé API Colisweb
-+ ```slot``` *(required, hash)*: Informations sur le slot demandé 
++ ```slot``` *(required, hash)*: Entité Slot, créneau de livraison demandé 
     + ```starts_at``` *(required, datetime UTC)*: Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
     + ```slot_size``` *(required, integer)*: Taille de la plage de livraison demandée (en minutes).   
-    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint [```/deliveries/options```](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles) garantissent une réponse positive de l'API.
-
-    <!-- TODO Jules : ici ce n'est plus vraiment vrai. Nous n'acceptons plus que les valeurs fournies par /deliveries/options. Trouver une formulation correcte -->
-
-    + ```service_class``` *(required, string)*: Qualité de service sélectionné. 
-    
-+ ```points``` *(required, array of <strong>Points</strong>)*: Informations sur les points de retrait et de livraison.    
+    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
++ ```route``` *(required)*: Informations sur les points de retrait et de livraison.    
 Pour que la demande soit valide, il faut absolument que ce tableau contiennent deux entités ```Point```, l'une ayant comme valeur de ```type``` ```"PICKUP"``` et l'autre  ```"SHIPPING"```.    
 *Remarque*: Ce endpoint n'accepte que les entités **Address** et **Store** au sein des **Point**.
 + ```packets``` *(required, array of hashes)*: Informations sur les colis
