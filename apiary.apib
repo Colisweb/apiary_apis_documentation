@@ -37,6 +37,7 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 
 #### L'entité "Point"
 ***
+Spécifie qu'un point est de type "point de retrait" ou "point de livraison" de la marchandise   
 + Un ```Point``` est composé des attributs suivants:
     + ```point_type``` *(required, string)*... La nature du point, les valeurs peuvent être :
         + **"pickup"** (point de retrait).
@@ -45,10 +46,11 @@ Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à
 
 #### L'entité "Location"
 ***
+Spécifie les informations des points de retrait / livraison.   
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:   
 
 + Soit une adresse quelconque avec les attributs suivants: 
-    + ```location_type ``` *(required, string = "address")* ... Location de type **"address"**
+    + ```type``` *(required, string = "address")* ... Location de type **"address"**
     + ```society``` *(optional, string)*... Société.
     + ```first_name``` *(optional, string)*... Prénom.
     + ```last_name``` *(required, string)*... Nom (ou concaténation prénom + nom).
@@ -63,32 +65,35 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```country``` *(required, string)*... Pays.
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
-    + ```location_type``` *(required, string = "store")*... Location de type **"store"**
+    + ```type``` *(required, string = "store")*... Location de type **"store"**
     + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
     Nous Réferençons vos magasins dans notre système au moment de la signature du contrat.
 
 + Soit un code postal avec attributs suivants:
-    + ```location_type``` *(required, string = "city")*... location de type **"city"**
+    + ```type``` *(required, string = "city")*... location de type **"city"**
     + ```postal_code``` *(required, string)*... Code postal.  
 
 
 #### L'entité "Slot"
 ***
+Spécifie le créneaux horaire souhaité pour la livraison de la marchandise.   
 + Un **Slot** est composé des attributs suivants:
     + ```starts_at``` *(required, datetime)*... Début du créneau horaire.
     + ```size``` *(required, integer)*... Taille de la plage de livraison (en minutes).
 
 #### L'entité "Packaging"
 ***
+Spécifie les informations de l'ensemble du/des colis constituant la demande de livraison.   
 + Un **Packaging** est composé des attributes suivants:
     + ```global_description``` *(optional, string)*... La description globale du packaging.
     + ```packets``` *(required, array[Packet])*... Les paquets composant le packaging.
 
 #### L'entité "Packet"
 ***
+Spécifie les informations sur un colis   
 + Un **Packet** est composé des attributs suivants:
-    + ```description``` *(optional , string)*... La description du paquet.
+    + ```description``` *(optional , string)*... La description / référence du paquet.
     + ```length``` *(required, integer)*... Longueur du colis (en millimètres).
     + ```width``` *(required, integer)*.. Largeur du colis (en millimètres).
     + ```height``` *(required, integer)*.. Hauteur du colis (en millimètres).
@@ -132,6 +137,7 @@ Permet de récupérer les options de livraisons disponibles.
     + ```point``` *(required, hash)*
         + ```point_type``` *(required, string = shipping)*... Point de livraison
         + ```location``` *(required, Location)*... Informations du point.
++ ```packaging```*(required, hash)*... informations sur l'ensemble du/des colis constituant la demande de livraison.
 + ```packets``` *(required, array of hashes)*: Informations sur les colis.
   + ```length``` *(required, integer)*: Longueur du colis (en millimètres).
   + ```width``` *(required, integer)*: largeur du colis (en millimètres).
@@ -183,17 +189,17 @@ Permet de récupérer les options de livraisons disponibles.
                 "packets": [
                     {
                         "description": "micro-onde",
-                        "weight": 1000,
                         "height": 140,
                         "length": 150,
-                        "width": 165
+                        "width": 165,
+                        "weight": 1000
                     },
                     {
                         "description": "Cafetière",
-                        "weight": 2550,
                         "height": 245,
                         "length": 250,
-                        "width": 265
+                        "width": 265,
+                        "weight": 2550
                     }
                 ]
             }
