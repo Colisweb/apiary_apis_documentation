@@ -299,13 +299,13 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 ### Contenu de la réponse
 
 + ```delivery``` *(hash)*: Informations sur la livraison créée
-  + ```delivery_uid``` *(string)* - Identifiant de la commande créée.   
-  **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
-  + ```slot``` *(hash)*: Informations de la plage horaire commandée.
-    + ```starts_at``` *(datetime UTC)*: Date et heure de début du créneau horaire demandé.
-    + ```ends_at``` *(datetime UTC)*: Date et heure de fin du créneau horaire demandé.
-    + ```slot_size``` *(integer)*: Taille du créneau horaire demandé (en minutes).
-    + ```price``` *(float)*: Coût HT de la livraison (en euro).
+    + ```delivery_uid``` *(string)* - Identifiant de la commande créée.   
+    **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
+    + ```slot``` *(hash)*: Informations de la plage horaire commandée.
+        + ```starts_at``` *(datetime UTC)*: Date et heure de début du créneau horaire demandé.
+        + ```ends_at``` *(datetime UTC)*: Date et heure de fin du créneau horaire demandé.
+        + ```slot_size``` *(integer)*: Taille du créneau horaire demandé (en minutes).
+        + ```price``` *(float)*: Coût HT de la livraison (en euro).
 
 ## Exemple de pré-commande de livraison en mode "B2C" -> cas d'une livraison depuis un magasin référencé vers un code postal [POST]
 
@@ -397,14 +397,13 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 
 ## Contenu de la réponse
 
-+ ```delivery``` *(hash)*: Informations sur la livraison confirmé
-  + ```delivery_uid``` *(string)* - Identifiant de la commande créée.   
-  + ```statuses```: ```"CONFIRMED"```
-  + ```slot``` *(hash)*: Informations de la plage horaire commandée.
-    + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
-    + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
-    + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
-    + ```price``` *(float)*: Coût HT de la livraison (en euro).
++ ```delivery``` *(hash)*: Informations sur la livraison créée
+    + ```delivery_uid``` *(string)* - Identifiant de la commande créée.   
+    + ```slot``` *(hash)*: Informations de la plage horaire commandée.
+        + ```starts_at``` *(datetime UTC)*: Date et heure de début du créneau horaire demandé.
+        + ```ends_at``` *(datetime UTC)*: Date et heure de fin du créneau horaire demandé.
+        + ```slot_size``` *(integer)*: Taille du créneau horaire demandé (en minutes).
+        + ```price``` *(float)*: Coût HT de la livraison (en euro).
 
 ## Voir un exemple de requête [PUT]
 
