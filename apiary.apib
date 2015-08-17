@@ -33,11 +33,18 @@ Deux environnements sont disponibles:
 ***
 ### Entités en entrée
 ***
-Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à un **point B (shipping)**.   
+Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à un **point B (shipping)**. 
 
+#### L'entité "Route"
+***
+Spécifie et constitue les informations sur le point de retrait et de livraison.   
++ Une ```Route``` est un array d'entités Point
+    
 #### L'entité "Point"
 ***
-Spécifie qu'un point est de type "point de retrait" ou "point de livraison" de la marchandise   
+Spécifie la nature d'un point ainsi que les informations d'addresse.   
+Il peut être soit un "point de retrait" soit un "point de livraison" de la marchandise.   
+
 + Un ```Point``` est composé des attributs suivants:
     + ```point_type``` *(required, string)*... La nature du point, les valeurs peuvent être :
         + **"pickup"** (point de retrait).
@@ -46,7 +53,7 @@ Spécifie qu'un point est de type "point de retrait" ou "point de livraison" de 
 
 #### L'entité "Location"
 ***
-Spécifie les informations des points de retrait / livraison.   
+Spécifie les informations d'addresse d'un point.   
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:   
 
 + Soit une adresse quelconque avec les attributs suivants: 
@@ -127,23 +134,24 @@ Permet de récupérer les options de livraisons disponibles.
 ### Paramètres de requête
 
 + ```api_key``` *(required)*... Clé API Colisweb.
-+ ```slot``` *(required)*
-    + ```starts_at``` *(required)*... Date et heure de début de la plage de livraison.
-    + ```size``` *(required)*... Taille de la plage de livraison (en minutes).
-+ ```points``` *(required)*: Informations sur les points de retrait et de livraison.    
-    + ```point``` *(required)*... Type Point
++ ```slot``` *(required)*... Entité Slot
+    + ```starts_at``` *(required)*
+    + ```size``` *(required)*
++ ```route``` *(required)*: Entité Route
+    + ```point``` *(required)*... Entité Point
         + ```point_type``` *(required, Value = pickup)*... Point de **retrait**
-        + ```location``` *(required)*... Type Location.
-    + ```point``` *(required, hash)*... Type point
+        + ```location``` *(required)*... Entité Location.
+    + ```point``` *(required, hash)*... Entité point
         + ```point_type``` *(required, Value = shipping)*... Point de **livraison**
-        + ```location``` *(required, Location)*... Type Location
-+ ```packaging```*(required)*... informations sur l'ensemble du/des colis constituant la demande de livraison.
-    + ```global_description``` *(optional)*... 
-        + ```packets``` *(required)*: Informations sur les colis.
-        + ```length``` *(required)*: Longueur du colis (en millimètres).
-        + ```width``` *(required)*: largeur du colis (en millimètres).
-        + ```height``` *(required)*: hauteur du colis (en millimètres).
-        + ```weight``` *(required)*: poids du colis (en grammes).
+        + ```location``` *(required, Location)*... Entité Location
++ ```packaging```*(required)*... Entité Packaging.
+    + ```global_description``` *(optional)*
+    + ```packets``` *(required)*... Array of Entité Packet.
+        + ```description```(*optional)*
+        + ```length``` *(required)*
+        + ```width``` *(required)*
+        + ```height``` *(required)*
+        + ```weight``` *(required)*
 
 ### Contenu de la réponse
 
@@ -151,7 +159,7 @@ Permet de récupérer les options de livraisons disponibles.
   + ```slot_size``` *(integer)*: Taille du créneau horaire en minutes de la livraison "instantanée" (en minutes).
   + ```price``` *(float)*: Coût HT pour ce créneau (en euro).
   + ```service_class``` *(string)*: Qualité de service pour ce créneau. (Premium, standard, ...)
-+ ```planned``` *(array of hashes)*: Disponibilités de l'offre "sur rendez-vous". Vide si aucune dispobilité pour l'offre "sur rendez-vous".
++ ```calendar``` *(array of hashes)*: . Vide si aucune dispobilité pour l'offre "sur rendez-vous".
   + ```starts_at``` *(datetime UTC)*: Début du créneau horaire.
   + ```ends_at``` *(datetime UTC)*: Fin du créneau horaire.
   + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
