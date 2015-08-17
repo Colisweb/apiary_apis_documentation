@@ -137,7 +137,7 @@ Permet de récupérer les options de livraisons disponibles.
 ### Paramètres de requête
 
 + ```api_key``` *(required, string)*... Clé API Colisweb.
-+ ```slot``` *(optional, Slot entity)*...
++ ```slot``` *(optional, Slot entity)*
     + ```size``` *(optional)* Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h
 Ce paramètre permet d'écraser la valeur configurée par défaut dans notre système.
 + ```route``` *(required, Route entity)*
@@ -170,7 +170,7 @@ Ce paramètre permet d'écraser la valeur configurée par défaut dans notre sys
     + ```price``` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
   
   
-### Voir un exemple de requête pour le cas d'une livraison depuis un magasin référencé vers un code postal [POST]
+### Exemple de demande d'options en mode "B2C" -> cas d'une livraison depuis un magasin référencé vers un code postal [POST]
 
 + Request (application/json)
 
@@ -272,20 +272,21 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 ### Paramètres de requête
 
 + ```api_key``` *(required, string)*... Clé API Colisweb
-+ ```slot``` *(required, hash)*... Entité Slot, créneau de livraison demandé 
++ ```slot``` *(required, Slot entity)*... Créneau de livraison demandé.
     + ```starts_at``` *(required, datetime UTC)*... Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
-    + ```slot_size``` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
+    + ```size``` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
 + ```route``` *(required, Route entity)*
     + ```point``` *(required, Point entity)*
         + ```type``` *(required, Value = pickup)*... Point de **retrait**
-        + ```location``` *(required, Location entity)*
+        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
         **Si la location est de type "store" et que la valeur passée à "store_code" est nul, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
     + ```point``` *(required, Point entity)*
         + ```type``` *(required, Value = shipping)*... Point de **livraison**
-        + ```location``` *(required, Location entity)*
+        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
+        **Si la location est de type "store", alors la valeur passée à "store_code" doit être obligatoirement renseignée**
 + ```packaging```*(required, packaging entity)*
     + ```global_description``` *(optional)*
     + ```packets``` *(required)*
@@ -298,16 +299,16 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 ### Contenu de la réponse
 
 + ```delivery``` *(hash)*: Informations sur la livraison créée
-  + ```delivery_id``` *(string)* - Identifiant de la commande créée.   
+  + ```delivery_uid``` *(string)* - Identifiant de la commande créée.   
   **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
-  + ```command_status```: ```"PRE_ORDERED"```
+  + ```statuses``` *(Statuses entity)*... statuts de commande et de livraison.
   + ```slot``` *(hash)*: Informations de la plage horaire commandée.
-    + ```starts_at``` *(datetime UTC)*: Début d'un créneau horaire.
-    + ```ends_at``` *(datetime UTC)*: Fin d'un créneau horaire.
-    + ```slot_size``` *(integer)*: Taille du créneau horaire (en minutes).
+    + ```starts_at``` *(datetime UTC)*: Date et heure de début du créneau horaire demandé.
+    + ```ends_at``` *(datetime UTC)*: Date et heure de fin du créneau horaire demandé.
+    + ```slot_size``` *(integer)*: Taille du créneau horaire demandé (en minutes).
     + ```price``` *(float)*: Coût HT de la livraison (en euro).
 
-## Exemple de pré-commande de livraison B2C [POST]
+## Exemple de pré-commande de livraison en mode "B2C" -> cas d'une livraison depuis un magasin référencé vers un code postal [POST]
 
 + Request (application/json)
 
@@ -318,18 +319,18 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
                 "slot_size": 120,
                 "service_class": "standard"
             },
-            "points": [
+            "route": [
                 {
-                    "type": "PICKUP",
-                    "address_type": "STORE",
-                    "point": {
-                        "store_code": "100001"
+                    "type": "pickup",
+                    "location": {
+                        "type": "store",
+                        "store_code": "100001"                        
                     }
                 },
                 {
-                    "type": "SHIPPING",
-                    "address_type": "CONSUMER",
-                    "point": {
+                    "type": "shipping",
+                    "location": {
+                        "type": "address",
                         "society": "Twelve factors & C",
                         "first_name": "Helmout",
                         "last_name": "Ardelpik",
@@ -341,28 +342,26 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
                         "additional_informations": "Digicode B345, 3 éme etage",
                         "postal_code": "75001",
                         "city": "Paris",
-                        "country": "France",
-                        "send_command_statuses": true,
-                        "send_survey": true
+                        "country": "France"                        
                     }
-                }
+                },
             ],
             "packaging": {
                 "global_description": "Ensemble set cuisine",
                 "packets": [
                     {
                         "description": "micro-onde",
-                        "weight": 1000,
                         "height": 140,
                         "length": 150,
-                        "width": 165
+                        "width": 165,
+                        "weight": 1000
                     },
                     {
                         "description": "Cafetière",
-                        "weight": 2550,
                         "height": 245,
                         "length": 250,
-                        "width": 265
+                        "width": 265,
+                        "weight": 2550
                     }
                 ]
             }
