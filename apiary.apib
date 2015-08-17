@@ -311,16 +311,16 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
 ### Contenu de la réponse
 
-+ ```delivery``` *(hash)*: Informations sur la livraison créée
-    + ```delivery_uid``` *(string)* - Identifiant unique de la livraison.   
++ ```delivery``` *(hash)*... Informations sur la livraison créée
+    + ```delivery_uid``` *(string)*... Identifiant unique de la livraison.   
     **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
-    + ```statuses```(hash, Statuses entity)... statuts de commande et de livraison.
-        + ```global```(string = "pre_ordered")...
-    + ```slot``` *(hash)*: Informations de la plage horaire commandée.
-        + ```starts_at``` *(datetime UTC)*: Date et heure de début du créneau horaire demandé.
-        + ```ends_at``` *(datetime UTC)*: Date et heure de fin du créneau horaire demandé.
-        + ```size``` *(integer)*: Taille du créneau horaire demandé (en minutes).
-        + ```price``` *(float)*: Coût HT de la livraison (en euro).
+    + ```status```(hash, Status entity)... statuts de commande et de livraison.
+        + ```global```(string = "pre_ordered")
+    + ```slot``` *(hash)*... Informations de la plage horaire commandée.
+        + ```starts_at``` *(datetime UTC)*... Date et heure de début du créneau horaire demandé.
+        + ```ends_at``` *(datetime UTC)*... Date et heure de fin du créneau horaire demandé.
+        + ```size``` *(integer)*... Taille du créneau horaire demandé (en minutes).
+        + ```price``` *(float)*... Coût HT de la livraison (en euro).
 
 ## Exemple de pré-commande de livraison en mode "B2C" -> cas d'une livraison depuis un magasin référencé vers un code postal [POST]
 
@@ -416,14 +416,14 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 ## Contenu de la réponse
 
 + ```delivery``` *(hash)*: Informations sur la livraison créée
-    + ```delivery_uid``` *(string)* -Identifiant unique de la livraison.  
+    + ```delivery_uid``` *(string)*... Identifiant unique de la livraison.  
     + ```status```(hash, Status entity)... Statuts.
         + ```global```(string = "confirmed")... Commande confirmée
-    + ```slot``` *(hash)*: Informations sur la plage horaire demandée.
-        + ```starts_at``` *(datetime UTC)*: Date et heure de début du créneau horaire demandé.
-        + ```ends_at``` *(datetime UTC)*: Date et heure de fin du créneau horaire demandé.
-        + ```size``` *(integer)*: Taille du créneau horaire demandé (en minutes).
-        + ```price``` *(float)*: Coût HT de la livraison (en euro).
+    + ```slot``` *(hash)*... Informations sur la plage horaire demandée.
+        + ```starts_at``` *(datetime UTC)*... Date et heure de début du créneau horaire demandé.
+        + ```ends_at``` *(datetime UTC)*... Date et heure de fin du créneau horaire demandé.
+        + ```size``` *(integer)*.... Taille du créneau horaire demandé (en minutes).
+        + ```price``` *(float)*... Coût HT de la livraison (en euro).
 
 ## Voir un exemple de requête [PUT]
 
