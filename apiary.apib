@@ -317,7 +317,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 ### Contenu de la réponse
 
 + ```delivery``` *(hash)*... Informations sur la livraison créée
-    + ```delivery_uid``` *(string)*... Identifiant unique de la livraison.   
+    + ```uid``` *(string)*... Identifiant unique de la livraison.   
     **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
     + ```status```(hash, Status entity)... statuts de commande et de livraison.
         + ```global```(string = "pre_ordered")
@@ -389,7 +389,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
         {
             "delivery": {
-                "delivery_uid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "uid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
                 "status": {
                     "global": "pre_ordered"
                 },
@@ -403,9 +403,11 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
         }
 
 
-# Finaliser une commande de livraison [/deliveries/{delivery_uid}/confirm]
+# Finaliser une commande de livraison [/deliveries/{uid}/confirm]
 
-Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```delivery_uid``` de votre commande, vous devez la confirmer pour finaliser votre commande.
+Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```uid``` de votre commande, vous devez la confirmer pour finaliser votre commande.
+Le paramètre ```uid``` est à passer dans l'url de la requête [Exemple](#reference/commander-une-livraison/finaliser-une-commande-de-livraison/voir-un-exemple-de-requete)
+
 
 ***Attention***: Un maximum de **15 minutes** est autorisé entre la pré-commande et la confirmation de la commande.   
 Au delà, une erreur ```delivery_has_expired``` est renvoyée.
@@ -420,7 +422,7 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 ## Contenu de la réponse
 
 + ```delivery``` *(hash)*: Informations sur la livraison créée
-    + ```delivery_uid``` *(string)*... Identifiant unique de la livraison.  
+    + ```uid``` *(string)*... Identifiant unique de la livraison.  
     + ```status```(hash, Status entity)... statuts de commande et de livraison.
         + ```global```(string = "confirmed")... Commande confirmée
     + ```slot``` *(hash)*... Informations sur la plage horaire demandée.
@@ -432,7 +434,7 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 ## Voir un exemple de requête [PUT]
 
 + Parameters
-    + delivery_uid - Identifiant unique de la demande de livraison obtenue lors de la pré-commande
+    + uid - Identifiant unique de la demande de livraison obtenue lors de la pré-commande
 
 + Request (application/json)
 
@@ -446,7 +448,7 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
         
         {
             "delivery": {
-                "delivery_uid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+                "uid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
                 "status": {
                     "global": "confirmed"
                 }
