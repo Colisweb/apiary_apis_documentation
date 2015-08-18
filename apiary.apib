@@ -173,7 +173,7 @@ Ce paramètre permet d'écraser la valeur configurée dans notre système au mom
 ### Contenu de la réponse
 
 + ```now``` *(hash)*: Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
-    + ```available```*(boolean)*... livraison maintenant dans les x minutes disponible ou non.
+    + ```available```*(boolean)*... Disponibilité de la livraison "instantanée".
     + ```slot_size``` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
     + ```price``` *(float)*... Coût HT pour ce créneau (en euro).
 + ```calendar``` *(array of hashes)*... . Vide si aucune disponibilité.
@@ -214,15 +214,15 @@ Ce paramètre permet d'écraser la valeur configurée dans notre système au mom
                     {
                         "description": "micro-onde",
                         "height": 140,
-                        "length": 150,
-                        "width": 165,
+                        "length": 165,
+                        "width": 130,
                         "weight": 1000
                     },
                     {
                         "description": "Cafetière",
                         "height": 245,
-                        "length": 250,
-                        "width": 265,
+                        "length": 260,
+                        "width": 255,
                         "weight": 2550
                     }
                 ]
