@@ -150,7 +150,7 @@ Exemple:
 
 ## Obtenir les options de livraison disponibles [/deliveries/options]
 
-end_point : book
+end_point : /deliveries/options
 
 Permet de récupérer les options de livraisons disponibles.
 
@@ -286,6 +286,8 @@ Ce paramètre permet d'écraser la valeur configurée dans notre système au mom
 
 ## Pre-commander une livraison [/deliveries/book]
 
+End_point : /deliveries/book
+
 Permet d'effectuer une pré-commande de livraison.   
 Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une commande de livraison](#reference/commander-une-livraison/finaliser-une-commande-de-livraison).
 
@@ -406,6 +408,8 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
 
 # Finaliser une commande de livraison [/deliveries/{uid}/confirm]
+
+end_point : /deliveries/{uid}/confirm
 
 Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```uid``` de votre commande, vous devez la confirmer pour finaliser votre commande.   
 Le paramètre ```uid``` est à passer dans l'url de la requête.
