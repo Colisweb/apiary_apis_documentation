@@ -41,14 +41,14 @@ Ces notions de required / optional sont indiqués dans la description des *end_p
 #### L'entité "Route"
 ***
 Spécifie et constitue les informations sur le point de retrait et le point de livraison.   
-+ Une ```Route``` est un array d'entités Point
++ Une ```Route``` est un Array d'entités Point
     
 #### L'entité "Point"
 ***
 Spécifie la nature d'un point ainsi que les informations d'addresse.   
 Il peut être soit un "point de retrait" soit un "point de livraison" de la marchandise.   
 
-+ Un ```Point``` est composé des attributs suivants:
++ Un ```Point``` est un Hash composé des attributs suivants:
     + ```type``` *(required, string)*... La nature du point, les valeurs peuvent être :
         + **"pickup"** (point de retrait).
         + **"shipping"** (point de livraison).
