@@ -182,8 +182,8 @@ Ce paramètre permet d'écraser la valeur configurée dans notre système au mom
     + ```slot_size``` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
     + ```price``` *(float)*... Coût HT pour ce créneau (en euro).
 + ```calendar``` *(array of hashes)*... . Vide si aucune disponibilité.
-    + ```starts_at``` *(datetime UTC)*... Début du créneau horaire de livraison.
-    + ```ends_at``` *(datetime UTC)*... Fin du créneau horaire de livraison.
+    + ```starts_at``` *(datetime)*... Début du créneau horaire de livraison.
+    + ```ends_at``` *(datetime)*... Fin du créneau horaire de livraison.
     + ```slot_size``` *(integer)*... Taille du créneau horaire de livraison (en minutes).
     + ```price``` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
   
@@ -291,7 +291,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
 + ```api_key``` *(required, string)*... Clé API Colisweb
 + ```slot``` *(required, Slot entity)*... Créneau de livraison demandé.
-    + ```starts_at``` *(required, datetime UTC)*... Date et heure de début de la plage de livraison.   
+    + ```starts_at``` *(required, datetime)*... Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
     + ```size``` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
@@ -322,8 +322,8 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
     + ```status```(hash, Status entity)... statuts de commande et de livraison.
         + ```global```(string = "pre_ordered")
     + ```slot``` *(hash)*... Informations de la plage horaire commandée.
-        + ```starts_at``` *(datetime UTC)*... Date et heure de début du créneau horaire demandé.
-        + ```ends_at``` *(datetime UTC)*... Date et heure de fin du créneau horaire demandé.
+        + ```starts_at``` *(datetime)*... Date et heure de début du créneau horaire demandé.
+        + ```ends_at``` *(datetime)*... Date et heure de fin du créneau horaire demandé.
         + ```size``` *(integer)*... Taille du créneau horaire demandé (en minutes).
         + ```price``` *(float)*... Coût HT de la livraison (en euro).
 
