@@ -107,7 +107,7 @@ Spécifie les informations sur un colis
     + ```length``` *(required, integer)*... Longueur du colis (en centimètres).
     + ```width``` *(required, integer)*.. Largeur du colis (en centimètres).
     + ```height``` *(required, integer)*.. Hauteur du colis (en centimètres).
-    + ```weight``` *(required, integer)*.. Poids du colis (en grammes).
+    + ```weight``` *(required, float)*.. Poids du colis (en kilos).
 
 ***
 ### Entités en sortie
@@ -223,14 +223,14 @@ Ce paramètre permet d'écraser la valeur configurée dans notre système au mom
                         "height": 60,
                         "length": 80,
                         "width": 30,
-                        "weight": 2550
+                        "weight": 2,5
                     },
                     {
                         "description": "Cafetière",
                         "height": 60,
                         "length": 80,
                         "width": 30,
-                        "weight": 1000
+                        "weight": 1.0
                     }
                 ]
             }
@@ -376,14 +376,14 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
                         "height": 60,
                         "length": 80,
                         "width": 30,
-                        "weight": 2550
+                        "weight": 2.5
                     },
                     {
                         "description": "Cafetière",
                         "height": 60,
                         "length": 80,
                         "width": 30,
-                        "weight": 1000
+                        "weight": 1.0
                     }
                 ]
             }
