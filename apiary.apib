@@ -467,3 +467,48 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
                 }
             }
         }
+
+# Group Récupération des statuts des commandes
+
+La récupération des statuts des commandes se fait via un Webhook.   
+Le Webhook vous permet d'être informé en temps réél de chaque changement des statuts d'une commande.   
+
+## Webhooks
+1 - Vous nous fournissez une URL (contacter directement Colisweb).    
+2 - A chaque changement de statut d'une commande, notre système envoie une requête `HTTP POST` sur votre URL.   
+
+<strong>Note</strong> : En cas d'échec de la connexion, le système effectue jusque 3 tentatives supplémentaires à 30 secondes d'intervalle.
+
+## Format de donné envoyé
+```
+{   
+    "delivery": {
+        uuid: "identifiant unique de la commande"
+        reference: "reference de la commande"
+    },
+    delivery_statuses: {
+        global: "statut global de la commande",
+        retailer: "statut magasin de la commande", 
+        carrier: "statut transporteur de la commande"
+        
+    }
+}
+```
+## Détail des statuts
+Les différents statuts susceptibles de vous être renvoyés sont :
+
+### global (statut global automatique)
+- `pre_order` = pré-commande
+- `confirmed` = commande confirmée
+- `canceled`  = commande annulée
+
+### retailer (statut géré par le magasin)
+- `preparing` = colis à préparer / en préparation
+- `ready_to_pick_up`= colis prêt à être retiré
+- `picked_up`= colis retiré
+- `package_returned`= colis retourné en magasin
+
+### carrier (statut géré par le transporteur chargé de la livraison)
+- `package_withdrawn` = colis retiré
+- `package_returned`= colis retourné
+- `delivered` = colis livré
