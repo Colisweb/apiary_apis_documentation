@@ -483,8 +483,9 @@ Le Webhook vous permet d'être informé en temps réél de chaque changement des
 ```
 {   
     "delivery": {
-        uuid: "identifiant unique de la commande"
-        reference: "reference de la commande"
+        uuid: "identifiant unique de la commande",
+        primary_order_reference: "reference primaire de la commande",
+        secondary_order_reference: "reference secondaire de la commande"
     },
     delivery_statuses: {
         global: "statut global de la commande",
