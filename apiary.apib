@@ -158,7 +158,8 @@ Afin de nous transmettre les dimensions de ce que vous voulez faire livrer, deux
   ```length```, ```width```, ```height```, ```weight``` renseignés.
 
 Ces deux solutions sont mutuellement exclusives, la première option étant prioritaire sur la seconde.   
-C'est-à-dire que si les dimensions d'un **Packaging** sont renseignées alors les **Packets** seront ignorés.
+C'est-à-dire que si les dimensions d'un **Packaging** sont renseignées alors les **Packets** seront ignorés.   
+Si aucune des deux solutions n'est choisie, la requête sera rejetée et générera une erreur ```400 Bad Request```
 
 ***
 ## Formats de dates
