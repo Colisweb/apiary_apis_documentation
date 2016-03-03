@@ -154,8 +154,8 @@ Afin de nous transmettre les dimensions de ce que vous voulez faire livrer, deux
 
   Dans ce second cas de figure, il vous faudra impérativement **ne pas** remplir les champs
   ```packets_quantity```, ```length```, ```width```, ```height```, ```weight``` de **Packaging**.   
-  Il vous faudra, pour chaque produit, générer une entité **Packet** avec les champs 
-  ``length```, ```width```, ```height```, ```weight``` renseignés.
+  Il vous faudra, pour chaque produit, générer une entité **Packet** avec au moins les champs 
+  ```length```, ```width```, ```height```, ```weight``` renseignés.
 
 Ces deux solutions sont mutuellement exclusives, la premieère option étant prioritaire sur la seconde.
 C'est-à-dire que si les dimensions d'un Packaging sont renseignées alors les Packets seront ignorés.
