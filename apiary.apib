@@ -101,13 +101,20 @@ Spécifie le créneaux horaire souhaité pour la livraison de la marchandise.
 Spécifie les informations de l'ensemble du/des colis constituant la demande de livraison.   
 + Un **Packaging** est composé des attributes suivants:
     + ```global_description``` *(optional, string)*... La description globale du packaging.
-    + ```packets``` *(required, array[Packet])*... Les paquets composant le packaging.
-
+    + ```packaging_ref``` *(optional, string)*... Une référence permettant d'identifié le Packaging, si vous en avez.
+    + ```packets_quantity``` *(optional, integer)*... Le nombre de paquets contenu dans le Packaging.
+    + ```length``` *(optional, float)*... Longueur du Packaging.
+    + ```width``` *(optional, float)*... Largeur du Packaging.
+    + ```height``` *(optional, float)*... Hauteur du Packaging.
+    + ```height``` *(optional, float)*... Poids du Packaging.
+    + ```packets``` *(required, array[Packet])*... Les paquets composant le Packaging.
+    
 #### L'entité "Packet"
 ***
 Spécifie les informations sur un colis   
 + Un **Packet** est composé des attributs suivants:
     + ```description``` *(optional , string)*... La description / référence du paquet.
+    + ```sku``` *(optional , string)*... Identifiant unique du produit.
     + ```length``` *(required, float)*... Longueur du colis (en centimètres).
     + ```width``` *(required, float)*.. Largeur du colis (en centimètres).
     + ```height``` *(required, float)*.. Hauteur du colis (en centimètres).
