@@ -354,10 +354,17 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
         + ```type``` *(required, Value = shipping)*... Point de **livraison**
         + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
         **Si la location est de type "store", alors la valeur passée à "store_code" doit être obligatoirement renseignée**
-+ ```packaging```*(required, packaging entity)*
++ ```packaging``` *(required, packaging entity)*
     + ```global_description``` *(optional)*
-    + ```packets``` *(required)*
-        + ```description```(*optional)*
+    + ```packaging_ref``` *(optional)*
+    + ```packets_quantity``` *(optional)*
+    + ```length``` *(optional)*
+    + ```width``` *(optional)*
+    + ```height``` *(optional)*
+    + ```weight``` *(optional)*
+    + ```packets``` *(optional)*
+        + ```description``` *(optional)*
+        + ```sku``` *(optional)*
         + ```length``` *(required)*
         + ```width``` *(required)*
         + ```height``` *(required)*
