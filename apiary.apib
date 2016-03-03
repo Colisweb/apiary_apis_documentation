@@ -98,7 +98,7 @@ Spécifie le créneaux horaire souhaité pour la livraison de la marchandise.
 
 #### L'entité "Packaging"
 ***
-Spécifie les informations de l'ensemble du/des colis constituant la demande de livraison.   
+Spécifie les informations du colis constituant la demande de livraison.   
 + Un **Packaging** est composé des attributes suivants:
     + ```global_description``` *(optional, string)*... La description globale du packaging.
     + ```packaging_ref``` *(optional, string)*... Une référence permettant d'identifié le Packaging, si vous en avez.
@@ -107,18 +107,18 @@ Spécifie les informations de l'ensemble du/des colis constituant la demande de 
     + ```width``` *(optional, float)*... Largeur du Packaging.
     + ```height``` *(optional, float)*... Hauteur du Packaging.
     + ```height``` *(optional, float)*... Poids du Packaging.
-    + ```packets``` *(required, array[Packet])*... Les paquets composant le Packaging.
+    + ```packets``` *(required, array[Packet])*... Les produits composant le colis.
     
 #### L'entité "Packet"
 ***
-Spécifie les informations sur un colis   
+Spécifie les informations sur un produit du colis   
 + Un **Packet** est composé des attributs suivants:
     + ```description``` *(optional , string)*... La description / référence du paquet.
     + ```sku``` *(optional , string)*... Identifiant unique du produit.
-    + ```length``` *(required, float)*... Longueur du colis (en centimètres).
-    + ```width``` *(required, float)*.. Largeur du colis (en centimètres).
-    + ```height``` *(required, float)*.. Hauteur du colis (en centimètres).
-    + ```weight``` *(required, float)*.. Poids du colis (en kilos).
+    + ```length``` *(required, float)*... Longueur du produit (en centimètres).
+    + ```width``` *(required, float)*.. Largeur du produit (en centimètres).
+    + ```height``` *(required, float)*.. Hauteur du produit (en centimètres).
+    + ```weight``` *(required, float)*.. Poids du produit (en kilos).
 
 ***
 ### Entités en sortie
