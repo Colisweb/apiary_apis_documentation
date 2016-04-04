@@ -94,7 +94,7 @@ Spécifie le créneaux horaire souhaité pour la livraison de la marchandise.
 #### L'entité "Packaging"
 ***
 Spécifie les informations du conteneur et des paquets constituants la demande de livraison.   
-+ Un **Packaging** est composé des attributes suivants:
++ Un **Packaging** est composé des attributs suivants:
     + ```global_description``` *(optional, string)*... La description globale du packaging.
     + ```packaging_ref``` *(optional, string)*... Une référence permettant d'identifier spécifiquement le conteneur.
     + ```packets_quantity``` *(optional, integer)*... Le nombre de paquets contenu dans le packaging.
@@ -117,10 +117,25 @@ Spécifie les informations sur un paquet.
 
 
 ### Entités en sortie
+
+#### L'entité "Delivery"
 ***
 
-#### L'entité "status"
+Spécifie les informations de la livraison commandée.
+
+**Important :** Tous les endpoints, excepté celui de récupération des options de livraisons, retourne une entité `Delivery`.
+
++ Une `Delivery` est composé des attributs suivants:
+    + `uuid` *(UUID)*... Identifiant unique de la livraison commandée.
+    + `primary_order_reference` *(string)*... Référence primaire. Voir endpoint "Finaliser une commande de livraison" pour plus d'informations.
+    + `secondary_order_reference` *(string)*... Référence secondaire. Voir endpoint "Finaliser une commande de livraison" pour plus d'informations.
+    + `packaging` *(entité Packaging)*... Les informations sur le conteneur et les pacquets à livrer.
+    + `route` *(entité Route)*... Les informations sur le point de retrait et le point de livraison.
+    + `status` *(entité Status)*... Les informations de statuts de livraison.
+
+#### L'entité "Status"
 ***
+
 Spécifie les informations de statuts de livraison
 + Un ```status``` est un ```Hash``` composé des attributs suivants:
     + ```global``` *(string)*... statut global de la commande. (voir section "Statuts de livraison")
