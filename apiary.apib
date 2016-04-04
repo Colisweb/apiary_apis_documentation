@@ -123,15 +123,15 @@ Spécifie les informations sur un paquet.
 
 Spécifie les informations de la livraison commandée.
 
-**Important :** Tous les endpoints, excepté celui de récupération des options de livraisons, retourne une entité `Delivery`.
+**Important :** Tous les endpoints retourne une entité `Delivery` excepté celui de récupération des options de livraisons disponibles.
 
-+ Une `Delivery` est composé des attributs suivants:
++ Une `Delivery` est composée des attributs suivants:
     + `uuid` *(UUID)*... Identifiant unique de la livraison commandée.
     + `primary_order_reference` *(string)*... Référence primaire. Voir endpoint "Finaliser une commande de livraison" pour plus d'informations.
     + `secondary_order_reference` *(string)*... Référence secondaire. Voir endpoint "Finaliser une commande de livraison" pour plus d'informations.
-    + `packaging` *(entité Packaging)*... Les informations sur le conteneur et les pacquets à livrer.
-    + `route` *(entité Route)*... Les informations sur le point de retrait et le point de livraison.
-    + `status` *(entité Status)*... Les informations de statuts de livraison.
+    + `packaging` *(Packaging entity)*... Les informations sur le conteneur et les pacquets à livrer.
+    + `route` *(enriched Route entity)*... Les informations sur le point de retrait et le point de livraison enrichies.
+    + `status` *(Status entity)*... Les informations de statuts de livraison.
 
 #### L'entité "Status"
 ***
@@ -558,6 +558,10 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
         + ```weight``` *(required)*
 
 **Remarque:** Si le `pickup` et le `shipping` sont tous deux de type `store`, au moins un des deux `store_code` doit être renseigné.
+
+### Contenu de la réponse
+
+La réponse contient une entité `Delivery`. 
 
 + Request Exemple de requête "B2B" (application/json)
     
@@ -1199,6 +1203,10 @@ Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 **Cette référence permet au transporteur d'identifier le colis au moment de la récupération du colis.**
 + ```secondary_order_reference``` *(optional, string)*: Votre référence commande secondaire.
 
+### Contenu de la réponse
+
+La réponse contient une entité `Delivery`. 
+
 + Parameters
     
     + uuid - Identifiant unique de la commande de livraison obtenue lors de la pré-commande
@@ -1321,6 +1329,10 @@ Permet de récupérer l'ensemble des attributs et statuts de livraison, ainsi qu
 
 Voir la section "Statuts de livraison" pour les codes statuts.
 
+### Contenu de la réponse
+
+La réponse contient une entité `Delivery`. 
+
 + Request (application/json)
 
     + Headers 
@@ -1439,6 +1451,10 @@ Permet de mettre à jour la reference commande secondaire à tout moment.
 
 + ```secondary_order_reference``` *(optional, string)* ... Votre référence commande secondaire.
 
+### Contenu de la réponse
+
+La réponse contient une entité `Delivery`. 
+
 + Parameters
     + uuid - Identifiant unique de la commande de livraison
 
@@ -1554,6 +1570,10 @@ Permet de mettre à jour la reference commande secondaire à tout moment.
 + Une livraison peut être annulée :
     + Si le colis n'a pas été retiré par le transporteur.   
     + Jusque 20 minutes après le début du créneau horaire.
+
+### Contenu de la réponse
+
+La réponse contient une entité `Delivery`. 
     
 + Parameters
 
