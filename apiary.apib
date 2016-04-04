@@ -556,7 +556,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
             {
                 "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "starts_at": "2015-04-22T08:00:00+00:00",
                     "size": 120
                 },
                 "route": [
@@ -599,71 +599,97 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 + Response 201 (application/json)
 
     + Body
-    
+            
             {
-              "delivery": {
-                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
-                "primary_order_reference": "",
-                "secondary_order_reference": "",
-                "packaging": {
-                  "global_description": "",
-                  "packaging_ref": "",
-                  "width": "10.0",
-                  "length": "10.0",
-                  "height": "10.0",
-                  "weight": "1.0",
-                  "packets_quantity": 1,
-                  "packets": [
-                    {
-                      "description": "",
-                      "sku": "",
-                      "width": "10.0",
-                      "length": "10.0",
-                      "height": "10.0",
-                      "weight": "1.0"
-                    }
-                  ]
-                },
-                "route": [
-                  {
-                    "type": "pickup",
-                    "location": {
-                      "type": "store",
-                      "store_code": "100001"                        
+                "delivery": {
+                    "uuid": "fb869236-1090-4019-8c88-2a2be4d45f65",
+                    "primary_order_reference": "",
+                    "secondary_order_reference": "",
+                    "packaging": {
+                        "global_description": "Ensemble set cuisine",
+                        "packaging_ref": "",
+                        "width": "60.0",
+                        "length": "80.0",
+                        "height": "60.0",
+                        "weight": "3.5",
+                        "packets_quantity": 2,
+                        "packets": [
+                            {
+                                "description": "micro-onde",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "2.5"
+                            },
+                            {
+                                "description": "Cafetière",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "1.0"
+                            }
+                        ]
                     },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
+                    "route": [
+                        {
+                            "type": "pickup",
+                            "location": {
+                                "type": "store",
+                                "society": "",
+                                "name": "Welshoo center",
+                                "first_name": "Yann",
+                                "last_name": "Marzack",
+                                "line1": "286 bis Rue Solférino",
+                                "line2": "",
+                                "postal_code": "59000",
+                                "city": "Lille",
+                                "country": "France",
+                                "additional_informations": "Auberge du Temps Jadis",
+                                "primary_phone": "0685868586",
+                                "secondary_phone": "",
+                                "email": "center@welshoo.com",
+                                "store_code": "100001"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        },
+                        {
+                            "type": "shipping",
+                            "location": {
+                                "type": "store",
+                                "society": "",
+                                "name": "Welshoo kitchen",
+                                "first_name": "Jules",
+                                "last_name": "Ivanic",
+                                "line1": "106 Rue de l'Hôpital Militaire",
+                                "line2": "",
+                                "postal_code": "59000",
+                                "city": "Lille",
+                                "country": "",
+                                "additional_informations": "Pulp Kitchen",
+                                "primary_phone": "0785868586",
+                                "secondary_phone": "",
+                                "email": "kitchen@welshoo.com",
+                                "store_code": "100002"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        }
+                    ],
+                    "status": {
+                        "global": "pre_ordered",
+                        "pickup_problems": [],
+                        "shipping_problems": []
                     }
-                  },
-                  {
-                    "type": "shipping",
-                    "location": {
-                      "type": "address",
-                      "name": "yann",
-                      "line1": "165 avenue de bretagne",
-                      "line2": "",
-                      "postal_code": "59000",
-                      "city": "lille",
-                      "country": "france",
-                      "primary_phone": "07",
-                      "secondary_phone": "",
-                      "additional_informations": ""
-                    },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
-                    }
-                  }
-                ],
-                "status": {
-                  "global": "pre-ordered",
-                  "pickup_problems": [],
-                  "shipping_problems": []
                 }
-              }
             }
-
+            
 + Request Exemple de requête "B2C" (application/json)
     
     B2C
@@ -676,7 +702,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
             {
                 "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "starts_at": "2015-04-22T08:00:00+00:00",
                     "size": 120
                 },
                 "route": [
@@ -695,13 +721,13 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
                             "first_name": "Helmout",
                             "last_name": "Ardelpik",
                             "email": "helmoutardelpik@gmail.com",
-                            "primary_phone": "0694385693",
-                            "secondary_phone": "0354678942",
+                            "primary_phone": "0685898585",
+                            "secondary_phone": "",
                             "line1": "165, avenue des champs Elysées",
                             "line2": "Batiment Leblanc",
                             "additional_informations": "Digicode B345, 3 éme etage",
-                            "postal_code": "75001",
-                            "city": "Paris",
+                            "postal_code": "59800",
+                            "city": "Lille",
                             "country": "France"                        
                         }
                     }
@@ -732,67 +758,91 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
     + Body
     
             {
-              "delivery": {
-                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
-                "primary_order_reference": "",
-                "secondary_order_reference": "",
-                "packaging": {
-                  "global_description": "",
-                  "packaging_ref": "",
-                  "width": "10.0",
-                  "length": "10.0",
-                  "height": "10.0",
-                  "weight": "1.0",
-                  "packets_quantity": 1,
-                  "packets": [
-                    {
-                      "description": "",
-                      "sku": "",
-                      "width": "10.0",
-                      "length": "10.0",
-                      "height": "10.0",
-                      "weight": "1.0"
-                    }
-                  ]
-                },
-                "route": [
-                  {
-                    "type": "pickup",
-                    "location": {
-                      "type": "store",
-                      "store_code": "100001"                        
+                "delivery": {
+                    "uuid": "fb869236-1090-4019-8c88-2a2be4d45f65",
+                    "primary_order_reference": "",
+                    "secondary_order_reference": "",
+                    "packaging": {
+                        "global_description": "Ensemble set cuisine",
+                        "packaging_ref": "",
+                        "width": "60.0",
+                        "length": "80.0",
+                        "height": "60.0",
+                        "weight": "3.5",
+                        "packets_quantity": 2,
+                        "packets": [
+                            {
+                                "description": "micro-onde",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "2.5"
+                            },
+                            {
+                                "description": "Cafetière",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "1.0"
+                            }
+                        ]
                     },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
+                    "route": [
+                        {
+                            "type": "pickup",
+                            "location": {
+                                "type": "store",
+                                "name": "Welshoo center",
+                                "first_name": "Yann",
+                                "last_name": "Marzack",
+                                "line1": "286 bis Rue Solférino",
+                                "line2": "",
+                                "postal_code": "59000",
+                                "city": "Lille",
+                                "country": "France",
+                                "additional_informations": "Auberge du Temps Jadis",
+                                "primary_phone": "0685868586",
+                                "secondary_phone": "",
+                                "email": "center@welshoo.com",
+                                "store_code": "100001"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        },
+                        {
+                            "type": "shipping",
+                            "location": {
+                                "type": "address",
+                                "society": "Twelve factors & C",
+                                "name": "Helmout Ardelpik",
+                                "first_name": "Helmout",
+                                "last_name": "Ardelpik",
+                                "line1": "165, avenue des champs Elysées",
+                                "line2": "Batiment Leblanc",
+                                "postal_code": "59800",
+                                "city": "Lille",
+                                "country": "France",
+                                "additional_informations": "Digicode B345, 3 éme etage",
+                                "primary_phone": "0685898585",
+                                "secondary_phone": "",
+                                "email": "helmoutardelpik@gmail.com"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        }
+                    ],
+                    "status": {
+                        "global": "pre_ordered",
+                        "pickup_problems": [],
+                        "shipping_problems": []
                     }
-                  },
-                  {
-                    "type": "shipping",
-                    "location": {
-                      "type": "address",
-                      "name": "yann",
-                      "line1": "165 avenue de bretagne",
-                      "line2": "",
-                      "postal_code": "59000",
-                      "city": "lille",
-                      "country": "france",
-                      "primary_phone": "07",
-                      "secondary_phone": "",
-                      "additional_informations": ""
-                    },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
-                    }
-                  }
-                ],
-                "status": {
-                  "global": "pre-ordered",
-                  "pickup_problems": [],
-                  "shipping_problems": []
                 }
-              }
             }
             
 + Request Exemple de requête "C2B" (application/json)
@@ -807,7 +857,7 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
 
             {
                 "slot": {
-                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "starts_at": "2015-04-22T08:00:00+00:00",
                     "size": 120
                 },
                 "route": [
@@ -819,13 +869,13 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
                             "first_name": "Helmout",
                             "last_name": "Ardelpik",
                             "email": "helmoutardelpik@gmail.com",
-                            "primary_phone": "0694385693",
-                            "secondary_phone": "0354678942",
+                            "primary_phone": "0685898585",
+                            "secondary_phone": "",
                             "line1": "165, avenue des champs Elysées",
                             "line2": "Batiment Leblanc",
                             "additional_informations": "Digicode B345, 3 éme etage",
-                            "postal_code": "75001",
-                            "city": "Paris",
+                            "postal_code": "59800",
+                            "city": "Lille",
                             "country": "France"                        
                         }
                     },
@@ -863,67 +913,91 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
     + Body
     
             {
-              "delivery": {
-                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
-                "primary_order_reference": "",
-                "secondary_order_reference": "",
-                "packaging": {
-                  "global_description": "",
-                  "packaging_ref": "",
-                  "width": "10.0",
-                  "length": "10.0",
-                  "height": "10.0",
-                  "weight": "1.0",
-                  "packets_quantity": 1,
-                  "packets": [
-                    {
-                      "description": "",
-                      "sku": "",
-                      "width": "10.0",
-                      "length": "10.0",
-                      "height": "10.0",
-                      "weight": "1.0"
-                    }
-                  ]
-                },
-                "route": [
-                  {
-                    "type": "shipping",
-                    "location": {
-                      "type": "store",
-                      "store_code": "100001"                        
+                "delivery": {
+                    "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                    "primary_order_reference": "",
+                    "secondary_order_reference": "",
+                    "packaging": {
+                        "global_description": "Ensemble set cuisine",
+                        "packaging_ref": "",
+                        "width": "60.0",
+                        "length": "80.0",
+                        "height": "60.0",
+                        "weight": "3.5",
+                        "packets_quantity": 2,
+                        "packets": [
+                            {
+                                "description": "micro-onde",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "2.5"
+                            },
+                            {
+                                "description": "Cafetière",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "1.0"
+                            }
+                        ]
                     },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
+                    "route": [
+                        {
+                            "type": "pickup",
+                            "location": {
+                                "type": "address",
+                                "society": "Twelve factors & C",
+                                "name": "Helmout Ardelpik",
+                                "first_name": "Helmout",
+                                "last_name": "Ardelpik",
+                                "line1": "165, avenue des champs Elysées",
+                                "line2": "Batiment Leblanc",
+                                "postal_code": "59800",
+                                "city": "Lille",
+                                "country": "France",
+                                "additional_informations": "Digicode B345, 3 éme etage",
+                                "primary_phone": "0685898585",
+                                "secondary_phone": "",
+                                "email": "helmoutardelpik@gmail.com"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        },
+                        {
+                            "type": "shipping",
+                            "location": {
+                                "type": "store",
+                                "name": "Welshoo center",
+                                "first_name": "Yann",
+                                "last_name": "Marzack",
+                                "line1": "286 bis Rue Solférino",
+                                "line2": "",
+                                "postal_code": "59000",
+                                "city": "Lille",
+                                "country": "France",
+                                "additional_informations": "Auberge du Temps Jadis",
+                                "primary_phone": "0685868586",
+                                "secondary_phone": "",
+                                "email": "center@welshoo.com",
+                                "store_code": "100001"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        }
+                    ],
+                    "status": {
+                        "global": "pre-ordered",
+                        "pickup_problems": [],
+                        "shipping_problems": []
                     }
-                  },
-                  {
-                    "type": "pickup",
-                    "location": {
-                      "type": "address",
-                      "name": "yann",
-                      "line1": "165 avenue de bretagne",
-                      "line2": "",
-                      "postal_code": "59000",
-                      "city": "lille",
-                      "country": "france",
-                      "primary_phone": "07",
-                      "secondary_phone": "",
-                      "additional_informations": ""
-                    },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
-                    }
-                  }
-                ],
-                "status": {
-                  "global": "pre-ordered",
-                  "pickup_problems": [],
-                  "shipping_problems": []
                 }
-              }
             }
 
 + Request Exemple de requête "C2C" (application/json)
@@ -937,67 +1011,67 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
     + Body
      
             {
-              "slot": {
-                "starts_at": "2015-04-22T10:00:00+02:00",
-                "size": 120
-              },
-              "route": [
-                {
-                  "type": "pickup",
-                  "location": {
-                    "type": "address",
-                    "society": "Bars&Co",
-                    "first_name": "Jean",
-                    "last_name": "Delacre",
-                    "email": "jdelacre@gmail.com",
-                    "primary_phone": "0689623565",
-                    "secondary_phone": "0354986315",
-                    "line1": "39, rue solférino",
-                    "line2": "ZAC de valmy",
-                    "additional_informations": "Sonner chez le concierge",
-                    "postal_code": "75008",
-                    "city": "Paris",
-                    "country": "France"
-                  }
+                "slot": {
+                    "starts_at": "2015-04-22T08:00:00+00:00",
+                    "size": 120
                 },
-                {
-                  "type": "shipping",
-                  "location": {
-                    "type": "address",
-                    "society": "Twelve factors & C",
-                    "first_name": "Helmout",
-                    "last_name": "Ardelpik",
-                    "email": "helmoutardelpik@gmail.com",
-                    "primary_phone": "0694385693",
-                    "secondary_phone": "0354678942",
-                    "line1": "165, avenue des champs Elysées",
-                    "line2": "Batiment Leblanc",
-                    "additional_informations": "Digicode B345, 3 éme etage",
-                    "postal_code": "75001",
-                    "city": "Paris",
-                    "country": "France"
-                  }
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "address",
+                            "society": "Bars&Co",
+                            "first_name": "Jean",
+                            "last_name": "Delacre",
+                            "email": "jdelacre@gmail.com",
+                            "primary_phone": "0685898586",
+                            "secondary_phone": "0685898686",
+                            "line1": "39, rue solférino",
+                            "line2": "ZAC de valmy",
+                            "additional_informations": "Sonner chez le concierge",
+                            "postal_code": "59000",
+                            "city": "Lille",
+                            "country": "France"
+                        }
+                    },
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "address",
+                            "society": "Twelve factors & C",
+                            "first_name": "Helmout",
+                            "last_name": "Ardelpik",
+                            "email": "helmoutardelpik@gmail.com",
+                            "primary_phone": "0694385693",
+                            "secondary_phone": "0354678942",
+                            "line1": "165, avenue des champs Elysées",
+                            "line2": "Batiment Leblanc",
+                            "additional_informations": "Digicode B345, 3 éme etage",
+                            "postal_code": "59800",
+                            "city": "Lille",
+                            "country": "France"
+                        }
+                    }
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
                 }
-              ],
-              "packaging": {
-                "global_description": "Ensemble set cuisine",
-                "packets": [
-                  {
-                    "description": "micro-onde",
-                    "height": 60,
-                    "length": 80,
-                    "width": 30,
-                    "weight": 2.5
-                  },
-                  {
-                    "description": "Cafetière",
-                    "height": 60,
-                    "length": 80,
-                    "width": 30,
-                    "weight": 1.0
-                  }
-                ]
-              }
             }
 
 + Response 201 (application/json)
@@ -1005,75 +1079,91 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
     + Body
     
             {
-              "delivery": {
-                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
-                "primary_order_reference": "",
-                "secondary_order_reference": "",
-                "packaging": {
-                  "global_description": "",
-                  "packaging_ref": "",
-                  "width": "10.0",
-                  "length": "10.0",
-                  "height": "10.0",
-                  "weight": "1.0",
-                  "packets_quantity": 1,
-                  "packets": [
-                    {
-                      "description": "",
-                      "sku": "",
-                      "width": "10.0",
-                      "length": "10.0",
-                      "height": "10.0",
-                      "weight": "1.0"
-                    }
-                  ]
-                },
-                "route": [
-                  {
-                    "type": "pickup",
-                    "location": {
-                      "type": "address",
-                      "name": "Colisweb center",
-                      "line1": "165, Avenue de Bretagne",
-                      "line2": "Colisweb",
-                      "postal_code": "59000",
-                      "city": "Lille",
-                      "country": "",
-                      "primary_phone": "0611590696",
-                      "secondary_phone": "0611590696",
-                      "additional_informations": ""
+                "delivery": {
+                    "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                    "primary_order_reference": "",
+                    "secondary_order_reference": "",
+                    "packaging": {
+                        "global_description": "Ensemble set cuisine",
+                        "packaging_ref": "",
+                        "width": "60.0",
+                        "length": "80.0",
+                        "height": "60.0",
+                        "weight": "3.5",
+                        "packets_quantity": 2,
+                        "packets": [
+                            {
+                                "description": "micro-onde",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "2.5"
+                            },
+                            {
+                                "description": "Cafetière",
+                                "sku": "",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "1.0"
+                            }
+                        ]
                     },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
+                    "route": [
+                        {
+                            "type": "pickup",
+                            "location": {
+                                "type": "address",
+                                "society": "Bars&Co",
+                                "name": "Jean Delacre",
+                                "first_name": "Jean",
+                                "last_name": "Delacre",
+                                "line1": "39, rue solférino",
+                                "line2": "ZAC de valmy",
+                                "postal_code": "59000",
+                                "city": "Lille",
+                                "country": "France",
+                                "additional_informations": "Sonner chez le concierge",
+                                "primary_phone": "0685898586",
+                                "secondary_phone": "0685898686",
+                                "email": "jdelacre@gmail.com"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        },
+                        {
+                            "type": "shipping",
+                            "location": {
+                                "type": "address",
+                                "society": "Twelve factors & C",
+                                "name": "Helmout Ardelpik",
+                                "first_name": "Helmout",
+                                "last_name": "Ardelpik",
+                                "line1": "165, avenue des champs Elysées",
+                                "line2": "Batiment Leblanc",
+                                "postal_code": "59800",
+                                "city": "Lille",
+                                "country": "France",
+                                "additional_informations": "Digicode B345, 3 éme etage",
+                                "primary_phone": "0685898585",
+                                "secondary_phone": "",
+                                "email": "helmoutardelpik@gmail.com"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        }
+                    ],
+                    "status": {
+                        "global": "pre-ordered",
+                        "pickup_problems": [],
+                        "shipping_problems": []
                     }
-                  },
-                  {
-                    "type": "shipping",
-                    "location": {
-                      "type": "address",
-                      "name": "yann",
-                      "line1": "165 avenue de bretagne",
-                      "line2": "",
-                      "postal_code": "59000",
-                      "city": "lille",
-                      "country": "france",
-                      "primary_phone": "07",
-                      "secondary_phone": "",
-                      "additional_informations": ""
-                    },
-                    "calendar": {
-                      "starts_at": "2015-12-02T16:00:00Z",
-                      "ends_at": "2015-12-02T18:00:00Z"
-                    }
-                  }
-                ],
-                "status": {
-                  "global": "pre-ordered",
-                  "pickup_problems": [],
-                  "shipping_problems": []
                 }
-              }
             }
 
 
