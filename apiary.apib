@@ -56,7 +56,7 @@ Il peut être soit un "point de retrait" soit un "point de livraison" de la marc
 #### L'entité "Location"
 ***
 Spécifie les informations d'adresse d'un point.   
-Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrétes:   
+Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrètes:   
 
 + Soit une adresse quelconque avec les attributs suivants: 
     + ```type``` *(required, string = "address")* ... Location de type **"address"**
@@ -68,7 +68,7 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```secondary_phone``` *(optional, string)*... Numéro de téléphone secondaire.
     + ```line1``` *(required, string)*... Adresse de livraison.
     + ```line2``` *(optional, string)*... Complément d'adresse.
-    + ```additional_informations``` *(optional, string)*... Informations supplémentaire (digicode, ...)
+    + ```additional_informations``` *(optional, string)*... Informations supplémentaires (digicode, ...)
     + ```postal_code``` *(required, string)*... Code postal.
     + ```city``` *(required, string)*... Ville.
     + ```country``` *(required, string)*... Pays.
@@ -77,7 +77,7 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```type``` *(required, string = "store")*... Location de type **"store"**
     + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
-    Nous réferençons vos magasins dans notre système au moment de la signature du contrat.
+    Nous référençons vos magasins dans notre système au moment de la signature du contrat.
 
 + Soit un code postal avec attributs suivants:
     + ```type``` *(required, string = "city")*... location de type **"city"**
@@ -86,7 +86,7 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
 
 #### L'entité "Slot"
 ***
-Spécifie le créneaux horaire souhaité pour la livraison de la marchandise.   
+Spécifie le créneau horaire souhaité pour la livraison de la marchandise.   
 + Un **Slot** est composé des attributs suivants:
     + ```starts_at``` *(datetime)*... Début du créneau horaire.
     + ```size``` *(integer)*... Taille de la plage de livraison (en minutes).
@@ -123,13 +123,13 @@ Spécifie les informations sur un paquet.
 
 Spécifie les informations de la livraison commandée.
 
-**Important :** Tous les endpoints retourne une entité `Delivery` excepté celui de récupération des options de livraisons disponibles.
+**Important :** Tous les endpoints retournent une entité `Delivery` excepté celui de récupération des options de livraisons disponibles.
 
 + Une `Delivery` est composée des attributs suivants:
     + `uuid` *(UUID)*... Identifiant unique de la livraison commandée.
     + `primary_order_reference` *(string)*... Référence primaire. Voir endpoint "Finaliser une commande de livraison" pour plus d'informations.
     + `secondary_order_reference` *(string)*... Référence secondaire. Voir endpoint "Finaliser une commande de livraison" pour plus d'informations.
-    + `packaging` *(Packaging entity)*... Les informations sur le conteneur et les pacquets à livrer.
+    + `packaging` *(Packaging entity)*... Les informations sur le conteneur et les paquets à livrer.
     + `route` *(enriched Route entity)*... Les informations sur le point de retrait et le point de livraison enrichies.
     + `status` *(Status entity)*... Les informations de statuts de livraison.
 
@@ -143,7 +143,7 @@ Spécifie les informations de statuts de livraison
         + ```type``` *(string)*... Problèmes rencontrés au retrait (voir section "Problèmes de livraison")
     + ```shipping_problems``` *(Array of Hash)*
         + ```type``` *(string)*... Problèmes rencontrés au point de livraison (voir section "Problèmes de livraison")
-
+        
 ## Description des dimensions
 ***
 
@@ -196,7 +196,7 @@ Si aucune des deux solutions n'est choisie, la requête sera rejetée et génér
 ## Problèmes de livraison
 ***
 
-Que la livraison soit un succés ou un échec, plusieurs types de problèmes peuvent être remontés par le transporteur lors du retrait ou de la livraison de la marchandise.
+Que la livraison soit un succès ou un échec, plusieurs types de problèmes peuvent être remontés par le transporteur lors du retrait ou de la livraison de la marchandise.
 
 * `no_package` = Aucun colis trouvé(s).
 * `too_many_packages` = Trop de colis.
@@ -228,7 +228,7 @@ Que la livraison soit un succés ou un échec, plusieurs types de problèmes peu
 
 ***[POST] 4/deliveries/options***
 
-Permet de récupérer les options de livraison disponibles.
+Permets de récupérer les options de livraison disponibles.
 
 ### Paramètres de requête
 
@@ -236,11 +236,11 @@ Permet de récupérer les options de livraison disponibles.
     + ```point``` *(required, Point entity)*
         + ```type``` *(required, value = "pickup")*... Point de **retrait**
         + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
-        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
+        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui-même le magasin de retrait le plus adapté géographiquement parmi ceux référencés.**
     + ```point``` *(required, Point entity)*
         + ```type``` *(required, value = "shipping")*... Point de **livraison**   
         + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
-        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin à livrer le plus adapté géographiquement parmis ceux référencés.**
+        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui-même le magasin à livrer le plus adapté géographiquement parmi ceux référencés.**
 + ```packaging``` *(required, packaging entity)*
     + ```global_description``` *(optional)*
     + ```packaging_ref``` *(optional)*
@@ -515,12 +515,12 @@ Permet de récupérer les options de livraison disponibles.
                 }
             }
 
-## Pre-commander une livraison [POST /4/deliveries/book]
+## Précommander une livraison [POST /4/deliveries/book]
 
 ***[POST] 4/deliveries/book***
 
-Permet d'effectuer une pré-commande de livraison.   
-Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une commande de livraison](#reference/commander-une-livraison/finaliser-une-commande-de-livraison).
+Permets d'effectuer une précommande de livraison.   
+Cette précommande sera ensuite à confirmer dans la méthode [Finaliser une commande de livraison](#reference/commander-une-livraison/finaliser-une-commande-de-livraison).
 
 ### Paramètres de requête
 
@@ -1188,7 +1188,7 @@ La réponse contient une entité `Delivery`.
 
 ***[PUT] 4/deliveries/{uuid}/confirm***
 
-Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```uuid``` de votre commande, vous devez la confirmer pour finaliser votre commande.   
+Une fois que vous avez précommandé une livraison et que l'API vous a retourné le ```uuid``` de votre commande, vous devez la confirmer pour finaliser votre commande.   
 Le paramètre ```uuid``` est à passer dans l'URL de la requête.
 
 
@@ -1207,7 +1207,7 @@ La réponse contient une entité `Delivery`.
 
 + Parameters
     
-    + uuid - Identifiant unique de la commande de livraison obtenue lors de la pré-commande
+    + uuid - Identifiant unique de la commande de livraison obtenue lors de la précommande
     
 + Request (application/json)
     
@@ -1323,7 +1323,7 @@ La réponse contient une entité `Delivery`.
 
 ***[GET] /4/deliveries/{uuid}***
 
-Permet de récupérer l'ensemble des attributs et statuts de livraison, ainsi que les éventuelles anomalies rencontrées aux points de retrait et de livraison.   
+Permets de récupérer l'ensemble des attributs et statuts de livraison, ainsi que les éventuelles anomalies rencontrées aux points de retrait et de livraison.   
 
 Voir la section "Statuts de livraison" pour les codes statuts.
 
@@ -1443,7 +1443,7 @@ La réponse contient une entité `Delivery`.
 
 ***[POST] /4/deliveries/{uuid}***
 
-Permet de mettre à jour la reference commande secondaire à tout moment.
+Permets de mettre à jour la reference commande secondaire à tout moment.
 
 ### Paramètres de requête
 
