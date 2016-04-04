@@ -3,22 +3,22 @@ HOST: http://sandbox.api.colisweb.com
 
 # Colisweb API v4
 
-Ce document décrit les points d'entrées, appelés **endpoints**, de l'API ainsi que les workflows d'utilisations.   
+Ce document décrit les points d'entrées, appelés **endpoints**, de l'API.   
 > **ATTENTION**: Nous nous réservons le droit **d'ajouter** certains attributs tout au long du cycle de vie de cette API.
 
+## Authentification
 ***
-## Autorisations
-***
-Une clé API est nécessaire pour pouvoir échanger avec l'API.
-Pour obtenir une clé, veuillez en faire la demande à support@colisweb.com.
+Une clé API est nécessaire pour pouvoir échanger avec l'API.   
+Pour obtenir une clé API, veuillez en faire la demande à support@colisweb.com.
 
-***
+**L'authentification se fait via un header HTTP spécifique.**   
+**Chaque requête doit contenir un header HTTP dont la clé est `Api-Key` et la valeur est la clé API fournie.**
+
 ## Encodage de caractères
 ***
 Le charset supporté pour les requêtes transmises à l'API est l' **UTF-8**.
 
-***
-## Environnements et URL
+## Environnements et URLs
 ***
 Deux environnements sont disponibles:  
 
@@ -32,27 +32,22 @@ Deux environnements sont disponibles:
 
 > ***Les clés API sont différentes selon les environnements***
 
-***
-## Glossaire
+## Entités
 ***
 ### Entités en entrée
 ***
-Nous gérons des **livraisons** partant d'un **point A (pickup)** et arrivant à un **point B (shipping)**.   
-
-Certaines des clés/valeurs des entités décrites dans cette section peuvent être optionnelles ou requises selon les différents *end_points* de l'API.   
-Ces notions de required / optional sont indiqués dans la description des *end_points*.
 
 #### L'entité "Route"
 ***
 Spécifie et constitue les informations sur le point de retrait et le point de livraison.   
-+ Une ```Route``` est un Array d'entités ```Point```
++ Une ```Route``` est une liste d'entités ```Point```
     
 #### L'entité "Point"
 ***
-Spécifie la nature d'un point ainsi que les informations d'addresse.   
+Spécifie la nature d'un point ainsi que les informations d'adresse.   
 Il peut être soit un "point de retrait" soit un "point de livraison" de la marchandise.   
 
-+ Un ```Point``` est un Hash composé des attributs suivants:
++ Un ```Point``` est un ```Hash``` composé des attributs suivants:
     + ```type``` *(required, string)*... La nature du point, les valeurs peuvent être :
         + **"pickup"** (point de retrait).
         + **"shipping"** (point de livraison).
@@ -67,7 +62,7 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```type``` *(required, string = "address")* ... Location de type **"address"**
     + ```society``` *(optional, string)*... Société.
     + ```first_name``` *(optional, string)*... Prénom.
-    + ```last_name``` *(required, string)*... Nom (ou concaténation prénom + nom).
+    + ```last_name``` *(required, string)*... Nom.
     + ```email``` *(required, string)*... Email.
     + ```primary_phone``` *(required, string)*... Numéro de téléphone primaire.
     + ```secondary_phone``` *(optional, string)*... Numéro de téléphone secondaire.
@@ -82,11 +77,11 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + ```type``` *(required, string = "store")*... Location de type **"store"**
     + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
     
-    Nous Réferençons vos magasins dans notre système au moment de la signature du contrat.
+    Nous réferençons vos magasins dans notre système au moment de la signature du contrat.
 
 + Soit un code postal avec attributs suivants:
     + ```type``` *(required, string = "city")*... location de type **"city"**
-    + ```zip_code``` *(required, string)*... Code postal.  
+    + ```postal_code``` *(required, string)*... Code postal.  
 
 
 #### L'entité "Slot"
@@ -120,22 +115,21 @@ Spécifie les informations sur un paquet.
     + ```height``` *(required, float)*.. Hauteur du paquet (en centimètres).
     + ```weight``` *(required, float)*.. Poids du paquet (en kilos).
 
-***
+
 ### Entités en sortie
 ***
 
 #### L'entité "status"
 ***
 Spécifie les informations de statuts de livraison
-+ Un **status** est composé des attributs suivants:
-    + ```global``` *(string)*... statut global de la commande.
-    
-+ Le statut ```global``` peut prendre les valeurs :
-    + *pre_ordered*... pré-commande.
-    + *confirmed*... commande confirmée.
-    + *canceled*... commande annulée.
-
-***
++ Un ```status``` est un ```Hash``` composé des attributs suivants:
+    + ```global``` *(string)*... statut global de la commande. (voir section "Statuts de livraison")
+    + ```pickup_problems``` *(Array of Hash)*
+        + ```type``` *(string)*... Problèmes rencontrés au retrait (voir section "Problèmes de livraison")
+    + ```shipping_problems``` *(Array of Hash)*
+        + ```type``` *(string)*... Problèmes rencontrés au point de livraison (voir section "Problèmes de livraison")
+        
+        
 ## Description des dimensions
 ***
 
@@ -150,7 +144,7 @@ Afin de nous transmettre les dimensions de ce que vous voulez faire livrer, deux
   Dans ce cas de figure, il vous faudra impérativement remplir les champs 
   ```packets_quantity```, ```length```, ```width```, ```height```, ```weight``` de l'entité **Packaging**.   
 
-2. Décrire précisement le contenu du panier de votre client, nous laissant le soin de calculer le conteneur le plus adapté.
+2. Décrire précisement l'ensemble des "paquets" composant la livraison, nous laissant le soin de calculer le conteneur le plus adapté.
 
   Dans ce second cas de figure, il vous faudra impérativement **ne pas** remplir les champs
   ```packets_quantity```, ```length```, ```width```, ```height```, ```weight``` de **Packaging**.   
@@ -161,7 +155,6 @@ Ces deux solutions sont mutuellement exclusives, la première option étant prio
 Cela signifie que si les dimensions d'un **Packaging** sont renseignées alors les **Packets** seront ignorés.   
 Si aucune des deux solutions n'est choisie, la requête sera rejetée et générera une erreur ```400 Bad Request```
 
-***
 ## Formats de dates
 ***
 + L'API accepte en paramètre d'entrée des dates au format **ISO 8601** avec timezone.   
@@ -172,10 +165,38 @@ Si aucune des deux solutions n'est choisie, la requête sera rejetée et génér
 + Toutes les dates renvoyées par l'API le sont en UTC dans le même format   
     Exemple: 
     ```
-    2015-04-22T14:00:00+00:00
+    2015-04-22T14:00:00Z
     ```
 
+## Statuts de livraison possibles
 ***
+* `pre_ordered` = en attente de confirmation
+* `confirmed` = commande confirmée
+* `picked_up` = colis retiré
+* `pick_up_failed` = échec de retrait colis *(état terminal)*
+* `delivered` = colis livré *(état terminal)*
+* `delivery_failed` = échec de livraison
+* `package_returned` = colis retourné *(état terminal)*
+* `canceled` = commande annulée *(état terminal)*
+
+## Problèmes de livraison
+***
+
+Que la livraison soit un succés ou un échec, plusieurs types de problèmes peuvent être remontés par le transporteur lors du retrait ou de la livraison de la marchandise.
+
+* `no_package` = Aucun colis trouvé(s).
+* `too_many_packages` = Trop de colis.
+* `missing_packages` = Colis manquants.
+* `too_heavy` = Colis trop lourd(s).
+* `wrong_dimensions` = Dimensions inadaptées.
+* `pickup_point_closed` = Point de retrait fermé.
+* `absent_customer` = Client absent.
+* `unreachable_customer` = Client injoignable.
+* `wrong_address` = Mauvaise adresse.
+* `delivery_rejection` = Refus de réception.
+* `wrong_package` = Mauvais colis.
+* `other` = Autre problème.
+
 ## Codes erreurs
 ***
 | Error name                | HTTP Status       | Description                       |
@@ -187,30 +208,25 @@ Si aucune des deux solutions n'est choisie, la requête sera rejetée et génér
 | missing_delivery          | 404 not found     | Numéro de commande inconnue       |
 | delivery_has_expired      | 400 Bad request   | La confirmation de commande survient après le timeout (15 minutes), impossible de confirmer la commande|
 
-# Group Commander une livraison
+# Group Commander une livraison 
 
-## Obtenir les options de livraison disponibles [/4/deliveries/options]
+## Obtenir les options de livraison disponibles [POST /4/deliveries/options]
 
-end_point : /deliveries/options
+***[POST] 4/deliveries/options***
 
-Permet de récupérer les options de livraisons disponibles.
+Permet de récupérer les options de livraison disponibles.
 
 ### Paramètres de requête
 
-+ ```api_key``` *(required, string)*... Clé API Colisweb.
-+ ```slot``` *(optional, Slot entity)*
-    + ```size``` *(optional)* Taille de la plage de livraison demandée en minutes. Exemple : 120 pour une livraison en 2h
-Ce paramètre permet d'écraser la valeur configurée dans notre système au moment de la contractualisation.
 + ```route``` *(required, Route entity)*
     + ```point``` *(required, Point entity)*
-        + ```type``` *(required, Value = pickup)*... Point de **retrait**
-        + ```location``` *(required, Location entity)*   
-        Le type de la location ne peut être que **"store"**.   
-        **Si la location est de type "store" et que la valeur passée à "store_code" est vide, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
+        + ```type``` *(required, value = "pickup")*... Point de **retrait**
+        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
+        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
     + ```point``` *(required, Point entity)*
-        + ```type``` *(required, Value = shipping)*... Point de **livraison**   
-        Le type de la location ne peut être que  **"city"** 
-        + ```location``` *(required, Location entity)*
+        + ```type``` *(required, value = "shipping")*... Point de **livraison**   
+        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
+        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin à livrer le plus adapté géographiquement parmis ceux référencés.**
 + ```packaging``` *(required, packaging entity)*
     + ```global_description``` *(optional)*
     + ```packaging_ref``` *(optional)*
@@ -227,10 +243,13 @@ Ce paramètre permet d'écraser la valeur configurée dans notre système au mom
         + ```height``` *(required)*
         + ```weight``` *(required)*
 
+**Remarque:** Si le `pickup` et le `shipping` sont tous deux de type `store`, au moins un des deux `store_code` doit être renseigné.
+
+
 ### Contenu de la réponse
 
-+ ```now``` *(hash)*: Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
-    + ```available```*(boolean)*... Disponibilité de la livraison "instantanée".
++ ```now``` *(hash)*... Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
+    + ```available``` *(boolean)*... Disponibilité de la livraison "instantanée".
     + ```slot_size``` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
     + ```price``` *(float)*... Coût HT pour ce créneau (en euro).
 + ```calendar``` *(array of hashes)*... . Vide si aucune disponibilité.
@@ -239,113 +258,259 @@ Ce paramètre permet d'écraser la valeur configurée dans notre système au mom
     + ```slot_size``` *(integer)*... Taille du créneau horaire de livraison (en minutes).
     + ```price``` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
   
-  
-### Exemple de demande d'options en mode "B2C" -> cas d'une livraison depuis un magasin référencé vers un code postal [POST]
++ Request Exemple de requête "B2B" (application/json)
+    
+    B2B
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
 
-+ Request (application/json)
-
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "slot": {
-                "size": 120
-            },
-            "route": [
-                {
-                    "type": "pickup",
-                    "location": {
-                        "type": "store",
-                        "store_code": "100001"                        
-                    }
-                },
-                {
-                    "type": "shipping",
-                    "location": {
-                        "type": "city",
-                        "zip_code": "75001"                        
-                    }
-                }
-            ],
-            "packaging": {
-                "global_description": "Ensemble set cuisine",
-                "packets": [
+            {
+                "route": [
                     {
-                        "description": "micro-onde",
-                        "height": 60,
-                        "length": 80,
-                        "width": 30,
-                        "weight": 2.5
+                        "type": "pickup",
+                        "location": {
+                            "type": "store",
+                            "store_code": "100001"                        
+                        }
                     },
                     {
-                        "description": "Cafetière",
-                        "height": 60,
-                        "length": 80,
-                        "width": 30,
-                        "weight": 1.0
+                        "type": "shipping",
+                        "location": {
+                            "type": "store",
+                            "postal_code": "100002"                        
+                        }
                     }
-                ]
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
+                }
             }
-        }
+
++ Request Exemple de requête "B2C" (application/json)
+    
+    B2C
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "store",
+                            "store_code": "100001"                        
+                        }
+                    },
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "city",
+                            "postal_code": "75001"                        
+                        }
+                    }
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
+                }
+            }
+            
++ Request Exemple de requête "C2B" (application/json)
+    
+    C2B
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "city",
+                            "store_code": "75001"                        
+                        }
+                    },
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "store",
+                            "postal_code": "100001"                        
+                        }
+                    }
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
+                }
+            }
+
++ Request Exemple de requête "C2C" (application/json)
+    
+    C2C
+    
+    + Headers 
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "city",
+                            "postal_code": "75008"                        
+                        }
+                    },
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "city",
+                            "postal_code": "75001"                        
+                        }
+                    }
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
+                }
+            }
 
 + Response 200 (application/json)
-  
-        {
-            "delivery": {
-                "now": {
-                    "available": true,
-                    "slot_size": 120,
-                    "price": 16.00
-                },
-                "calendar": [
-                    {
-                        "starts_at": "2015-04-22T10:00:00+02:00",
-                        "ends_at": "2015-04-22T12:00:00+02:00",
+    
+    + Body
+
+            {
+                "delivery": {
+                    "now": {
+                        "available": true,
                         "slot_size": 120,
                         "price": 16.00
                     },
-                    {
-                        "starts_at": "2015-04-22T12:00:00+02:00",
-                        "ends_at": "2015-04-22T14:00:00+02:00",
-                        "slot_size": 120,
-                        "price": 8.00
-                    },
-                    {
-                        "starts_at": "2015-04-22T14:00:00+02:00",
-                        "ends_at": "2015-04-22T17:00:00+02:00",
-                        "slot_size": 180,
-                        "price": 10.00
-                    },
-                    {
-                        "starts_at": "2015-04-23T10:00:00+02:00",
-                        "ends_at": "2015-04-23T12:00:00+02:00",
-                        "slot_size": 120,
-                        "price": 16.00
-                    },
-                    {
-                        "starts_at": "2015-04-23T12:00:00+02:00",
-                        "ends_at": "2015-04-23T14:00:00+02:00",
-                        "slot_size": 120,
-                        "price": 8.00
-                    },
-                    {
-                        "starts_at": "2015-04-23T14:00:00+02:00",
-                        "ends_at": "2015-04-23T17:00:00+02:00",
-                        "slot_size": 180,
-                        "price": 10.00
-                    }
-                ]
+                    "calendar": [
+                        {
+                            "starts_at": "2015-04-22T10:00:00+00:00",
+                            "ends_at": "2015-04-22T12:00:00+00:00",
+                            "slot_size": 120,
+                            "price": 16.00
+                        },
+                        {
+                            "starts_at": "2015-04-22T12:00:00+00:00",
+                            "ends_at": "2015-04-22T14:00:00+00:00",
+                            "slot_size": 120,
+                            "price": 8.00
+                        },
+                        {
+                            "starts_at": "2015-04-22T14:00:00+00:00",
+                            "ends_at": "2015-04-22T17:00:00+00:00",
+                            "slot_size": 180,
+                            "price": 10.00
+                        },
+                        {
+                            "starts_at": "2015-04-23T10:00:00+00:00",
+                            "ends_at": "2015-04-23T12:00:00+00:00",
+                            "slot_size": 120,
+                            "price": 16.00
+                        },
+                        {
+                            "starts_at": "2015-04-23T12:00:00+00:00",
+                            "ends_at": "2015-04-23T14:00:00+00:00",
+                            "slot_size": 120,
+                            "price": 8.00
+                        },
+                        {
+                            "starts_at": "2015-04-23T14:00:00+00:00",
+                            "ends_at": "2015-04-23T17:00:00+00:00",
+                            "slot_size": 180,
+                            "price": 10.00
+                        }
+                    ]
+                }
             }
-        }
 
-## Pre-commander une livraison [/4/deliveries/book]
+## Pre-commander une livraison [POST /4/deliveries/book]
 
-End_point : /deliveries/book
+***[POST] 4/deliveries/book***
 
 Permet d'effectuer une pré-commande de livraison.   
 Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une commande de livraison](#reference/commander-une-livraison/finaliser-une-commande-de-livraison).
 
 ### Paramètres de requête
 
-+ ```api_key``` *(required, string)*... Clé API Colisweb
 + ```slot``` *(required, Slot entity)*... Créneau de livraison demandé.
     + ```starts_at``` *(required, datetime)*... Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
@@ -354,13 +519,13 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
 + ```route``` *(required, Route entity)*
     + ```point``` *(required, Point entity)*
-        + ```type``` *(required, Value = pickup)*... Point de **retrait**
+        + ```type``` *(required, value = "pickup")*... Point de **retrait**
         + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
-        **Si la location est de type "store" et que la valeur passée à "store_code" est nulle, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
+        **Si la location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
     + ```point``` *(required, Point entity)*
-        + ```type``` *(required, Value = shipping)*... Point de **livraison**
+        + ```type``` *(required, value = "shipping")*... Point de **livraison**
         + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
-        **Si la location est de type "store", alors la valeur passée à "store_code" doit être obligatoirement renseignée**
+        **Si la location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin à livrer le plus adapté géographiquement parmis ceux référencés.**
 + ```packaging``` *(required, packaging entity)*
     + ```global_description``` *(optional)*
     + ```packaging_ref``` *(optional)*
@@ -377,187 +542,956 @@ Cette pré-commande sera ensuite à confirmer dans la méthode [Finaliser une co
         + ```height``` *(required)*
         + ```weight``` *(required)*
 
-### Contenu de la réponse
+**Remarque:** Si le `pickup` et le `shipping` sont tous deux de type `store`, au moins un des deux `store_code` doit être renseigné.
 
-+ ```delivery``` *(hash)*... Informations sur la livraison créée
-    + ```uuid``` *(string)*... Identifiant unique de la livraison.   
-    **Cet identifiant vous sera nécessaire, notamment, pour effectuer la confirmation de la commande.**
-    + ```status```(hash, Status entity)... statuts de commande et de livraison.
-        + ```global```(string = "pre_ordered")
-    + ```slot``` *(hash)*... Informations de la plage horaire commandée.
-        + ```starts_at``` *(datetime)*... Date et heure de début du créneau horaire demandé.
-        + ```ends_at``` *(datetime)*... Date et heure de fin du créneau horaire demandé.
-        + ```size``` *(integer)*... Taille du créneau horaire demandé (en minutes).
-        + ```price``` *(float)*... Coût HT de la livraison (en euro).
++ Request Exemple de requête "B2B" (application/json)
+    
+    B2B
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
 
-## Exemple de pré-commande de livraison en mode "B2C" -> cas d'une livraison depuis un magasin référencé vers une adresse [POST]
-
-+ Request (application/json)
-
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "slot": {
-                "starts_at": "2015-04-22T10:00:00+02:00",
-                "size": 120
-            },
-            "route": [
-                {
-                    "type": "pickup",
-                    "location": {
-                        "type": "store",
-                        "store_code": "100001"                        
-                    }
+            {
+                "slot": {
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "size": 120
                 },
-                {
-                    "type": "shipping",
-                    "location": {
-                        "type": "address",
-                        "society": "Twelve factors & C",
-                        "first_name": "Helmout",
-                        "last_name": "Ardelpik",
-                        "email": "helmoutardelpik@gmail.com",
-                        "primary_phone": "0694385693",
-                        "secondary_phone": "0354678942",
-                        "line1": "165, avenue des champs Elysées",
-                        "line2": "Batiment Leblanc",
-                        "additional_informations": "Digicode B345, 3 éme etage",
-                        "postal_code": "75001",
-                        "city": "Paris",
-                        "country": "France"                        
-                    }
-                }
-            ],
-            "packaging": {
-                "global_description": "Ensemble set cuisine",
-                "packets": [
+                "route": [
                     {
-                        "description": "micro-onde",
-                        "height": 60,
-                        "length": 80,
-                        "width": 30,
-                        "weight": 2.5
+                        "type": "pickup",
+                        "location": {
+                            "type": "store",
+                            "store_code": "100001"                        
+                        }
                     },
                     {
-                        "description": "Cafetière",
-                        "height": 60,
-                        "length": 80,
-                        "width": 30,
-                        "weight": 1.0
+                        "type": "shipping",
+                        "location": {
+                            "type": "store",
+                            "store_code": "100002"                        
+                        }
                     }
-                ]
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
+                }
             }
-        }
 
 + Response 201 (application/json)
 
-        {
-            "delivery": {
-                "uuid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
-                "status": {
-                    "global": "pre_ordered"
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "",
+                "secondary_order_reference": "",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
                 },
+                "route": [
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "store",
+                      "store_code": "100001"                        
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
+                "status": {
+                  "global": "pre-ordered",
+                  "pickup_problems": [],
+                  "shipping_problems": []
+                }
+              }
+            }
+
++ Request Exemple de requête "B2C" (application/json)
+    
+    B2C
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
                 "slot": {
                     "starts_at": "2015-04-22T10:00:00+02:00",
-                    "ends_at": "2015-04-22T12:00:00+02:00",
-                    "size": 120,
-                    "price": 5.00
+                    "size": 120
+                },
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "store",
+                            "store_code": "100001"                        
+                        }
+                    },
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "address",
+                            "society": "Twelve factors & C",
+                            "first_name": "Helmout",
+                            "last_name": "Ardelpik",
+                            "email": "helmoutardelpik@gmail.com",
+                            "primary_phone": "0694385693",
+                            "secondary_phone": "0354678942",
+                            "line1": "165, avenue des champs Elysées",
+                            "line2": "Batiment Leblanc",
+                            "additional_informations": "Digicode B345, 3 éme etage",
+                            "postal_code": "75001",
+                            "city": "Paris",
+                            "country": "France"                        
+                        }
+                    }
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
                 }
             }
-        }
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "",
+                "secondary_order_reference": "",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
+                },
+                "route": [
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "store",
+                      "store_code": "100001"                        
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
+                "status": {
+                  "global": "pre-ordered",
+                  "pickup_problems": [],
+                  "shipping_problems": []
+                }
+              }
+            }
+            
++ Request Exemple de requête "C2B" (application/json)
+    
+    C2B
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
+                "slot": {
+                    "starts_at": "2015-04-22T10:00:00+02:00",
+                    "size": 120
+                },
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "address",
+                            "society": "Twelve factors & C",
+                            "first_name": "Helmout",
+                            "last_name": "Ardelpik",
+                            "email": "helmoutardelpik@gmail.com",
+                            "primary_phone": "0694385693",
+                            "secondary_phone": "0354678942",
+                            "line1": "165, avenue des champs Elysées",
+                            "line2": "Batiment Leblanc",
+                            "additional_informations": "Digicode B345, 3 éme etage",
+                            "postal_code": "75001",
+                            "city": "Paris",
+                            "country": "France"                        
+                        }
+                    },
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "store",
+                            "store_code": "100001"                        
+                        }
+                    }
+                ],
+                "packaging": {
+                    "global_description": "Ensemble set cuisine",
+                    "packets": [
+                        {
+                            "description": "micro-onde",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "Cafetière",
+                            "height": 60,
+                            "length": 80,
+                            "width": 30,
+                            "weight": 1.0
+                        }
+                    ]
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "",
+                "secondary_order_reference": "",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
+                },
+                "route": [
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "store",
+                      "store_code": "100001"                        
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
+                "status": {
+                  "global": "pre-ordered",
+                  "pickup_problems": [],
+                  "shipping_problems": []
+                }
+              }
+            }
+
++ Request Exemple de requête "C2C" (application/json)
+    
+    C2C
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+
+    + Body
+     
+            {
+              "slot": {
+                "starts_at": "2015-04-22T10:00:00+02:00",
+                "size": 120
+              },
+              "route": [
+                {
+                  "type": "pickup",
+                  "location": {
+                    "type": "address",
+                    "society": "Bars&Co",
+                    "first_name": "Jean",
+                    "last_name": "Delacre",
+                    "email": "jdelacre@gmail.com",
+                    "primary_phone": "0689623565",
+                    "secondary_phone": "0354986315",
+                    "line1": "39, rue solférino",
+                    "line2": "ZAC de valmy",
+                    "additional_informations": "Sonner chez le concierge",
+                    "postal_code": "75008",
+                    "city": "Paris",
+                    "country": "France"
+                  }
+                },
+                {
+                  "type": "shipping",
+                  "location": {
+                    "type": "address",
+                    "society": "Twelve factors & C",
+                    "first_name": "Helmout",
+                    "last_name": "Ardelpik",
+                    "email": "helmoutardelpik@gmail.com",
+                    "primary_phone": "0694385693",
+                    "secondary_phone": "0354678942",
+                    "line1": "165, avenue des champs Elysées",
+                    "line2": "Batiment Leblanc",
+                    "additional_informations": "Digicode B345, 3 éme etage",
+                    "postal_code": "75001",
+                    "city": "Paris",
+                    "country": "France"
+                  }
+                }
+              ],
+              "packaging": {
+                "global_description": "Ensemble set cuisine",
+                "packets": [
+                  {
+                    "description": "micro-onde",
+                    "height": 60,
+                    "length": 80,
+                    "width": 30,
+                    "weight": 2.5
+                  },
+                  {
+                    "description": "Cafetière",
+                    "height": 60,
+                    "length": 80,
+                    "width": 30,
+                    "weight": 1.0
+                  }
+                ]
+              }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "",
+                "secondary_order_reference": "",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
+                },
+                "route": [
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "address",
+                      "name": "Colisweb center",
+                      "line1": "165, Avenue de Bretagne",
+                      "line2": "Colisweb",
+                      "postal_code": "59000",
+                      "city": "Lille",
+                      "country": "",
+                      "primary_phone": "0611590696",
+                      "secondary_phone": "0611590696",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
+                "status": {
+                  "global": "pre-ordered",
+                  "pickup_problems": [],
+                  "shipping_problems": []
+                }
+              }
+            }
 
 
-# Finaliser une commande de livraison [/4/deliveries/{uuid}/confirm]
+## Finaliser une commande de livraison [PUT /4/deliveries/{uuid}/confirm]
 
-end_point : /deliveries/{uid}/confirm
+***[PUT] 4/deliveries/{uuid}/confirm***
 
-Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```uid``` de votre commande, vous devez la confirmer pour finaliser votre commande.   
-Le paramètre ```uid``` est à passer dans l'url de la requête.
+Une fois que vous avez pré-commandé une livraison et que l'API vous a retourné le ```uuid``` de votre commande, vous devez la confirmer pour finaliser votre commande.   
+Le paramètre ```uuid``` est à passer dans l'URL de la requête.
 
 
-***Attention***: Il n'est pas possible de confirmer une commande au delà de 15 minutes après le début du créneau horaire.   
+***Attention***: Il n'est plus possible de confirmer une commande au delà de 15 minutes après le début du créneau horaire de livraison.   
 Au delà, une erreur ```delivery_has_expired``` est renvoyée.
 
-## Paramètres de requête
+### Paramètres de requête
 
-+ ```api_key``` *(required, string)*: Clé API Colisweb
 + ```primary_order_reference:``` *(required, string)*: Votre référence commande primaire.   
 **Cette référence permet au transporteur d'identifier le colis au moment de la récupération du colis.**
 + ```secondary_order_reference``` *(optional, string)*: Votre référence commande secondaire.
 
-## Contenu de la réponse
-
-+ ```delivery``` *(hash)*: Informations sur la livraison créée
-    + ```uuid``` *(string)*... Identifiant unique de la livraison.  
-    + ```status```(hash, Status entity)... statuts de commande et de livraison.
-        + ```global```(string = "confirmed")... Commande confirmée
-
-## Voir un exemple de requête [PUT]
-
 + Parameters
-    + uuid - Identifiant unique de la demande de livraison obtenue lors de la pré-commande
+    
+    + uuid - Identifiant unique de la commande de livraison obtenue lors de la pré-commande
+    
++ Request (application/json)
+    
+    + Headers 
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
+                "primary_order_reference": "R10390",
+                "secondary_order_reference": "987663"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "R10390",
+                "secondary_order_reference": "987663",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
+                },
+                "route": [
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "address",
+                      "name": "Colisweb center",
+                      "line1": "165, Avenue de Bretagne",
+                      "line2": "Colisweb",
+                      "postal_code": "59000",
+                      "city": "Lille",
+                      "country": "",
+                      "primary_phone": "0611590696",
+                      "secondary_phone": "0611590696",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
+                "status": {
+                  "global": "delivered",
+                  "pickup_problems": [
+                    {
+                      "type": "wrong_dimensions"
+                    }
+                  ],
+                  "shipping_problems": [
+                    {
+                      "type": "missing_packages"
+                    }
+                  ]
+                }
+              }
+            }
+
+        
+# Group Gestion des livraisons
+
+## Actions disponibles [/4/deliveries/{uuid}]
+
+## Consulter les informations d'une livraison [GET]
+
+***[GET] /4/deliveries/{uuid}***
+
+Permet de récupérer l'ensemble des attributs et statuts de livraison, ainsi que les éventuelles anomalies rencontrées aux points de retrait et de livraison.   
+
+Voir la section "Statuts de livraison" pour les codes statuts.
 
 + Request (application/json)
 
-        {
-            "api_key": "3025688655a161aeb167b7b33f03c013",
-            "primary_order_reference": "R10390",
-            "secondary_order_reference": "987663"
-        }
+    + Headers 
 
-+ Response 200 (application/json)
-        
-        {
-            "delivery": {
-                "uuid": "03355b96-7195-411a-9c3f-3a6a4b6997ce",
+            Api-Key: votreCléApi
+
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "OXVF-125",
+                "secondary_order_reference": "51",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
+                },
+                "route": [
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "address",
+                      "name": "Colisweb center",
+                      "line1": "165, Avenue de Bretagne",
+                      "line2": "Colisweb",
+                      "postal_code": "59000",
+                      "city": "Lille",
+                      "country": "",
+                      "primary_phone": "0611590696",
+                      "secondary_phone": "0611590696",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
                 "status": {
-                    "global": "confirmed"
+                  "global": "delivered",
+                  "pickup_problems": [
+                    {
+                      "type": "wrong_dimensions"
+                    }
+                  ],
+                  "shipping_problems": [
+                    {
+                      "type": "missing_packages"
+                    }
+                  ]
                 }
+              }
             }
-        }
 
-<!--
-# Group Récupération des statuts des commandes
 
-La récupération des statuts des commandes se fait via un Webhook.   
-Le Webhook vous permet d'être informé en temps réél de chaque changement des statuts d'une commande.   
+## Mettre à jour la livraison [POST]
 
-## Webhooks
-1 - Vous nous fournissez une URL (contacter directement Colisweb).    
-2 - A chaque changement de statut d'une commande, notre système envoie une requête `HTTP POST` sur votre URL.   
+***[POST] /4/deliveries/{uuid}***
 
-<strong>Note</strong> : En cas d'échec de la connexion, le système effectue jusque 3 tentatives supplémentaires à 30 secondes d'intervalle.
+Permet de mettre à jour la reference commande secondaire à tout moment.
 
-## Format de donné envoyé
-```
-{   
-    "delivery": {
-        uuid: "identifiant unique de la commande",
-        primary_order_reference: "reference primaire de la commande",
-        secondary_order_reference: "reference secondaire de la commande"
-    },
-    delivery_statuses: {
-        global: "statut global de la commande",
-        retailer: "statut magasin de la commande", 
-        carrier: "statut transporteur de la commande"
+### Paramètres de requête :
+
++ ```secondary_order_reference``` *(optional, string)* ... Votre référence commande secondaire.
+
++ Parameters
+    + uuid - Identifiant unique de la commande de livraison
+
++ Request (application/json)
+     
+    + Headers 
+
+            Api-Key: votreCléApi
+    
+    + Body
+         
+            {
+              "secondary_order_reference": "987663"
+            }
+    
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "OXVF-125",
+                "secondary_order_reference": "987663",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
+                },
+                "route": [
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "address",
+                      "name": "Colisweb center",
+                      "line1": "165, Avenue de Bretagne",
+                      "line2": "Colisweb",
+                      "postal_code": "59000",
+                      "city": "Lille",
+                      "country": "",
+                      "primary_phone": "0611590696",
+                      "secondary_phone": "0611590696",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
+                "status": {
+                  "global": "confirmed",
+                  "pickup_problems": [],
+                  "shipping_problems": []
+                }
+              }
+            }
         
-    }
-}
-```
-## Détail des statuts
-Les différents statuts susceptibles de vous être renvoyés sont :
+## Annuler une livraison [DELETE]
 
-### global (statut global automatique)
-- `pre_order` = pré-commande
-- `confirmed` = commande confirmée
-- `canceled`  = commande annulée
+***[DELETE] /4/deliveries/{uuid}***
 
-### retailer (statut géré par le magasin)
-- `preparing` = colis à préparer / en préparation
-- `ready_to_pick_up`= colis prêt à être retiré
-- `picked_up`= colis retiré
-- `package_returned`= colis retourné en magasin
++ Une livraison peut être annulée :
+    + Si le colis n'a pas été retiré par le transporteur.   
+    + Jusque 20 minutes après le début du créneau horaire.
+    
++ Parameters
 
-### carrier (statut géré par le transporteur chargé de la livraison)
-- `package_withdrawn` = colis retiré
-- `package_returned`= colis retourné
-- `delivered` = colis livré-->
+    + uuid - Identifiant unique de la commande de livraison
+
++ Request (application/json)
+
+     + Headers 
+
+            Api-Key: votreCléApi
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+              "delivery": {
+                "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                "primary_order_reference": "OXVF-125",
+                "secondary_order_reference": "51",
+                "packaging": {
+                  "global_description": "",
+                  "packaging_ref": "",
+                  "width": "10.0",
+                  "length": "10.0",
+                  "height": "10.0",
+                  "weight": "1.0",
+                  "packets_quantity": 1,
+                  "packets": [
+                    {
+                      "description": "",
+                      "sku": "",
+                      "width": "10.0",
+                      "length": "10.0",
+                      "height": "10.0",
+                      "weight": "1.0"
+                    }
+                  ]
+                },
+                "route": [
+                  {
+                    "type": "pickup",
+                    "location": {
+                      "type": "address",
+                      "name": "Colisweb center",
+                      "line1": "165, Avenue de Bretagne",
+                      "line2": "Colisweb",
+                      "postal_code": "59000",
+                      "city": "Lille",
+                      "country": "",
+                      "primary_phone": "0611590696",
+                      "secondary_phone": "0611590696",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  },
+                  {
+                    "type": "shipping",
+                    "location": {
+                      "type": "address",
+                      "name": "yann",
+                      "line1": "165 avenue de bretagne",
+                      "line2": "",
+                      "postal_code": "59000",
+                      "city": "lille",
+                      "country": "france",
+                      "primary_phone": "07",
+                      "secondary_phone": "",
+                      "additional_informations": ""
+                    },
+                    "calendar": {
+                      "starts_at": "2015-12-02T16:00:00Z",
+                      "ends_at": "2015-12-02T18:00:00Z"
+                    }
+                  }
+                ],
+                "status": {
+                  "global": "canceled",
+                  "pickup_problems": [],
+                  "shipping_problems": []
+                }
+              }
+            }
