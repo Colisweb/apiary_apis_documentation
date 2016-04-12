@@ -1,5 +1,4 @@
 FORMAT: 1A
-HOST: http://sandbox.api.colisweb.com
 
 # Colisweb API v4
 
@@ -40,18 +39,18 @@ Deux environnements sont disponibles:
 #### L'entité "Route"
 ***
 Spécifie et constitue les informations sur le point de retrait et le point de livraison.   
-+ Une ```Route``` est une liste d'entités ```Point```
++ Une `Route` est une liste d'entités `Point`
     
 #### L'entité "Point"
 ***
 Spécifie la nature d'un point ainsi que les informations d'adresse.   
 Il peut être soit un "point de retrait" soit un "point de livraison" de la marchandise.   
 
-+ Un ```Point``` est un ```Hash``` composé des attributs suivants:
-    + ```type``` *(required, string)*... La nature du point, les valeurs peuvent être :
++ Un `Point` est un `Hash` composé des attributs suivants:
+    + `type` *(required, string)*... La nature du point, les valeurs peuvent être :
         + **"pickup"** (point de retrait).
         + **"shipping"** (point de livraison).
-    + ```location``` *(required, Location entity)*... Informations du point.
+    + `location` *(required, Location entity)*... Informations du point.
 
 #### L'entité "Location"
 ***
@@ -59,61 +58,61 @@ Spécifie les informations d'adresse d'un point.
 Une **Location** est un type abstrait décliné selon l'une de ces trois spécialisations concrètes:   
 
 + Soit une adresse quelconque avec les attributs suivants: 
-    + ```type``` *(required, string = "address")* ... Location de type **"address"**
-    + ```society``` *(optional, string)*... Société.
-    + ```first_name``` *(optional, string)*... Prénom.
-    + ```last_name``` *(required, string)*... Nom.
-    + ```email``` *(required, string)*... Email.
-    + ```primary_phone``` *(required, string)*... Numéro de téléphone primaire.
-    + ```secondary_phone``` *(optional, string)*... Numéro de téléphone secondaire.
-    + ```line1``` *(required, string)*... Adresse de livraison.
-    + ```line2``` *(optional, string)*... Complément d'adresse.
-    + ```additional_informations``` *(optional, string)*... Informations supplémentaires (digicode, ...)
-    + ```postal_code``` *(required, string)*... Code postal.
-    + ```city``` *(required, string)*... Ville.
-    + ```country``` *(required, string)*... Pays.
+    + `type` *(required, string = "address")* ... Location de type **"address"**
+    + `society` *(optional, string)*... Société.
+    + `first_name` *(optional, string)*... Prénom.
+    + `last_name` *(required, string)*... Nom.
+    + `email` *(required, string)*... Email.
+    + `primary_phone` *(required, string)*... Numéro de téléphone primaire.
+    + `secondary_phone` *(optional, string)*... Numéro de téléphone secondaire.
+    + `line1` *(required, string)*... Adresse de livraison.
+    + `line2` *(optional, string)*... Complément d'adresse.
+    + `additional_informations` *(optional, string)*... Informations supplémentaires (digicode, ...)
+    + `postal_code` *(required, string)*... Code postal.
+    + `city` *(required, string)*... Ville.
+    + `country` *(required, string)*... Pays.
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
-    + ```type``` *(required, string = "store")*... Location de type **"store"**
-    + ```store_code``` *(optional, string)*... Code magasin/entrepôt.  
+    + `type` *(required, string = "store")*... Location de type **"store"**
+    + `store_code` *(optional, string)*... Code magasin/entrepôt.  
     
     Nous référençons vos magasins dans notre système au moment de la signature du contrat.
 
 + Soit un code postal avec attributs suivants:
-    + ```type``` *(required, string = "city")*... location de type **"city"**
-    + ```postal_code``` *(required, string)*... Code postal.  
+    + `type` *(required, string = "city")*... location de type **"city"**
+    + `postal_code` *(required, string)*... Code postal.  
 
 
 #### L'entité "Slot"
 ***
 Spécifie le créneau horaire souhaité pour la livraison de la marchandise.   
 + Un **Slot** est composé des attributs suivants:
-    + ```starts_at``` *(datetime)*... Début du créneau horaire.
-    + ```size``` *(integer)*... Taille de la plage de livraison (en minutes).
+    + `starts_at` *(datetime)*... Début du créneau horaire.
+    + `size` *(integer)*... Taille de la plage de livraison (en minutes).
 
 #### L'entité "Packaging"
 ***
 Spécifie les informations du conteneur et des paquets constituants la demande de livraison.   
 + Un **Packaging** est composé des attributs suivants:
-    + ```global_description``` *(optional, string)*... La description globale du packaging.
-    + ```packaging_ref``` *(optional, string)*... Une référence permettant d'identifier spécifiquement le conteneur.
-    + ```packets_quantity``` *(optional, integer)*... Le nombre de paquets contenu dans le packaging.
-    + ```length``` *(optional, float)*... Longueur du volume utile (en centimètres).
-    + ```width``` *(optional, float)*... Largeur du volume utile (en centimètres).
-    + ```height``` *(optional, float)*... Hauteur du volume utile (en centimètres).
-    + ```weight``` *(optional, float)*... Poids du volume utile (en centimètres).
-    + ```packets``` *(optional, array[Packet])*... Les paquets composant le colis.
+    + `global_description` *(optional, string)*... La description globale du packaging.
+    + `packaging_ref` *(optional, string)*... Une référence permettant d'identifier spécifiquement le conteneur.
+    + `packets_quantity` *(optional, integer)*... Le nombre de paquets contenu dans le packaging.
+    + `length` *(optional, float)*... Longueur du volume utile (en centimètres).
+    + `width` *(optional, float)*... Largeur du volume utile (en centimètres).
+    + `height` *(optional, float)*... Hauteur du volume utile (en centimètres).
+    + `weight` *(optional, float)*... Poids du volume utile (en centimètres).
+    + `packets` *(optional, array[Packet])*... Les paquets composant le colis.
     
 #### L'entité "Packet"
 ***
 Spécifie les informations sur un paquet.   
 + Un **Packet** est composé des attributs suivants:
-    + ```description``` *(optional , string)*... La description / référence du paquet.
-    + ```sku``` *(optional , string)*... Identifiant unique du paquet / produit.
-    + ```length``` *(required, float)*... Longueur du paquet (en centimètres).
-    + ```width``` *(required, float)*.. Largeur du paquet (en centimètres).
-    + ```height``` *(required, float)*.. Hauteur du paquet (en centimètres).
-    + ```weight``` *(required, float)*.. Poids du paquet (en kilos).
+    + `description` *(optional , string)*... La description / référence du paquet.
+    + `sku` *(optional , string)*... Identifiant unique du paquet / produit.
+    + `length` *(required, float)*... Longueur du paquet (en centimètres).
+    + `width` *(required, float)*.. Largeur du paquet (en centimètres).
+    + `height` *(required, float)*.. Hauteur du paquet (en centimètres).
+    + `weight` *(required, float)*.. Poids du paquet (en kilos).
 
 
 ### Entités en sortie
@@ -137,12 +136,12 @@ Spécifie les informations de la livraison commandée.
 ***
 
 Spécifie les informations de statuts de livraison
-+ Un ```status``` est un ```Hash``` composé des attributs suivants:
-    + ```global``` *(string)*... statut global de la commande. (voir section "Statuts de livraison")
-    + ```pickup_problems``` *(Array of Hash)*
-        + ```type``` *(string)*... Problèmes rencontrés au retrait (voir section "Problèmes de livraison")
-    + ```shipping_problems``` *(Array of Hash)*
-        + ```type``` *(string)*... Problèmes rencontrés au point de livraison (voir section "Problèmes de livraison")
++ Un `status` est un `Hash` composé des attributs suivants:
+    + `global` *(string)*... statut global de la commande. (voir section "Statuts de livraison")
+    + `pickup_problems` *(Array of Hash)*
+        + `type` *(string)*... Problèmes rencontrés au retrait (voir section "Problèmes de livraison")
+    + `shipping_problems` *(Array of Hash)*
+        + `type` *(string)*... Problèmes rencontrés au point de livraison (voir section "Problèmes de livraison")
         
 ## Description des dimensions
 ***
@@ -156,31 +155,31 @@ Afin de nous transmettre les dimensions de ce que vous voulez faire livrer, deux
 1. Décrire un "conteneur" étant capable de contenir les paquets/produits de votre client.
 
   Dans ce cas de figure, il vous faudra impérativement remplir les champs 
-  ```packets_quantity```, ```length```, ```width```, ```height```, ```weight``` de l'entité **Packaging**.   
+  `packets_quantity`, `length`, `width`, `height`, `weight` de l'entité **Packaging**.   
 
 2. Décrire précisement l'ensemble des "paquets" composant la livraison, nous laissant le soin de calculer le conteneur le plus adapté.
 
   Dans ce second cas de figure, il vous faudra impérativement **ne pas** remplir les champs
-  ```packets_quantity```, ```length```, ```width```, ```height```, ```weight``` de **Packaging**.   
+  `packets_quantity`, `length`, `width`, `height`, `weight` de **Packaging**.   
   Il vous faudra, pour chaque paquet/produit, générer une entité **Packet** avec au moins les champs 
-  ```length```, ```width```, ```height```, ```weight``` renseignés.
+  `length`, `width`, `height`, `weight` renseignés.
 
 Ces deux solutions sont mutuellement exclusives, la première option étant prioritaire sur la seconde.   
 Cela signifie que si les dimensions d'un **Packaging** sont renseignées alors les **Packets** seront ignorés.   
-Si aucune des deux solutions n'est choisie, la requête sera rejetée et générera une erreur ```400 Bad Request```
+Si aucune des deux solutions n'est choisie, la requête sera rejetée et générera une erreur `400 Bad Request`
 
 ## Formats de dates
 ***
 + L'API accepte en paramètre d'entrée des dates au format **ISO 8601** avec timezone.   
     Exemple: 
-    ```
+    `
     2015-04-22T12:00:00+02:00
-    ```
+    `
 + Toutes les dates renvoyées par l'API le sont en UTC dans le même format   
     Exemple: 
-    ```
+    `
     2015-04-22T14:00:00Z
-    ```
+    `
 
 ## Statuts de livraison possibles
 ***
@@ -232,44 +231,44 @@ Permets de récupérer les options de livraison disponibles.
 
 ### Paramètres de requête
 
-+ ```route``` *(required, Route entity)*
-    + ```point``` *(required, Point entity)*
-        + ```type``` *(required, value = "pickup")*... Point de **retrait**
-        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
++ `route` *(required, Route entity)*
+    + `point` *(required, Point entity)*
+        + `type` *(required, value = "pickup")*... Point de **retrait**
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
         **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui-même le magasin de retrait le plus adapté géographiquement parmi ceux référencés.**
-    + ```point``` *(required, Point entity)*
-        + ```type``` *(required, value = "shipping")*... Point de **livraison**   
-        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
+    + `point` *(required, Point entity)*
+        + `type` *(required, value = "shipping")*... Point de **livraison**   
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
         **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui-même le magasin à livrer le plus adapté géographiquement parmi ceux référencés.**
-+ ```packaging``` *(required, packaging entity)*
-    + ```global_description``` *(optional)*
-    + ```packaging_ref``` *(optional)*
-    + ```packets_quantity``` *(optional)*
-    + ```length``` *(optional)*
-    + ```width``` *(optional)*
-    + ```height``` *(optional)*
-    + ```weight``` *(optional)*
-    + ```packets``` *(optional)*
-        + ```description``` *(optional)*
-        + ```sku``` *(optional)*
-        + ```length``` *(required)*
-        + ```width``` *(required)*
-        + ```height``` *(required)*
-        + ```weight``` *(required)*
++ `packaging` *(required, packaging entity)*
+    + `global_description` *(optional)*
+    + `packaging_ref` *(optional)*
+    + `packets_quantity` *(optional)*
+    + `length` *(optional)*
+    + `width` *(optional)*
+    + `height` *(optional)*
+    + `weight` *(optional)*
+    + `packets` *(optional)*
+        + `description` *(optional)*
+        + `sku` *(optional)*
+        + `length` *(required)*
+        + `width` *(required)*
+        + `height` *(required)*
+        + `weight` *(required)*
 
 **Remarque:** Si le `pickup` et le `shipping` sont tous deux de type `store`, au moins un des deux `store_code` doit être renseigné.
 
 ### Contenu de la réponse
 
-+ ```now``` *(hash)*... Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
-    + ```available``` *(boolean)*... Disponibilité de la livraison "instantanée".
-    + ```slot_size``` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
-    + ```price``` *(float)*... Coût HT pour ce créneau (en euro).
-+ ```calendar``` *(array of hashes)*... . Vide si aucune disponibilité.
-    + ```starts_at``` *(datetime)*... Début du créneau horaire de livraison.
-    + ```ends_at``` *(datetime)*... Fin du créneau horaire de livraison.
-    + ```slot_size``` *(integer)*... Taille du créneau horaire de livraison (en minutes).
-    + ```price``` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
++ `now` *(hash)*... Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
+    + `available` *(boolean)*... Disponibilité de la livraison "instantanée".
+    + `slot_size` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
+    + `price` *(float)*... Coût HT pour ce créneau (en euro).
++ `calendar` *(array of hashes)*... . Vide si aucune disponibilité.
+    + `starts_at` *(datetime)*... Début du créneau horaire de livraison.
+    + `ends_at` *(datetime)*... Fin du créneau horaire de livraison.
+    + `slot_size` *(integer)*... Taille du créneau horaire de livraison (en minutes).
+    + `price` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
   
 + Request Exemple de requête "B2B" (application/json)
     
@@ -524,36 +523,36 @@ Cette précommande sera ensuite à confirmer dans la méthode [Finaliser une com
 
 ### Paramètres de requête
 
-+ ```slot``` *(required, Slot entity)*... Créneau de livraison demandé.
-    + ```starts_at``` *(required, datetime)*... Date et heure de début de la plage de livraison.   
++ `slot` *(required, Slot entity)*... Créneau de livraison demandé.
+    + `starts_at` *(required, datetime)*... Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
-    + ```size``` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
+    + `size` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
     Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
-+ ```route``` *(required, Route entity)*
-    + ```point``` *(required, Point entity)*
-        + ```type``` *(required, value = "pickup")*... Point de **retrait**
-        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
++ `route` *(required, Route entity)*
+    + `point` *(required, Point entity)*
+        + `type` *(required, value = "pickup")*... Point de **retrait**
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
         **Si la location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
-    + ```point``` *(required, Point entity)*
-        + ```type``` *(required, value = "shipping")*... Point de **livraison**
-        + ```location``` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
+    + `point` *(required, Point entity)*
+        + `type` *(required, value = "shipping")*... Point de **livraison**
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
         **Si la location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin à livrer le plus adapté géographiquement parmis ceux référencés.**
-+ ```packaging``` *(required, packaging entity)*
-    + ```global_description``` *(optional)*
-    + ```packaging_ref``` *(optional)*
-    + ```packets_quantity``` *(optional)*
-    + ```length``` *(optional)*
-    + ```width``` *(optional)*
-    + ```height``` *(optional)*
-    + ```weight``` *(optional)*
-    + ```packets``` *(optional)*
-        + ```description``` *(optional)*
-        + ```sku``` *(optional)*
-        + ```length``` *(required)*
-        + ```width``` *(required)*
-        + ```height``` *(required)*
-        + ```weight``` *(required)*
++ `packaging` *(required, packaging entity)*
+    + `global_description` *(optional)*
+    + `packaging_ref` *(optional)*
+    + `packets_quantity` *(optional)*
+    + `length` *(optional)*
+    + `width` *(optional)*
+    + `height` *(optional)*
+    + `weight` *(optional)*
+    + `packets` *(optional)*
+        + `description` *(optional)*
+        + `sku` *(optional)*
+        + `length` *(required)*
+        + `width` *(required)*
+        + `height` *(required)*
+        + `weight` *(required)*
 
 **Remarque:** Si le `pickup` et le `shipping` sont tous deux de type `store`, au moins un des deux `store_code` doit être renseigné.
 
@@ -1188,18 +1187,18 @@ La réponse contient une entité `Delivery`.
 
 ***[PUT] 4/deliveries/{uuid}/confirm***
 
-Une fois que vous avez précommandé une livraison et que l'API vous a retourné le ```uuid``` de votre commande, vous devez la confirmer pour finaliser votre commande.   
-Le paramètre ```uuid``` est à passer dans l'URL de la requête.
+Une fois que vous avez précommandé une livraison et que l'API vous a retourné le `uuid` de votre commande, vous devez la confirmer pour finaliser votre commande.   
+Le paramètre `uuid` est à passer dans l'URL de la requête.
 
 
 ***Attention***: Il n'est plus possible de confirmer une commande au delà de 15 minutes après le début du créneau horaire de livraison.   
-Au delà, une erreur ```delivery_has_expired``` est renvoyée.
+Au delà, une erreur `delivery_has_expired` est renvoyée.
 
 ### Paramètres de requête
 
-+ ```primary_order_reference:``` *(required, string)*: Votre référence commande primaire.   
++ `primary_order_reference:` *(required, string)*: Votre référence commande primaire.   
 **Cette référence permet au transporteur d'identifier le colis au moment de la récupération du colis.**
-+ ```secondary_order_reference``` *(optional, string)*: Votre référence commande secondaire.
++ `secondary_order_reference` *(optional, string)*: Votre référence commande secondaire.
 
 ### Contenu de la réponse
 
@@ -1447,7 +1446,7 @@ Permets de mettre à jour la reference commande secondaire à tout moment.
 
 ### Paramètres de requête
 
-+ ```secondary_order_reference``` *(optional, string)* ... Votre référence commande secondaire.
++ `secondary_order_referenceP` *(optional, string)* ... Votre référence commande secondaire.
 
 ### Contenu de la réponse
 
@@ -1672,5 +1671,327 @@ La réponse contient une entité `Delivery`.
                         "pickup_problems": [],
                         "shipping_problems": []
                     }
+                }
+            }
+            
+# Group BETA - API Proximis
+
+L'API Proximis est une surcouche de notre API.  
+Elle se destine aux clients utilisant <a href="http://www.proximis.com/">Proximis</a> pour leur gestion de stocks.    
+Cette API simplifie l'intégration de Colisweb dans vos services web et vos magasins utilisant Proximis.
+
+## Environnements et URL
+***
+Deux environnements sont disponibles:  
+
++ **Sandbox**: Environnement "bac à sable" pour vos tests avant mise en production.   
+> https://sandbox-proximis.api.colisweb.com/ **end_point**
+
++ **Production**: Après validation des tests en sandbox.   
+> https://proximis.api.colisweb.com/ **end_point**
+
+**end_point** = Méthodes décrites ci-après.
+
+> ***Les clés API sont différentes selon les environnements***
+
+## Obtenir les options de livraison disponibles [POST /deliveries/options]
+
+***POST /deliveries/options***
+
+Permet de récupérer les options de livraisons disponibles.
+
+### Paramètres de requête
+
++ `postal_code` *(required, string)* Code postal à livrer.
+* `packaging` *(required, Hash)*
+    + `packets` *(required, array of Packet entities)*
+        + `description` *(optional)*
+        + `sku` *(required)*
+        + `length` *(required)*
+        + `width` *(required)*
+        + `height` *(required)*
+        + `weight` *(required)*
+
+### Contenu de la réponse
+
++ `now` *(hash)*: Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
+    + `available` *(boolean)*... Disponibilité de la livraison "instantanée".
+    + `slot_size` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
+    + `price` *(float)*... Coût HT pour ce créneau (en euro).
++ `calendar` *(array of hashes)*... . Vide si aucune disponibilité.
+    + `starts_at` *(datetime)*... Début du créneau horaire de livraison.
+    + `ends_at` *(datetime)*... Fin du créneau horaire de livraison.
+    + `slot_size` *(integer)*... Taille du créneau horaire de livraison (en minutes).
+    + `price` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
+  
++ Request (application/json)
+
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+    
+            {
+                "postal_code": "75015",
+                "packaging": {
+                    "packets": [
+                        {
+                            "description": "",
+                            "sku": "mac",
+                            "length": 2.0,
+                            "width": 2.0,
+                            "height": 2.0,
+                            "weight": 2.0
+                        },
+                        {
+                            "description": "",
+                            "sku": "iphone",
+                            "length": 2.0,
+                            "width": 2.0,
+                            "height": 2.0,
+                            "weight": 2.0
+                        }
+                    ]
+                }
+            }
+
++ Response 200 (application/json)
+  
+    + Body
+
+            {
+                "delivery": {
+                    "now": {
+                        "available": true,
+                        "slot_size": 120,
+                        "price": 16.00
+                    },
+                    "calendar": [
+                        {
+                            "starts_at": "2015-04-22T10:00:00+02:00",
+                            "ends_at": "2015-04-22T12:00:00+02:00",
+                            "slot_size": 120,
+                            "price": 16.00
+                        },
+                        {
+                            "starts_at": "2015-04-22T12:00:00+02:00",
+                            "ends_at": "2015-04-22T14:00:00+02:00",
+                            "slot_size": 120,
+                            "price": 8.00
+                        },
+                        {
+                            "starts_at": "2015-04-22T14:00:00+02:00",
+                            "ends_at": "2015-04-22T17:00:00+02:00",
+                            "slot_size": 180,
+                            "price": 10.00
+                        },
+                        {
+                            "starts_at": "2015-04-23T10:00:00+02:00",
+                            "ends_at": "2015-04-23T12:00:00+02:00",
+                            "slot_size": 120,
+                            "price": 16.00
+                        },
+                        {
+                            "starts_at": "2015-04-23T12:00:00+02:00",
+                            "ends_at": "2015-04-23T14:00:00+02:00",
+                            "slot_size": 120,
+                            "price": 8.00
+                        },
+                        {
+                            "starts_at": "2015-04-23T14:00:00+02:00",
+                            "ends_at": "2015-04-23T17:00:00+02:00",
+                            "slot_size": 180,
+                            "price": 10.00
+                        }
+                    ]
+                }
+            }
+
+## Pre-commander une livraison [POST /deliveries/book]
+
+***POST /deliveries/book***
+
+Permet d'effectuer une pré-commande de livraison.   
+Cette pré-commande sera ensuite à confirmer dans le back-office Proximis.
+
+### Paramètres de requête
+
++ `slot` *(required, Slot entity)*... Créneau de livraison demandé.
+    + `starts_at` *(required, datetime)*... Date et heure de début de la plage de livraison.   
+    Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
+    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
+    + `size` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
+    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
++ `route` *(required, Route entity)*
+    + `point` *(required, Point entity)*
+        + `type` *(required, value = <strong>"shipping"</strong>)*... Point de **livraison**
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"address"**.  
+* `packaging` *(required, Hash)*
+    + `packets` *(required, array of Packet entities)*
+        + `description` *(optional)*
+        + `sku` *(required)*
+        + `length` *(required)*
+        + `width` *(required)*
+        + `height` *(required)*
+        + `weight` *(required)*
+
+
+### Contenu de la réponse
+
+La réponse contient une entité `Delivery` + la réponse de l'API de création de commande de Proximis.    
+Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur documentation : 
+<a href="https://docs.proximis.com/api-v2/order.html#creation-d-une-commande">Proximis - Création d'une commande</a>
+
++ Request (application/json)
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
+                "slot": {
+                    "starts_at": "2015-04-22T08:00:00+00:00",
+                    "size": 120
+                },
+                "route": [
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "address",
+                            "society": "Twelve factors & C",
+                            "first_name": "Helmout",
+                            "last_name": "Ardelpik",
+                            "email": "helmoutardelpik@gmail.com",
+                            "primary_phone": "0694385693",
+                            "secondary_phone": "0354678942",
+                            "line1": "165, avenue des champs Elysées",
+                            "line2": "Batiment Leblanc",
+                            "additional_informations": "Digicode B345, 3 éme etage",
+                            "postal_code": "75015",
+                            "city": "Paris",
+                            "country": "France"
+                        }
+                    }
+                ],
+                "packaging": {
+                    "packets": [
+                        {
+                            "description": "",
+                            "sku": "mac",
+                            "width": 60.0,
+                            "length": 80.0,
+                            "height": 30.0,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "",
+                            "sku": "iphone",
+                            "width": 60.0,
+                            "length": 80.0,
+                            "height": 30.0,
+                            "weight": 1.0
+                        }
+                    ]
+                }
+                
+            }
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+                "delivery": {
+                    "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                    "primary_order_reference": "",
+                    "secondary_order_reference": "",
+                    "packaging": {
+                        "global_description": "",
+                        "packaging_ref": "",
+                        "width": "60.0",
+                        "length": "80.0",
+                        "height": "60.0",
+                        "weight": "3.5",
+                        "packets_quantity": 2,
+                        "packets": [
+                            {
+                                "description": "",
+                                "sku": "mac",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "2.5"
+                            },
+                            {
+                                "description": "",
+                                "sku": "iphone",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "1.0"
+                            }
+                        ]
+                    },
+                    "route": [
+                        {
+                            "type": "pickup",
+                            "location": {
+                                "type": "store",
+                                "name": "Welshoo center",
+                                "first_name": "Yann",
+                                "last_name": "Marzack",
+                                "line1": "286 bis Rue Solférino",
+                                "line2": "",
+                                "postal_code": "75016",
+                                "city": "Paris",
+                                "country": "France",
+                                "additional_informations": "",
+                                "primary_phone": "0685868586",
+                                "secondary_phone": "",
+                                "email": "center@welshoo.com",
+                                "store_code": "100001"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        },
+                        {
+                            "type": "shipping",
+                            "location": {
+                                "type": "address",
+                                "society": "Twelve factors & C",
+                                "name": "Helmout Ardelpik",
+                                "first_name": "Helmout",
+                                "last_name": "Ardelpik",
+                                "line1": "165, avenue des champs Elysées",
+                                "line2": "Batiment Leblanc",
+                                "postal_code": "75015",
+                                "city": "Paris",
+                                "country": "France",
+                                "additional_informations": "Digicode B345, 3 éme etage",
+                                "primary_phone": "0694385693",
+                                "secondary_phone": "0354678942",
+                                "email": "helmoutardelpik@gmail.com"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        }
+                    ],
+                    "status": {
+                        "global": "pre_ordered",
+                        "pickup_problems": [],
+                        "shipping_problems": []
+                    }
+                },
+                "proximis_infos": {
+                   "_id": "0001de8f8c683a6d46b78e92221797cc",
+                   "type" : "shoporder",
+                   "alias" : "LEB-58841066-433"
                 }
             }
