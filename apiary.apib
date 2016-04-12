@@ -1835,11 +1835,19 @@ Cette pré-commande sera ensuite à confirmer dans le back-office Proximis.
         + `width` *(required)*
         + `height` *(required)*
         + `weight` *(required)*
++ `webhook_url` *(optional, string)*... 
 
 
 ### Contenu de la réponse
 
-La réponse contient une entité `Delivery` + la réponse de l'API de création de commande de Proximis.    
++ `delivery` *(Delivery entity)*... Informations sur la livrasion Colisweb.
++ `proximis_infos` *(Proximis Order creation response data)*... Informations transmises par Proximis en réponse à la création d'une 
+commande dans leur système.     
+Cette réponse contient :
+    + `_id` *(string)*... ID de la commande Proximis
+    + `type` *(string)*... Le type de commande Proximis
+    + `alias` *(string)*... La référence de la commande Proximis
+
 Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur documentation : 
 <a href="https://docs.proximis.com/api-v2/order.html#creation-d-une-commande">Proximis - Création d'une commande</a>
 
@@ -1895,8 +1903,8 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                             "weight": 1.0
                         }
                     ]
-                }
-                
+                },
+                "webhook_url": "https://your-api.host.com/endpoint"
             }
 
 + Response 201 (application/json)
@@ -1991,7 +1999,197 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                 },
                 "proximis_infos": {
                    "_id": "0001de8f8c683a6d46b78e92221797cc",
-                   "type" : "shoporder",
+                   "type" : "fastorder",
                    "alias" : "LEB-58841066-433"
                 }
             }
+            
+## Webhook de suivi [POST /yourWebhookUrl]
+
+***POST yourWebhookUrl***
+
+Si à la pré-commande de votre livraison, vous avez fourni une URL de webhook, alors chaque changement d'état de la commande Proximis, 
+vous sera transmis via un appel HTTP POST sur l'URL fourni.
+Le payload de cet appel contiendra les informations transmises par Proximis ainsi que les informations concernant la livraison.
+
+### Payload
+
++ `delivery` *(Delivery entity)*... Informations sur la livrasion Colisweb.
++ `proximis_infos` *(Proximis Order entity)*... Informations de commande Proximis.     
+Pour plus d'informations sur le l'entité `Order` de Proximis se référer à leur documentation: 
+<a href="https://docs.proximis.com/api-v2/types.html#format-des-fiches-des-commandes">format-des-fiches-des-commandes</a>
+
++ Request Payload (application/json)
+
+    + Body
+    
+            {
+                "delivery": {
+                    "uuid": "7fc74bb9-dc68-4634-aeae-b4e27da9fcc6",
+                    "primary_order_reference": "",
+                    "secondary_order_reference": "",
+                    "packaging": {
+                        "global_description": "",
+                        "packaging_ref": "",
+                        "width": "60.0",
+                        "length": "80.0",
+                        "height": "60.0",
+                        "weight": "3.5",
+                        "packets_quantity": 2,
+                        "packets": [
+                            {
+                                "description": "",
+                                "sku": "mac",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "2.5"
+                            },
+                            {
+                                "description": "",
+                                "sku": "iphone",
+                                "width": "60.0",
+                                "length": "80.0",
+                                "height": "30.0",
+                                "weight": "1.0"
+                            }
+                        ]
+                    },
+                    "route": [
+                        {
+                            "type": "pickup",
+                            "location": {
+                                "type": "store",
+                                "name": "Welshoo center",
+                                "first_name": "Yann",
+                                "last_name": "Marzack",
+                                "line1": "286 bis Rue Solférino",
+                                "line2": "",
+                                "postal_code": "75016",
+                                "city": "Paris",
+                                "country": "France",
+                                "additional_informations": "",
+                                "primary_phone": "0685868586",
+                                "secondary_phone": "",
+                                "email": "center@welshoo.com",
+                                "store_code": "100001"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        },
+                        {
+                            "type": "shipping",
+                            "location": {
+                                "type": "address",
+                                "society": "Twelve factors & C",
+                                "name": "Helmout Ardelpik",
+                                "first_name": "Helmout",
+                                "last_name": "Ardelpik",
+                                "line1": "165, avenue des champs Elysées",
+                                "line2": "Batiment Leblanc",
+                                "postal_code": "75015",
+                                "city": "Paris",
+                                "country": "France",
+                                "additional_informations": "Digicode B345, 3 éme etage",
+                                "primary_phone": "0694385693",
+                                "secondary_phone": "0354678942",
+                                "email": "helmoutardelpik@gmail.com"
+                            },
+                            "calendar": {
+                                "starts_at": "2015-04-22T08:00:00Z",
+                                "ends_at": "2015-04-22T10:00:00Z"
+                            }
+                        }
+                    ],
+                    "status": {
+                        "global": "pre_ordered",
+                        "pickup_problems": [],
+                        "shipping_problems": []
+                    }
+                },
+                "proximis_infos": {
+                    "_id": "0001de8f8c683a6d46b78e92221797cc",
+                    "store": "145",
+                    "customer": {
+                        "civility": "mister",
+                        "name": "Ivanic",
+                        "first_name": "Jules",
+                        "email": "jules@example.com",
+                        "cell_phone": "+33686939999",
+                        "preferences": {
+                            "email_notification": false,
+                            "sms_notification": false,
+                            "newsletter_subscription": false,
+                            "gift_wrapping": false
+                        },
+                        "secret_code": "7944666",
+                        "phone": "",
+                        "address": {
+                            "street1": null,
+                            "street2": null,
+                            "zipcode": null,
+                            "city": null
+                        }
+                    },
+                    "products": {
+                        "items": [
+                            {
+                                "reference": "10153421",
+                                "count": 1,
+                                "name": "",
+                                "size": "",
+                                "color": "",
+                                "model": "",
+                                "price": {
+                                    "amount": 1,
+                                    "symbol": "€",
+                                    "currency": "EUR"
+                                },
+                                "quantity_prepared": null,
+                                "quantity_delivered": null,
+                                "brand": "",
+                                "description": "The good product",
+                                "imageurl": "http://cache.host.com/Medias/Images/Articles/10153421/11111.jpg",
+                                "category": "New",
+                                "producturl": "",
+                                "id": "10155420",
+                                "shippingcost": 0,
+                                "shippingweight": 0
+                            }
+                        ],
+                        "value": {
+                            "amount": 1,
+                            "symbol": "€",
+                            "currency": "EUR"
+                        }
+                    },
+                    "type": "fastorder",
+                    "lang": "FR",
+                    "status": "on-hold",
+                    "appointment": {},
+                    "alias": "LEB-58841066-433",
+                    "delivery": {
+                        "type": "FdS",
+                        "store": "190"
+                    },
+                    "payment": {
+                        "status": "unpaid"
+                    },
+                    "updated_at": "2016-01-27T13:17:29.981Z",
+                    "created_at": "2016-01-26T10:13:04.787Z",
+                    "handle_before": "2016-01-26T11:15:00.000Z",
+                    "tracking": {
+                        "analytics": {
+                            "account": "UA-45645665-1",
+                            "cid": "377a605a-9c42-4c18-cgd4-7a74eaed5808"
+                        },
+                        "context": "FdS"
+                    }
+                }
+            }
+
++ Response 201
+
+            No response needed
