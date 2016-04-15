@@ -1835,7 +1835,8 @@ Cette pré-commande sera ensuite à confirmer dans le back-office Proximis.
         + `weight` *(required)*
 + `webhook_url` *(optional, string)*... URL de suivi de commande.    
 Pour plus d'informations, voir [Suivi de commande](#reference/beta-api-proximis/suivi-de-commande)
-
++ `proximis` *(optional, Hash)*... Proximis related data
+    + `alias` *(optional, string)*... Proximis order alias
 
 ### Contenu de la réponse
 
@@ -1903,7 +1904,10 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                         }
                     ]
                 },
-                "webhook_url": "https://your-api.host.com/endpoint"
+                "webhook_url": "https://your-api.host.com/endpoint",
+                "proximis": {
+                    "alias": "an_alias"
+                }
             }
 
 + Response 201 (application/json)
