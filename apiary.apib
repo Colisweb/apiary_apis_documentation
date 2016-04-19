@@ -558,7 +558,7 @@ Cette précommande sera ensuite à confirmer dans la méthode [Finaliser une com
 
 ### Contenu de la réponse
 
-La réponse contient une entité `Delivery`. 
+La réponse contient une entité `Delivery`.
 
 + Request Exemple de requête "B2B" (application/json)
     
@@ -1806,12 +1806,12 @@ Permet de récupérer les options de livraisons disponibles.
                 ]
             }
 
-## Pre-commander une livraison [POST /deliveries/book]
+## Précommander une livraison [POST /deliveries/book]
 
 ***POST /deliveries/book***
 
-Permet d'effectuer une pré-commande de livraison.   
-Cette pré-commande sera ensuite à confirmer dans le back-office Proximis.
+Permet d'effectuer une précommande de livraison.   
+Cette précommande sera ensuite à confirmer dans le back-office Proximis.
 
 ### Paramètres de requête
 
@@ -1834,7 +1834,7 @@ Cette pré-commande sera ensuite à confirmer dans le back-office Proximis.
         + `height` *(required)*
         + `weight` *(required)*
 + `webhook_url` *(optional, string)*... URL de suivi de commande.    
-Pour plus d'informations, voir [Suivi de commande](/#reference/api-web-to-store/suivi-de-commande)
+Pour plus d'informations, voir [Suivi de commande](#reference/api-web-to-store/suivi-de-commande)
 + `proximis` *(optional, Hash)*... Proximis related data
     + `alias` *(optional, string)*... Proximis order alias
 
@@ -2011,7 +2011,7 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
 
 ***POST yourWebhookUrl***
 
-Si à la pré-commande de votre livraison, vous avez fourni une URL de webhook, alors chaque changement d'état de la commande Proximis, 
+Si à la précommande de votre livraison, vous avez fourni une URL de webhook, alors chaque changement d'état de la commande Proximis, 
 vous sera transmis via un appel HTTP POST sur l'URL fourni.    
 Le payload de cet appel contiendra les informations transmises par Proximis ainsi que les informations concernant la livraison Colisweb.
 
