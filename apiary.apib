@@ -553,6 +553,8 @@ Cette précommande sera ensuite à confirmer dans la méthode [Finaliser une com
         + `width` *(required)*
         + `height` *(required)*
         + `weight` *(required)*
++ `webhook_url` *(optional, string)*... URL de suivi de commande.
+Pour plus d'informations, voir [Suivi de commande](#reference/commander-une-livraison/suivi-de-commande)
 
 **Remarque:** Si le `pickup` et le `shipping` sont tous deux de type `store`, au moins un des deux `store_code` doit être renseigné.
 
@@ -609,7 +611,8 @@ La réponse contient une entité `Delivery`.
                             "weight": 1.0
                         }
                     ]
-                }
+                },
+                "webhook_url": "https://your-webhook-url.com"
             }
 
 + Response 201 (application/json)
@@ -766,7 +769,8 @@ La réponse contient une entité `Delivery`.
                             "weight": 1.0
                         }
                     ]
-                }
+                },
+                "webhook_url": "https://your-webhook-url.com"
             }
 
 + Response 201 (application/json)
@@ -921,7 +925,8 @@ La réponse contient une entité `Delivery`.
                             "weight": 1.0
                         }
                     ]
-                }
+                },
+                "webhook_url": "https://your-webhook-url.com"
             }
 
 + Response 201 (application/json)
@@ -1087,7 +1092,8 @@ La réponse contient une entité `Delivery`.
                             "weight": 1.0
                         }
                     ]
-                }
+                },
+                "webhook_url": "https://your-webhook-url.com"
             }
 
 + Response 201 (application/json)
