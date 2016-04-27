@@ -1934,10 +1934,10 @@ Cette précommande sera ensuite à confirmer dans le back-office Proximis.
         + `length` *(required)*
         + `width` *(required)*
         + `height` *(required)*
-        + `weight` *(required)*
-+ `webhook_url` *(optional, string)*... URL de suivi de commande.    
+        + `weight` *(required)* 
 Pour plus d'informations, voir [Suivi de commande](#reference/api-web-to-store/suivi-de-commande)
 + `proximis` *(optional, Hash)*... Proximis related data
+    + `webhook_url` *(optional, string)*... URL de suivi de commande Proximis.   
     + `alias` *(optional, string)*... Proximis order alias
 
 ### Contenu de la réponse
@@ -2006,8 +2006,8 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                         }
                     ]
                 },
-                "webhook_url": "https://your-api.host.com/endpoint",
                 "proximis": {
+                    "webhook_url": "https://your-api.host.com/endpoint",
                     "alias": "an_alias"
                 }
             }
