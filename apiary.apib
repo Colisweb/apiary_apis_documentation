@@ -2069,7 +2069,9 @@ Cette réponse contient :
 Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur documentation : 
 <a href="https://docs.proximis.com/api-v2/order.html#creation-d-une-commande">Proximis - Création d'une commande</a>
 
-+ Request (application/json)
++ Request Exemple de requête AVEC sélection intelligente du magasin (application/json)
+    
+    Avec sélection intelligente du magasin
     
     + Headers
     
@@ -2083,6 +2085,74 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                     "size": 120
                 },
                 "route": [
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "address",
+                            "society": "Twelve factors & C",
+                            "first_name": "Helmout",
+                            "last_name": "Ardelpik",
+                            "email": "helmoutardelpik@gmail.com",
+                            "primary_phone": "0694385693",
+                            "secondary_phone": "0354678942",
+                            "line1": "165, avenue des champs Elysées",
+                            "line2": "Batiment Leblanc",
+                            "additional_informations": "Digicode B345, 3 éme etage",
+                            "postal_code": "75015",
+                            "city": "Paris",
+                            "country": "France"
+                        }
+                    }
+                ],
+                "packaging": {
+                    "packets": [
+                        {
+                            "description": "",
+                            "sku": "mac",
+                            "width": 60.0,
+                            "length": 80.0,
+                            "height": 30.0,
+                            "weight": 2.5
+                        },
+                        {
+                            "description": "",
+                            "sku": "iphone",
+                            "width": 60.0,
+                            "length": 80.0,
+                            "height": 30.0,
+                            "weight": 1.0
+                        }
+                    ]
+                },
+                "proximis": {
+                    "webhook_url": "https://your-api.host.com/endpoint",
+                    "alias": "an_alias"
+                }
+            }
+
++ Request Exemple de requête SANS sélection intelligente du magasin (application/json)
+    
+    Sans sélection intelligente du magasin
+    
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+
+            {
+                "slot": {
+                    "starts_at": "2015-04-22T08:00:00+00:00",
+                    "size": 120
+                },
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "store",
+                            "store_code": "100001"
+                        }
+                    },
                     {
                         "type": "shipping",
                         "location": {
