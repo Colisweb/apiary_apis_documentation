@@ -2040,8 +2040,8 @@ Cette précommande sera ensuite à confirmer dans le back-office Proximis.
     + `point` *(required, Point entity)*
         + `type` *(required, value = <strong>"shipping"</strong>)*... Point de **livraison**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"address"**.  
-    + `point` *(optional, Point entity)*... Si passé, bypass la sélection intelligente du magasin en sélectionnant le magasin passé.
-        + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **livraison**
+    + `point` *(optional, Point entity)*... <strong>Si passé, bypass la sélection intelligente du magasin en sélectionnant le magasin passé.</strong>
+        + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **retrait**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"**. 
 * `packaging` *(required, Hash)*
     + `packets` *(required, array of Packet entities)*
