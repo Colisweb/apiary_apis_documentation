@@ -1825,6 +1825,7 @@ Permet de récupérer les options de livraisons disponibles.
     + `ends_at` *(datetime)*... Fin du créneau horaire de livraison.
     + `slot_size` *(integer)*... Taille du créneau horaire de livraison (en minutes).
     + `price` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
++ `location` *(Location entity)*... Informations du magasin sélectionné.
   
 + Request (application/json)
 
@@ -1866,44 +1867,156 @@ Permet de récupérer les options de livraisons disponibles.
                 "now": {
                     "available": true,
                     "slot_size": 120,
-                    "price": 16.00
+                    "price": 16.00,
+                    "location": {
+                        "type": "store",
+                        "name": "Welshoo center",
+                        "first_name": "Yann",
+                        "last_name": "Marzack",
+                        "line1": "286 bis Rue Solférino",
+                        "line2": "",
+                        "postal_code": "75016",
+                        "city": "Paris",
+                        "country": "France",
+                        "additional_informations": "",
+                        "primary_phone": "0685868586",
+                        "secondary_phone": "",
+                        "email": "center@welshoo.com",
+                        "store_code": "100001"
+                    }
                 },
                 "calendar": [
                     {
                         "starts_at": "2015-04-22T10:00:00+02:00",
                         "ends_at": "2015-04-22T12:00:00+02:00",
                         "slot_size": 120,
-                        "price": 16.00
+                        "price": 16.00,
+                        "location": {
+                            "type": "store",
+                            "name": "Welshoo center",
+                            "first_name": "Yann",
+                            "last_name": "Marzack",
+                            "line1": "286 bis Rue Solférino",
+                            "line2": "",
+                            "postal_code": "75016",
+                            "city": "Paris",
+                            "country": "France",
+                            "additional_informations": "",
+                            "primary_phone": "0685868586",
+                            "secondary_phone": "",
+                            "email": "center@welshoo.com",
+                            "store_code": "100001"
+                        }
                     },
                     {
                         "starts_at": "2015-04-22T12:00:00+02:00",
                         "ends_at": "2015-04-22T14:00:00+02:00",
                         "slot_size": 120,
-                        "price": 8.00
+                        "price": 8.00,
+                        "location": {
+                            "type": "store",
+                            "name": "Welshoo center",
+                            "first_name": "Yann",
+                            "last_name": "Marzack",
+                            "line1": "286 bis Rue Solférino",
+                            "line2": "",
+                            "postal_code": "75016",
+                            "city": "Paris",
+                            "country": "France",
+                            "additional_informations": "",
+                            "primary_phone": "0685868586",
+                            "secondary_phone": "",
+                            "email": "center@welshoo.com",
+                            "store_code": "100001"
+                        }
                     },
                     {
                         "starts_at": "2015-04-22T14:00:00+02:00",
                         "ends_at": "2015-04-22T17:00:00+02:00",
                         "slot_size": 180,
-                        "price": 10.00
+                        "price": 10.00,
+                        "location": {
+                            "type": "store",
+                            "name": "Welshoo center",
+                            "first_name": "Yann",
+                            "last_name": "Marzack",
+                            "line1": "286 bis Rue Solférino",
+                            "line2": "",
+                            "postal_code": "75016",
+                            "city": "Paris",
+                            "country": "France",
+                            "additional_informations": "",
+                            "primary_phone": "0685868586",
+                            "secondary_phone": "",
+                            "email": "center@welshoo.com",
+                            "store_code": "100001"
+                        }
                     },
                     {
                         "starts_at": "2015-04-23T10:00:00+02:00",
                         "ends_at": "2015-04-23T12:00:00+02:00",
                         "slot_size": 120,
-                        "price": 16.00
+                        "price": 16.00,
+                        "location": {
+                            "type": "store",
+                            "name": "Welshoo center",
+                            "first_name": "Yann",
+                            "last_name": "Marzack",
+                            "line1": "286 bis Rue Solférino",
+                            "line2": "",
+                            "postal_code": "75016",
+                            "city": "Paris",
+                            "country": "France",
+                            "additional_informations": "",
+                            "primary_phone": "0685868586",
+                            "secondary_phone": "",
+                            "email": "center@welshoo.com",
+                            "store_code": "100001"
+                        }
                     },
                     {
                         "starts_at": "2015-04-23T12:00:00+02:00",
                         "ends_at": "2015-04-23T14:00:00+02:00",
                         "slot_size": 120,
-                        "price": 8.00
+                        "price": 8.00,
+                        "location": {
+                            "type": "store",
+                            "name": "Welshoo center",
+                            "first_name": "Yann",
+                            "last_name": "Marzack",
+                            "line1": "286 bis Rue Solférino",
+                            "line2": "",
+                            "postal_code": "75016",
+                            "city": "Paris",
+                            "country": "France",
+                            "additional_informations": "",
+                            "primary_phone": "0685868586",
+                            "secondary_phone": "",
+                            "email": "center@welshoo.com",
+                            "store_code": "100001"
+                        }
                     },
                     {
                         "starts_at": "2015-04-23T14:00:00+02:00",
                         "ends_at": "2015-04-23T17:00:00+02:00",
                         "slot_size": 180,
-                        "price": 10.00
+                        "price": 10.00,
+                        "location": {
+                            "type": "store",
+                            "name": "Welshoo center",
+                            "first_name": "Yann",
+                            "last_name": "Marzack",
+                            "line1": "286 bis Rue Solférino",
+                            "line2": "",
+                            "postal_code": "75016",
+                            "city": "Paris",
+                            "country": "France",
+                            "additional_informations": "",
+                            "primary_phone": "0685868586",
+                            "secondary_phone": "",
+                            "email": "center@welshoo.com",
+                            "store_code": "100001"
+                        }
                     }
                 ]
             }
