@@ -1820,12 +1820,13 @@ Permet de récupérer les options de livraisons disponibles.
     + `available` *(boolean)*... Disponibilité de la livraison "instantanée".
     + `slot_size` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
     + `price` *(float)*... Coût HT pour ce créneau (en euro).
+    + `location` *(Location entity)*... Informations du magasin sélectionné.
 + `calendar` *(array of hashes)*... . Vide si aucune disponibilité.
     + `starts_at` *(datetime)*... Début du créneau horaire de livraison.
     + `ends_at` *(datetime)*... Fin du créneau horaire de livraison.
     + `slot_size` *(integer)*... Taille du créneau horaire de livraison (en minutes).
     + `price` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
-+ `location` *(Location entity)*... Informations du magasin sélectionné.
+    + `location` *(Location entity)*... Informations du magasin sélectionné.
   
 + Request (application/json)
 
