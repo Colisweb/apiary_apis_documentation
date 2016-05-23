@@ -74,7 +74,7 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
     + `type` *(required, string = "store")*... Location de type **"store"**
-    + `store_code` *(optional, string)*... Code magasin/entrepôt.  
+    + `store_code` *(required, string)*... Code magasin/entrepôt.  
     
     Nous référençons vos magasins dans notre système au moment de la signature du contrat.
 
@@ -235,12 +235,16 @@ Permets de récupérer les options de livraison disponibles.
     + `point` *(required, Point entity)*
         + `type` *(required, value = "pickup")*... Point de **retrait**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
-        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui-même le magasin de retrait le plus adapté géographiquement parmi ceux référencés.**
+        + `calendar` *(optional, array of hashes)*... Absent si disponibilités suivant contrat
+            + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
+            + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
     + `point` *(required, Point entity)*
-        + `type` *(required, value = "shipping")*... Point de **livraison**   
-        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.   
-        **Si la Location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui-même le magasin à livrer le plus adapté géographiquement parmi ceux référencés.**
-+ `packaging` *(required, packaging entity)*
+        + `type` *(required, value = "shipping")*... Point de **livraison**
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.
+        + `calendar` *(optional, array of hashes)*... Absent si disponibilités suivant contrat
+            + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
+            + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
++ `packaging` *(required, Packaging entity)*
     + `global_description` *(optional)*
     + `packaging_ref` *(optional)*
     + `packets_quantity` *(optional)*
@@ -255,9 +259,9 @@ Permets de récupérer les options de livraison disponibles.
         + `width` *(required)*
         + `height` *(required)*
         + `weight` *(required)*
-
-**Remarque:** Si le `pickup` et le `shipping` sont tous deux de type `store`, au moins un des deux `store_code` doit être renseigné.
-
++ `slot` *(optional)*
+    + `size` *(required, Integer)*... Taille des créneaux de livraison
+    
 ### Contenu de la réponse
 
 + `now` *(hash)*... Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
