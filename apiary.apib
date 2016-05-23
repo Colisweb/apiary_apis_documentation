@@ -537,11 +537,9 @@ Cette précommande sera ensuite à confirmer dans la méthode [Finaliser une com
     + `point` *(required, Point entity)*
         + `type` *(required, value = "pickup")*... Point de **retrait**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
-        **Si la location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin de retrait le plus adapté géographiquement parmis ceux référencés.**
     + `point` *(required, Point entity)*
         + `type` *(required, value = "shipping")*... Point de **livraison**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"address"** ou **"store"**   
-        **Si la location est de type `store` et que la valeur passée à `store_code` est vide, Colisweb sélectionne de lui même le magasin à livrer le plus adapté géographiquement parmis ceux référencés.**
 + `packaging` *(required, packaging entity)*
     + `global_description` *(optional)*
     + `packaging_ref` *(optional)*
