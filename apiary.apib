@@ -1,11 +1,13 @@
 FORMAT: 1A
 
-# Colisweb API v4
+# Colisweb API
 
 Ce document décrit les points d'entrées, appelés **endpoints**, de l'API.   
 > **ATTENTION**: Nous nous réservons le droit **d'ajouter** certains attributs tout au long du cycle de vie de cette API.
 
-## Authentification
+## Informations pratiques
+
+### Authentification
 ***
 Une clé API est nécessaire pour pouvoir échanger avec l'API.   
 Pour obtenir une clé API, veuillez en faire la demande à support@colisweb.com.
@@ -13,13 +15,13 @@ Pour obtenir une clé API, veuillez en faire la demande à support@colisweb.com.
 **L'authentification se fait via un header HTTP spécifique.**   
 **Chaque requête doit contenir un header HTTP dont la clé est `Api-Key` et la valeur est la clé API fournie.**
 
-## Encodage de caractères
+### Encodage de caractères
 ***
 Le charset supporté pour les requêtes transmises à l'API est l' **UTF-8**.
 
-## Environnements et URLs
+### Environnements et URLs
 ***
-Deux environnements sont disponibles:  
+Deux environnements sont disponibles, ***les clés API sont différentes selon les environnements***.
 
 + **Sandbox**: Environnement "bac à sable" pour vos tests avant mise en production.   
 > https://sandbox.api.colisweb.com/4/ **end_point**
@@ -29,7 +31,18 @@ Deux environnements sont disponibles:
 
 **end_point** = Méthodes décrites dans ce document
 
-> ***Les clés API sont différentes selon les environnements***
+### Formats de dates
+***
++ L'API accepte en paramètre d'entrée des dates au format **ISO 8601** avec timezone.   
+    Exemple: 
+    `
+    2015-04-22T12:00:00+02:00
+    `
++ Toutes les dates renvoyées par l'API le sont en UTC dans le même format   
+    Exemple: 
+    `
+    2015-04-22T14:00:00Z
+    `
 
 ## Entités
 ***
@@ -51,6 +64,9 @@ Il peut être soit un "point de retrait" soit un "point de livraison" de la marc
         + **"pickup"** (point de retrait).
         + **"shipping"** (point de livraison).
     + `location` *(required, Location entity)*... Informations du point.
+    + `calendar` *(optional, array of hashes)*... Filtre les créneaux contractualisés.
+        + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
+        + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
 
 #### L'entité "Location"
 ***
@@ -167,20 +183,7 @@ Afin de nous transmettre les dimensions de ce que vous voulez faire livrer, deux
 Ces deux solutions sont mutuellement exclusives, la première option étant prioritaire sur la seconde.   
 Cela signifie que si les dimensions d'un **Packaging** sont renseignées alors les **Packets** seront ignorés.   
 Si aucune des deux solutions n'est choisie, la requête sera rejetée et générera une erreur `400 Bad Request`
-
-## Formats de dates
-***
-+ L'API accepte en paramètre d'entrée des dates au format **ISO 8601** avec timezone.   
-    Exemple: 
     `
-    2015-04-22T12:00:00+02:00
-    `
-+ Toutes les dates renvoyées par l'API le sont en UTC dans le même format   
-    Exemple: 
-    `
-    2015-04-22T14:00:00Z
-    `
-
 ## Statuts de livraison possibles
 ***
 * `pre_ordered` = en attente de confirmation
@@ -276,8 +279,6 @@ Permets de récupérer les options de livraison disponibles.
   
 + Request Exemple de requête "B2B" (application/json)
     
-    B2B
-    
     + Headers
     
             Api-Key: votreCléApi
@@ -324,8 +325,6 @@ Permets de récupérer les options de livraison disponibles.
 
 + Request Exemple de requête "B2C" (application/json)
     
-    B2C
-    
     + Headers
     
             Api-Key: votreCléApi
@@ -371,9 +370,7 @@ Permets de récupérer les options de livraison disponibles.
             }
             
 + Request Exemple de requête "C2B" (application/json)
-    
-    C2B
-    
+
     + Headers
     
             Api-Key: votreCléApi
@@ -419,8 +416,6 @@ Permets de récupérer les options de livraison disponibles.
             }
 
 + Request Exemple de requête "C2C" (application/json)
-    
-    C2C
     
     + Headers 
     
@@ -566,8 +561,6 @@ La réponse contient une entité `Delivery`.
 
 + Request Exemple de requête "B2B" (application/json)
     
-    B2B
-    
     + Headers
     
             Api-Key: votreCléApi
@@ -712,9 +705,7 @@ La réponse contient une entité `Delivery`.
             }
             
 + Request Exemple de requête "B2C" (application/json)
-    
-    B2C
-    
+
     + Headers
     
             Api-Key: votreCléApi
@@ -868,9 +859,7 @@ La réponse contient une entité `Delivery`.
             }
             
 + Request Exemple de requête "C2B" (application/json)
-    
-    C2B
-    
+
     + Headers
     
             Api-Key: votreCléApi
@@ -1024,9 +1013,7 @@ La réponse contient une entité `Delivery`.
             }
 
 + Request Exemple de requête "C2C" (application/json)
-    
-    C2C
-    
+
     + Headers
     
             Api-Key: votreCléApi
@@ -1778,38 +1765,74 @@ La réponse contient une entité `Delivery`.
                 }
             }
             
-# Group API Web To Store
+# Group Web To Store
 
-L'API "Web To Store" est une surcouche de notre API.  
-Elle se destine aux clients utlisant des solutions de gestion de stock telle que <a href="http://www.proximis.com/">Proximis</a>.    
+L'API "Web To Store" permet la selection du point de retrait parmis plusieurs magasins et réalise la réservation du stock, si nécessaire.
+Elle se destine principalement aux clients utilisant des solutions de gestion de stock telles que <a href="http://www.proximis.com/">Proximis</a>.
 Cette API simplifie l'intégration de Colisweb avec les services web et magasins qui utilisent ces solutions.
+
+## Usages
++ **Vous avez un système de gestion de stock interne et souhaitez que Colisweb selectionne le magasin le plus adapté :**
+Utilisez le endpoint `/deliveries/options` avec une route contenant tous les magasins possèdant du stock.
+Deux cas sont possibles :
+    + Si les magasins sont référencés et connus de Colisweb, vous pouvez fournir des entités de type `store`.
+    + Si les points de retraits ne sont pas connus de Colisweb, vous pouvez fournir des entités de type `address` avec un `calendar` adapté.
+Les slots retournés contiennent toutes les informations permettant de réaliser un appel à `/4/deliveries/book` dans le cadre d'une 
+réservation standard (voir [Précommander une livraison](http://docs.coliswebapiv4.apiary.io/#reference/commander-une-livraison/precommander-une-livraison)).
+
++ **Vous avez un système de gestion de stock compatible :**
+Utilisez le endpoint `/deliveries/options` avec une route contenant uniquement le point de livraison.
+Continuez le processus de réservation via `/deliveries/book` (voir [Précommander une livraison](#reference/web-to-store/precommander-une-livraison)).
 
 ## Environnements et URL
 ***
-Deux environnements sont disponibles:  
+Deux environnements sont disponibles, ***les clés API sont différentes selon les environnements***.
 
 + **Sandbox**: Environnement "bac à sable" pour vos tests avant mise en production.   
 > https://sandbox-web2store.api.colisweb.com/ **end_point**
-
 + **Production**: Après validation des tests en sandbox.   
 > https://web2store.api.colisweb.com/ **end_point**
-
-**end_point** = Méthodes décrites ci-après.
-
-> ***Les clés API sont différentes selon les environnements***
 
 ## Obtenir les options de livraison disponibles [POST /deliveries/options]
 
 ***POST /deliveries/options***
 
-Permet de récupérer les options de livraisons disponibles.
+Permet de récupérer les options de livraisons disponibles avec le point de retrait associé à chaque créneau de livraison.
 
 ### Paramètres de requête
 
-+ `postal_code` *(required, string)* Code postal à livrer.
++ `route` *(required, Route entity)*
+    + `point` *(optionnal, Point entity)*
+        + `type` *(required, value = "pickup")*... Point de **retrait**.
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"address"**.   
+        + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
+            + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
+            + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
+    + `point` *(optionnal, Point entity)*
+        + `type` *(required, value = "pickup")*... Point de **retrait**.
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"address"**.   
+        + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
+            + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
+            + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
+    + 
+    + 
+    + 
+    + `point` *(required, Point entity)*
+        + `type` *(required, value = "shipping")*... Point de **livraison**.
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"**.
+        + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
+            + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
+            + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
 * `packaging` *(required, Hash)*
+    + `global_description` *(optional)*
+    + `packaging_ref` *(optional)*
+    + `packets_quantity` *(optional)*
+    + `length` *(optional)*
+    + `width` *(optional)*
+    + `height` *(optional)*
+    + `weight` *(optional)*
     + `packets` *(required, array of Packet entities)*
-        + `description` *(optional)*
+        + `description` *(required)*
         + `sku` *(required)*
         + `length` *(required)*
         + `width` *(required)*
@@ -1839,7 +1862,210 @@ Permet de récupérer les options de livraisons disponibles.
     + Body
     
             {
-                "postal_code": "75015",
+                "route": [
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "store",
+                            "store_code": "francs"
+                        }
+                    },
+                    {
+                        "type": "pickup",
+                        "location": {
+                            "type": "store",
+                            "store_code": "louvre"
+                        }
+                    },
+                    {
+                        "type": "shipping",
+                        "location": {
+                            "type": "city",
+                            "postal_code": "75003"
+                        }
+                    }
+              ],
+              "packaging": {
+                  "packets":[
+                      {
+                        "description": "Super produit",
+                        "sku": "10153650",
+                        "length": 20,
+                        "width": 30,
+                        "height": 10,
+                        "weight": 1
+                      }
+                    ]
+                }
+            }
+    
++ Response 200 (application/json)
+  
+    + Body
+    
+            {
+              "now": {
+                "available": false,
+                "slot_size": 0,
+                "price": 0,
+                "location": {
+                  "type": "store",
+                  "store_code": "francs"
+                }
+              },
+              "calendar": [
+                {
+                  "starts_at": "2016-06-11T07:00:00Z",
+                  "ends_at": "2016-06-11T10:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "louvre"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T08:00:00Z",
+                  "ends_at": "2016-06-11T11:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "louvre"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T09:00:00Z",
+                  "ends_at": "2016-06-11T12:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T10:00:00Z",
+                  "ends_at": "2016-06-11T13:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T11:00:00Z",
+                  "ends_at": "2016-06-11T14:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T12:00:00Z",
+                  "ends_at": "2016-06-11T15:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T13:00:00Z",
+                  "ends_at": "2016-06-11T16:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T14:00:00Z",
+                  "ends_at": "2016-06-11T17:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-11T15:00:00Z",
+                  "ends_at": "2016-06-11T18:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "louvre"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-13T07:00:00Z",
+                  "ends_at": "2016-06-13T10:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "louvre"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-13T08:00:00Z",
+                  "ends_at": "2016-06-13T11:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "louvre"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-13T09:00:00Z",
+                  "ends_at": "2016-06-13T12:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                },
+                {
+                  "starts_at": "2016-06-13T10:00:00Z",
+                  "ends_at": "2016-06-13T13:00:00Z",
+                  "slot_size": 180,
+                  "price": 8.33,
+                  "location": {
+                    "type": "store",
+                    "store_code": "francs"
+                  }
+                }
+              ]
+            }
+                
+    
++ Request (application/json)
+
+    + Headers
+    
+            Api-Key: votreCléApi
+    
+    + Body
+    
+            {
+                "route": [
+                    {
+                      "type": "shipping",
+                      "location": {
+                        "type": "city",
+                        "postal_code": "75015"
+                      }
+                    }
+                ],
                 "packaging": {
                     "packets": [
                         {
@@ -2029,16 +2255,16 @@ Permet de récupérer les options de livraisons disponibles.
 ***POST /deliveries/book***
 
 Permet d'effectuer une précommande de livraison.   
-Cette précommande sera ensuite à confirmer dans le back-office Proximis.
+Cette précommande sera ensuite à confirmer dans le **back-office Proximis**.
 
 ### Paramètres de requête
 
 + `slot` *(required, Slot entity)*... Créneau de livraison demandé.
     + `starts_at` *(required, datetime)*... Date et heure de début de la plage de livraison.   
     Pour passer une demande en mode "Instantané", passez la date / heure actuelle.   
-    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
+    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/web-to-store/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.   
     + `size` *(required, integer)*... Taille de la plage de livraison demandée (en minutes).   
-    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/commander-une-livraison/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
+    Vous pouvez passer la valeur que vous souhaitez, cependant seuls les valeurs fournies par le endpoint **[options de livraison](#reference/web-to-store/obtenir-les-options-de-livraison-disponibles)** garantissent une réponse positive de l'API.
 + `route` *(required, Route entity)*
     + `point` *(required, Point entity)*
         + `type` *(required, value = <strong>"shipping"</strong>)*... Point de **livraison**
@@ -2047,14 +2273,21 @@ Cette précommande sera ensuite à confirmer dans le back-office Proximis.
         + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **retrait**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"**. 
 * `packaging` *(required, Hash)*
+    + `global_description` *(optional)*
+    + `packaging_ref` *(optional)*
+    + `packets_quantity` *(optional)*
+    + `length` *(optional)*
+    + `width` *(optional)*
+    + `height` *(optional)*
+    + `weight` *(optional)*
     + `packets` *(required, array of Packet entities)*
-        + `description` *(optional)*
+        + `description` *(required)*
         + `sku` *(required)*
         + `length` *(required)*
         + `width` *(required)*
         + `height` *(required)*
         + `weight` *(required)* 
-Pour plus d'informations, voir [Suivi de commande](#reference/api-web-to-store/suivi-de-commande)
+Pour plus d'informations, voir [Suivi de commande](#reference/web-to-store/suivi-de-commande)
 + `proximis` *(optional, Hash)*... Proximis related data
     + `webhook_url` *(optional, string)*... URL de suivi de commande Proximis.   
     + `alias` *(optional, string)*... Proximis order alias
