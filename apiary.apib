@@ -1778,7 +1778,7 @@ Cette API simplifie l'intégration de Colisweb avec les services web et magasins
 + **Vous avez un système de gestion de stock interne et souhaitez que Colisweb selectionne le magasin le plus adapté :**
 Utilisez le endpoint `/deliveries/options` avec une route contenant tous les magasins possèdant du stock.
 Deux cas sont possibles :
-    + Si les magasins sont référencés et connus de Colisweb, vous pouvez fournir des entités de type `store`.
+    + Si les magasins sont référencés et connus de Colisweb, vous pouvez fournir des entités Location de type `store`.
     + Si les points de retraits ne sont pas connus de Colisweb, vous pouvez fournir des entités de type `address` avec un `calendar` adapté.
 Les slots retournés contiennent toutes les informations permettant de réaliser un appel à `/4/deliveries/book` dans le cadre d'une 
 réservation standard (voir [Précommander une livraison](http://docs.coliswebapiv4.apiary.io/#reference/commander-une-livraison/precommander-une-livraison)).
