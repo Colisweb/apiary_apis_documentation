@@ -2273,9 +2273,18 @@ Cette précommande sera ensuite à confirmer dans le **back-office Proximis**.
         + `width` *(required)*
         + `height` *(required)*
         + `weight` *(required)*
+        + `price` *(optional, Hash)*
+            + `paid_amount` *(required, number)*... Prix réellement payé par le client final pour ce produit.
+            + `retail_amount` *(required, number)*... Prix de vente du produit.
 + `proximis` *(optional, Hash)*... Proximis related data
     + `webhook_url` *(optional, string)*... URL de suivi de commande Proximis.   
     + `alias` *(optional, string)*... Proximis order alias
+    + `invoice_options` *(optional, List of Hash)*
+        + `label` *(required, String)*
+        + `value` *(required, number)*
+    + `extra_data` *(optional, List of Hash)*
+        + `label` *(required, String)*
+        + `value` *(required, String)*
 
 ### Contenu de la réponse
 
