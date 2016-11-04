@@ -1824,13 +1824,6 @@ Permet de récupérer les options de livraisons disponibles avec le point de ret
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
 * `packaging` *(required, Hash)*
-    + `global_description` *(optional)*
-    + `packaging_ref` *(optional)*
-    + `packets_quantity` *(optional)*
-    + `length` *(optional)*
-    + `width` *(optional)*
-    + `height` *(optional)*
-    + `weight` *(optional)*
     + `packets` *(required, array of Packet entities)*
         + `description` *(required)*
         + `sku` *(required)*
@@ -1886,7 +1879,7 @@ Permet de récupérer les options de livraisons disponibles avec le point de ret
                     }
               ],
               "packaging": {
-                  "packets":[
+                  "packets": [
                       {
                         "description": "Super produit",
                         "sku": "10153650",
@@ -2273,13 +2266,6 @@ Cette précommande sera ensuite à confirmer dans le **back-office Proximis**.
         + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **retrait**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"**. 
 * `packaging` *(required, Hash)*
-    + `global_description` *(optional)*
-    + `packaging_ref` *(optional)*
-    + `packets_quantity` *(optional)*
-    + `length` *(optional)*
-    + `width` *(optional)*
-    + `height` *(optional)*
-    + `weight` *(optional)*
     + `packets` *(required, array of Packet entities)*
         + `description` *(required)*
         + `sku` *(required)*
