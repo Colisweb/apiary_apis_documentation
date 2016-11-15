@@ -231,7 +231,15 @@ Que la livraison soit un succès ou un échec, plusieurs types de problèmes peu
 
 ***[POST] 4/deliveries/options***
 
-Permets de récupérer les options de livraison disponibles.
+Permet de récupérer les options de livraison disponibles.
+
+Les options de livraison dépendent:
++ De l'adresse du point de retrait (code postal)
++ De l'adresse du point de livraison (code postal)
++ Des colis à transporter (Poids et dimensions)
++ Des ouvertures du service Colisweb
++ Des horaires d'ouvertures du point de retrait dans le cas d'une intégration B2C/B2B.
+
 
 ### Paramètres de requête
 
@@ -518,8 +526,11 @@ Permets de récupérer les options de livraison disponibles.
 
 ***[POST] 4/deliveries/book***
 
-Permets d'effectuer une précommande de livraison.   
-Cette précommande sera ensuite à confirmer dans la méthode [Finaliser une commande de livraison](#reference/commander-une-livraison/finaliser-une-commande-de-livraison).
+Permet de précommander une livraison. 
+
+Une livraison précommandée n'est pas prise en charge par Colisweb, il est nécessaire de la confirmer avec la méthode [Finaliser une commande de livraison](#reference/commander-une-livraison/finaliser-une-commande-de-livraison). 
+
+***Remarque:*** Dans le cas d'une **intégration e-commerce**, il faut précommander la livraison **avant le paiement**.
 
 ### Paramètres de requête
 
