@@ -227,7 +227,30 @@ Que la livraison soit un succès ou un échec, plusieurs types de problèmes peu
 
 # Group Commander une livraison 
 
-## Obtenir les options de livraison disponibles [POST /4/deliveries/options]
+La commande d'une livraison Colisweb est réalisable en suivant ces 3 actions à la suite:
+
+[1. Obtenir les options de livraison](#reference/commander-une-livraison/1-obtenir-les-options-de-livraison-disponibles) 
+    
+|Inputs                                                            | Outputs               |
+| ---------------------------------------------------------------  | --------------------  |
+|- Point de retrait <br>- Point de livraison <br>- Colis           |- Options de livraison |
+d***    
+    
+[2. Précommander la livraison](#reference/commander-une-livraison/2-precommander-une-livraison)
+
+|Inputs                                                                                            | Outputs                             |
+| -----------------------------------------------------------------------------------------------  | ----------------------------------  |
+| - Point de retrait <br> - Point de livraison <br> - Colis <br> - Option de livraison             |- Livraison Colisweb (précommandée)  |
+*** 
+
+[3. Confirmer la livraison](#reference/commander-une-livraison/3-finaliser-une-commande-de-livraison)
+
+|Inputs                                                                                            | Outputs                             |
+| -----------------------------------------------------------------------------------------------  | ----------------------------------  |
+| - Livraison Colisweb (précommandée)                                                           |- Livraison Colisweb (confirmée)  |
+***    
+
+## 1. Obtenir les options de livraison disponibles [POST /4/deliveries/options]
 
 ***[POST] 4/deliveries/options***
 
@@ -522,7 +545,7 @@ Les options de livraison dépendent:
                 }
             }
 
-## Précommander une livraison [POST /4/deliveries/book]
+## 2. Précommander une livraison [POST /4/deliveries/book]
 
 ***[POST] 4/deliveries/book***
 
@@ -1190,7 +1213,7 @@ La réponse contient une entité `Delivery`.
             }
 
 
-## Finaliser une commande de livraison [PUT /4/deliveries/{uuid}/confirm]
+## 3. Finaliser une commande de livraison [PUT /4/deliveries/{uuid}/confirm]
 
 ***[PUT] 4/deliveries/{uuid}/confirm***
 
