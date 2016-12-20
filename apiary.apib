@@ -67,6 +67,10 @@ Il peut être soit un "point de retrait" soit un "point de livraison" de la marc
     + `calendar` *(optional, array of hashes)*... Filtre les créneaux contractualisés.
         + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
         + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
+    + `capacities` *(optional, array of hashes)*... Filtre les créneaux en fonction d'une capacité maximum de livraison. Cette capacité est définie dans une plage horaire.
+        + `earliest_starts_at` *(datetime)*... Début de la plage horaire de capacité.
+        + `latest_starts_at` *(datetime)*... Fin de la plage horaire de capacité.
+        + `max_capacity` *(Integer)* ... Capacité maximum de livraison dans la plage horaire.
 
 #### L'entité "Location"
 ***
@@ -273,13 +277,17 @@ Les options de livraison dépendent:
         + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
+        + `capacities` *(optional, array of hashes)*... Filtre les créneaux en fonction d'une capacité maximum de livraison pour un magasin. Cette capacité est définie sur une plage horaire.
+            + `earliest_starts_at` *(datetime)*... Début de la plage horaire de capacité.
+            + `latest_starts_at` *(datetime)*... Fin de la plage horaire de capacité.
+            + `max_capacity` *(Integer)* ... Capacité maximum de livraison dans la plage horaire.      
     + `point` *(required, Point entity)*
         + `type` *(required, value = "shipping")*... Point de **livraison**
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"** ou **"store"**.
         + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
-+ `packaging` *(required, Packaging entity)*
++ `packaging` *(required, Packaging entity)*oe
     + `global_description` *(optional)*
     + `packaging_ref` *(optional)*
     + `packets_quantity` *(optional)*
