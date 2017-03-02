@@ -33,7 +33,7 @@ Deux environnements sont disponibles, ***les clés API sont différentes selon l
 
 ### Formats de dates
 ***
-+ L'API accepte en paramètre d'entrée des dates au format **ISO 8601** avec timezone.   
++ L'API accepte en paramètre d'entrée des dates au format **ISO 8601 avec timezone**.   
     Exemple: 
     `
     2015-04-22T12:00:00+02:00
@@ -1125,6 +1125,7 @@ La réponse contient une entité `Delivery`.
                         }
                     ]
                 },
+                "webhook_url": "https://your-webhook-url.com"
             }
 
 + Response 201 (application/json)
