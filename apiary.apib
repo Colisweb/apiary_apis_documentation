@@ -306,16 +306,16 @@ Les options de livraison dépendent:
     + `size` *(required, Integer)*... Taille des créneaux de livraison
     
 ### Contenu de la réponse
-
-+ `now` *(hash)*... Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
-    + `available` *(boolean)*... Disponibilité de la livraison "instantanée".
-    + `slot_size` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
-    + `price` *(float)*... Coût HT pour ce créneau (en euro).
-+ `calendar` *(array of hashes)*... . Vide si aucune disponibilité.
-    + `starts_at` *(datetime)*... Début du créneau horaire de livraison.
-    + `ends_at` *(datetime)*... Fin du créneau horaire de livraison.
-    + `slot_size` *(integer)*... Taille du créneau horaire de livraison (en minutes).
-    + `price` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
++ `delivery` *(hash)*
+    + `now` *(hash)*... Disponibilité de l'offre "instantanée" (au moment de la requête). Vide si aucune disponibilité.
+        + `available` *(boolean)*... Disponibilité de la livraison "instantanée".
+        + `slot_size` *(integer)*... Taille du créneau horaire de la livraison "instantanée" (en minutes).
+        + `price` *(float)*... Coût HT pour ce créneau (en euro).
+    + `calendar` *(array of hashes)*... . Vide si aucune disponibilité.
+        + `starts_at` *(datetime)*... Début du créneau horaire de livraison.
+        + `ends_at` *(datetime)*... Fin du créneau horaire de livraison.
+        + `slot_size` *(integer)*... Taille du créneau horaire de livraison (en minutes).
+        + `price` *(float)*... Coût HT de la livraison dans ce créneau (en euro).
   
 + Request Exemple de requête "B2B" (application/json)
     
@@ -1848,19 +1848,19 @@ Permet de récupérer les options de livraisons disponibles avec le point de ret
 
 + `route` *(required, Route entity)*
     + `point` *(optionnal, Point entity)*
-        + `type` *(required, value = "pickup")*... Point de **retrait**.
+        + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **retrait**.
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"address"**.   
         + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
     + `point` *(optionnal, Point entity)*
-        + `type` *(required, value = "pickup")*... Point de **retrait**.
+        + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **retrait**.
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"address"**.   
         + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
     + `point` *(required, Point entity)*
-        + `type` *(required, value = "shipping")*... Point de **livraison**.
+        + `type` *(optionnal, value = <strong>"shipping"</strong>)*... Point de **livraison**.
         + `location` *(required, Location entity)*... Le type de la location ne peut être que **"city"**.
         + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
