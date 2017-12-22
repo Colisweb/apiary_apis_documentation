@@ -1851,7 +1851,7 @@ Permet de récupérer les options de livraisons disponibles avec le point de ret
 + `route` *(required, Route entity)*
     + `point` *(optionnal, Point entity)*
         + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **retrait**.
-        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"address"**.   
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"city"**.   
         + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
