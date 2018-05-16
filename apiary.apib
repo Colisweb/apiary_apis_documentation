@@ -31,6 +31,17 @@ Deux environnements sont disponibles, ***les clés API sont différentes selon l
 
 **end_point** = Méthodes décrites dans ce document
 
+### Certificats SSL
+
+Toutes nos APIs sont sécurisés grâce à la technologie HTTPS.
+
+Nos certificats SSL sont émis automatiquement par LetsEncrypt.   
+Ceci implique que ces certificats sont renouvelés automatiquement tous les 3 mois.
+
+> **ATTENTION**:    
+Si vous utilisez la JVM, vérifiez que votre version de JVM supporte LetsEncrypt.    
+Pour plus d'information sur les compatibilités avec LetsEncrypt, voir :https://letsencrypt.org/docs/certificate-compatibility/ 
+
 ### Formats de dates
 ***
 + L'API accepte en paramètre d'entrée des dates au format **ISO 8601 avec timezone**.   
@@ -1857,7 +1868,7 @@ Permet de récupérer les options de livraisons disponibles avec le point de ret
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
     + `point` *(optionnal, Point entity)*
         + `type` *(required, value = <strong>"pickup"</strong>)*... Point de **retrait**.
-        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"city"**.   
+        + `location` *(required, Location entity)*... Le type de la location ne peut être que **"store"** ou **"address"**.   
         + `calendar` *(optional, array of hashes)*... Si passé, filtre les créneaux contractualisés.
             + `starts_at` *(datetime)*... Début du créneau horaire de disponibilité.
             + `ends_at` *(datetime)*... Fin du créneau horaire de disponibilité.
