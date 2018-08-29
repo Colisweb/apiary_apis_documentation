@@ -102,6 +102,8 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + `postal_code` *(required, string)*... Code postal.
     + `city` *(required, string)*... Ville.
     + `country` *(required, string)*... Pays.
+    + `floor` *(required dans le cas d'une Livraison dans la pièce du choix, integer)*... Etage.
+    + `with_lift` *(required dans le cas d'une Livraison dans la pièce du choix, boolean)*
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
     + `type` *(required, string = "store")*... Location de type **"store"**
@@ -796,7 +798,9 @@ La réponse contient une entité `Delivery`.
                             "additional_informations": "Digicode B345, 3 éme etage",
                             "postal_code": "59800",
                             "city": "Lille",
-                            "country": "France"                        
+                            "country": "France",
+                            "floor": 4,
+                            "with_lift": true
                         }
                     }
                 ],
@@ -898,7 +902,10 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0685898585",
                                 "secondary_phone": "",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
+                                
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -943,7 +950,9 @@ La réponse contient une entité `Delivery`.
                             "additional_informations": "Digicode B345, 3 éme etage",
                             "postal_code": "59800",
                             "city": "Lille",
-                            "country": "France"                        
+                            "country": "France",
+                            "floor": 4,
+                            "with_lift": true
                         }
                     },
                     {
@@ -1029,7 +1038,9 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0685898585",
                                 "secondary_phone": "",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1052,7 +1063,9 @@ La réponse contient une entité `Delivery`.
                                 "primary_phone": "0685868586",
                                 "secondary_phone": "",
                                 "email": "center@welshoo.com",
-                                "store_code": "100001"
+                                "store_code": "100001",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1097,7 +1110,9 @@ La réponse contient une entité `Delivery`.
                             "additional_informations": "Sonner chez le concierge",
                             "postal_code": "59000",
                             "city": "Lille",
-                            "country": "France"
+                            "country": "France",
+                            "floor": 4,
+                            "with_lift": true
                         }
                     },
                     {
@@ -1115,7 +1130,9 @@ La réponse contient une entité `Delivery`.
                             "additional_informations": "Digicode B345, 3 éme etage",
                             "postal_code": "59800",
                             "city": "Lille",
-                            "country": "France"
+                            "country": "France",
+                            "floor": 4,
+                            "with_lift": true
                         }
                     }
                 ],
@@ -1194,7 +1211,9 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Sonner chez le concierge",
                                 "primary_phone": "0685898586",
                                 "secondary_phone": "0685898686",
-                                "email": "jdelacre@gmail.com"
+                                "email": "jdelacre@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1217,7 +1236,9 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0685898585",
                                 "secondary_phone": "",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1348,7 +1369,9 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0685898585",
                                 "secondary_phone": "",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1464,7 +1487,9 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0685898585",
                                 "secondary_phone": "",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1569,7 +1594,9 @@ Le payload de cet appel contiendra les informations concernant la livraison Coli
                         "additional_informations": "Digicode B345, 3 éme etage",
                         "primary_phone": "0694385693",
                         "secondary_phone": "0354678942",
-                        "email": "helmoutardelpik@gmail.com"
+                        "email": "helmoutardelpik@gmail.com",
+                        "floor": 4,
+                        "with_lift": true
                     },
                         "calendar": {
                             "starts_at": "2015-04-22T08:00:00Z",
@@ -1693,7 +1720,9 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0685898585",
                                 "secondary_phone": "",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1807,7 +1836,9 @@ La réponse contient une entité `Delivery`.
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0685898585",
                                 "secondary_phone": "",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -2385,7 +2416,9 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                             "additional_informations": "Digicode B345, 3 éme etage",
                             "postal_code": "75015",
                             "city": "Paris",
-                            "country": "France"
+                            "country": "France",
+                            "floor": 4,
+                            "with_lift": true
                         }
                     }
                 ],
@@ -2453,7 +2486,9 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                             "additional_informations": "Digicode B345, 3 éme etage",
                             "postal_code": "75015",
                             "city": "Paris",
-                            "country": "France"
+                            "country": "France",
+                            "floor": 4,
+                            "with_lift": true
                         }
                     }
                 ],
@@ -2559,7 +2594,9 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0694385693",
                                 "secondary_phone": "0354678942",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -2669,7 +2706,9 @@ Pour plus d'informations sur l'entité `Order` de Proximis se référer à leur 
                                 "additional_informations": "Digicode B345, 3 éme etage",
                                 "primary_phone": "0694385693",
                                 "secondary_phone": "0354678942",
-                                "email": "helmoutardelpik@gmail.com"
+                                "email": "helmoutardelpik@gmail.com",
+                                "floor": 4,
+                                 "with_lift": true
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
