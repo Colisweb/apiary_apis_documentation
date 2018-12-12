@@ -103,7 +103,7 @@ Une **Location** est un type abstrait décliné selon l'une de ces trois spécia
     + `city` *(required, string)*... Ville.
     + `country` *(required, string)*... Pays.
     + `floor` *(required dans le cas d'une Livraison dans la pièce du choix, integer)*... Etage.
-    + `with_lift` *(required dans le cas d'une Livraison dans la pièce du choix, boolean)*
+    + `lift_information` *(required dans le cas d'une Livraison dans la pièce du choix, string)*... Présence d'un ascenseur ("with_lift"), Absence d'un ascenseur ("no_lift")
 
 + Soit un magasin/entrepôt référencé dans notre système avec les attributs suivants: 
     + `type` *(required, string = "store")*... Location de type **"store"**
@@ -233,7 +233,7 @@ Que la livraison soit un succès ou un échec, plusieurs types de problèmes peu
 
 ## Codes erreurs
 ***
-| Error name                | HTTP Status       | Description                       |
+| Li name                | HTTP Status       | Description                       |
 | ------------------------  | ----------------  | --------------------------------- |
 | wrong_api_key             | 401 Unauthorized  | Clé API manquante / inconnue      |
 | missing_parameters        | 400 Bad Request   | Il manque des paramètres          |
@@ -241,6 +241,7 @@ Que la livraison soit un succès ou un échec, plusieurs types de problèmes peu
 | no_delivery_options       | 404 not found     | Aucune disponibilité de livraison |
 | missing_delivery          | 404 not found     | Numéro de commande inconnue       |
 | delivery_has_expired      | 400 Bad request   | La confirmation de commande survient après le timeout (15 minutes), impossible de confirmer la commande|
+| lift_information_field_is_wrong      | 400 Bad request   | Les informations sur l'ascenseur sont erronées|
 
 # Group Commander une livraison 
 
@@ -800,7 +801,7 @@ La réponse contient une entité `Delivery`.
                             "city": "Lille",
                             "country": "France",
                             "floor": 4,
-                            "with_lift": true
+                            "lift_information": "with_lift"
                         }
                     }
                 ],
@@ -904,7 +905,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                                 
                             },
                             "calendar": {
@@ -952,7 +953,7 @@ La réponse contient une entité `Delivery`.
                             "city": "Lille",
                             "country": "France",
                             "floor": 4,
-                            "with_lift": true
+                            "lift_information": "with_lift"
                         }
                     },
                     {
@@ -1040,7 +1041,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1065,7 +1066,7 @@ La réponse contient une entité `Delivery`.
                                 "email": "center@welshoo.com",
                                 "store_code": "100001",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1112,7 +1113,7 @@ La réponse contient une entité `Delivery`.
                             "city": "Lille",
                             "country": "France",
                             "floor": 4,
-                            "with_lift": true
+                            "lift_information": "with_lift"
                         }
                     },
                     {
@@ -1132,7 +1133,7 @@ La réponse contient une entité `Delivery`.
                             "city": "Lille",
                             "country": "France",
                             "floor": 4,
-                            "with_lift": true
+                            "lift_information": "with_lift"
                         }
                     }
                 ],
@@ -1213,7 +1214,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "0685898686",
                                 "email": "jdelacre@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1238,7 +1239,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1371,7 +1372,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1489,7 +1490,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1596,7 +1597,7 @@ Le payload de cet appel contiendra les informations concernant la livraison Coli
                         "secondary_phone": "0354678942",
                         "email": "helmoutardelpik@gmail.com",
                         "floor": 4,
-                        "with_lift": true
+                        "lift_information": "with_lift"
                     },
                         "calendar": {
                             "starts_at": "2015-04-22T08:00:00Z",
@@ -1722,7 +1723,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -1744,7 +1745,7 @@ La réponse contient une entité `Delivery`.
 
 + Une livraison peut être annulée :
     + Si le colis n'a pas été retiré par le transporteur.   
-    + Jusque 20 minutes après le début du créneau horaire.
+    + Si le créneau de livraison n'a pas commencé.
 
 ### Contenu de la réponse
 
@@ -1838,7 +1839,7 @@ La réponse contient une entité `Delivery`.
                                 "secondary_phone": "",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -2418,7 +2419,7 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                             "city": "Paris",
                             "country": "France",
                             "floor": 4,
-                            "with_lift": true
+                            "lift_information": "with_lift"
                         }
                     }
                 ],
@@ -2488,7 +2489,7 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                             "city": "Paris",
                             "country": "France",
                             "floor": 4,
-                            "with_lift": true
+                            "lift_information": "with_lift"
                         }
                     }
                 ],
@@ -2596,7 +2597,7 @@ Pour plus d'informations sur la réponse de l'API Proximis, se référer à leur
                                 "secondary_phone": "0354678942",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                "with_lift": true
+                                "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
@@ -2708,7 +2709,7 @@ Pour plus d'informations sur l'entité `Order` de Proximis se référer à leur 
                                 "secondary_phone": "0354678942",
                                 "email": "helmoutardelpik@gmail.com",
                                 "floor": 4,
-                                 "with_lift": true
+                                 "lift_information": "with_lift"
                             },
                             "calendar": {
                                 "starts_at": "2015-04-22T08:00:00Z",
